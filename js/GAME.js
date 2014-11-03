@@ -103,7 +103,7 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        megaman_sprite : "../sprites/8bitmegaman.png"
+        megaman_sprite : "sprites/8bitmegaman.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
