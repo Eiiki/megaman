@@ -4,9 +4,6 @@
 
 "use strict";
 
-/* jshint browser: true, devel: true, globalstrict: true */
-
-
 // A generic contructor which accepts an arbitrary descriptor object
 function Megaman(descr) {
     // Common inherited setup logic from Entity
@@ -15,14 +12,13 @@ function Megaman(descr) {
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.megaman_still;
     
-    // Set normal drawing scale
+    // Set drawing scale
     this._scale = 2.5;
 
-    this._verticalSpeed = 6;
+    this._verticalSpeed = 4;
     this._initialJumpSpeed = 12;
 
     this._isFiringBullet = false;
-
 };
 
 Megaman.prototype = new Entity();
@@ -35,10 +31,6 @@ Megaman.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
 Megaman.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
-Megaman.prototype.cx = 0;
-Megaman.prototype.cy = 0;
-Megaman.prototype.velX = 0;
-Megaman.prototype.velY = 0;
 Megaman.prototype.launchVel = 2;
 Megaman.prototype.numSubSteps = 1;
 
@@ -51,7 +43,7 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     var velX = this.velX,
         velY = this.velY;
 
-    var framesPerSprite = 5;
+    var framesPerSprite = 8;
     //Mirror the sprite around its Y-axis
     if(velX < 0)     g_megamanFlipSprite = true;
     else if(velX > 0) g_megamanFlipSprite = false;
@@ -163,12 +155,8 @@ Megaman.prototype.updatePosition = function (du) {
     var accelY = this.computeGravity();
 
     if(oldVelY === 0){
-        if(keys[this.KEY_JUMP]){
+        if(keys[this.KEY_JUMP])
             this.velY = maxVelY;
-            this.jumpSound.pause();
-            this.jumpSound.currentTime = 0;
-            this.jumpSound.play();
-        }
         else if(this.cy < maxY - halfWidth)
             oldVelY = -0.35;
     }
@@ -183,7 +171,12 @@ Megaman.prototype.updatePosition = function (du) {
 
     this.cy -= du * this.velY;
 
-    if(this.cy >= maxY) this.velY = 0;
+    if(this.cy >= maxY){
+        this.velY = 0;
+        this.jumpSound.pause();
+        this.jumpSound.currentTime = 0;
+        this.jumpSound.play();
+    }
 
     keys[this.KEY_JUMP] = false;
     this.cy = util.clampRange(this.cy, minY, maxY);
@@ -192,14 +185,6 @@ Megaman.prototype.updatePosition = function (du) {
 Megaman.prototype.maybeFireBullet = function () {
     
     if (keys[this.KEY_FIRE]) {
-        var dX = +Math.sin(this.rotation);
-        var dY = -Math.cos(this.rotation);
-        var launchDist = this.getRadius() * 1.2;
-        
-        var relVel = this.launchVel;
-        var relVelX = dX * relVel;
-        var relVelY = dY * relVel;
-
         var velY = 0,
             velX = g_megamanFlipSprite ? -10 : 10;
         entityManager.fireBullet(

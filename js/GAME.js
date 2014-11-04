@@ -3,13 +3,11 @@
 // =========
 /*
 
-A short, less complex, playable version of the Megaman
+A short, less complex, playable version of the classic Megaman
 
 */
 
 "use strict";
-
-/* jshint browser: true, devel: true, globalstrict: true */
 
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
@@ -19,12 +17,12 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 
 function createMegaman() {
-
     entityManager.generateMegaman({
         cx : 100,
-        cy : 100
+        cy : 100,
+        velX : 0,
+        velY : 0
     });
-    
 }
 
 // =============
@@ -93,7 +91,6 @@ function renderSimulation(ctx) {
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
-
 // =============
 // PRELOAD STUFF
 // =============
@@ -103,7 +100,8 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        megaman_sprite : "sprites/8bitmegaman.png"
+        megaman_sprite : "sprites/8bitmegaman.png",
+        bullet_sprite  : "sprites/bullet.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -112,7 +110,7 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    //Sprite(image, sx, sy, width, height)
+    //Sprite(image, sourceX, sourceY, width, height)
     g_sprites.megaman_still = new Sprite(
         g_images.megaman_sprite,
         103,10,
@@ -184,9 +182,7 @@ function preloadDone() {
     };
 
     g_sprites.bullet = new Sprite(
-        g_images.megaman_sprite,
-        103,10,
-        21,24
+        g_images.bullet_sprite
     );
 
     //g_sprites.bullet = new Sprite(g_images.ship);

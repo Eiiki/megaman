@@ -15,12 +15,16 @@ function Bullet(descr) {
 
     // Make a noise when I am created (i.e. fired)
     if(this.fireSound.currentTime === 0 || this.fireSound.currentTime > 0.4){
-    this.fireSound.pause();
-    this.fireSound.currentTime = 0;
-
-    this._scale = 0.2;
-}
+        this.fireSound.pause();
+        this.fireSound.currentTime = 0;
+    }
     this.fireSound.play();
+
+    // Default sprite, if not otherwise specified
+    this.sprite = this.sprite || g_sprites.bullet;
+    
+    // Set normal drawing scale
+    this._scale = 0.15;
     
 /*
     // Diagnostics to check inheritance stuff
@@ -39,10 +43,10 @@ Bullet.prototype.zappedSound = new Audio(
     "sounds/megaman_takes_hit.wav");
     
 // Initial, inheritable, default valuesBullet.prototype.cx = 200;
-Bullet.prototype.cy = 200;
+/*Bullet.prototype.cy = 200;
 Bullet.prototype.cx = 200;
 Bullet.prototype.velX = 20;
-Bullet.prototype.velY = 0;
+Bullet.prototype.velY = 0;*/
 
 Bullet.prototype.update = function (du) {
 
@@ -53,6 +57,8 @@ Bullet.prototype.update = function (du) {
 
     this.cx += this.velX * du;
     this.cy += this.velY * du;
+
+    if(this.cx > g_canvas.width || this.cx < 0) return entityManager.KILL_ME_NOW;
 
     this.wrapPosition();
     
@@ -72,7 +78,7 @@ Bullet.prototype.update = function (du) {
 };
 
 Bullet.prototype.getRadius = function () {
-    return 4;
+    return Math.max(this.sprite.width/2, this.sprite.height/2) * this._scale;
 };
 
 Bullet.prototype.takeBulletHit = function () {
@@ -83,8 +89,13 @@ Bullet.prototype.takeBulletHit = function () {
 };
 
 Bullet.prototype.render = function (ctx) {
+    var origScale = this.sprite.scale;
+    // pass my scale into the sprite, for drawing
+
+    this.sprite.scale = this._scale;
 
     g_sprites.bullet.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
+    this.sprite.scale = origScale;
 };

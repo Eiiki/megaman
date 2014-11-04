@@ -10,10 +10,13 @@
 //
 var g_megamanFlipSprite = false;
 function Sprite(image, sx, sy, width, height) {
+    if(sx === undefined) sx = 0;
+    if(sy === undefined) sy = 0;
+
     this.sx = sx;
     this.sy = sy;
-    this.width = width;
-    this.height = height;
+    this.width = width || image.width;
+    this.height = height || image.height;
 
     this.image = image;
     this.scale = 1;
