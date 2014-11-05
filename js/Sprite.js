@@ -51,8 +51,8 @@ Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, flipSprite, rotat
     this.drawWrappedVerticalCentredAt(ctx, cx, cy, flipSprite, rotation);
     
     // Left and Right wraps
-    this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, flipSprite, rotation);
-    this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, flipSprite, rotation);
+    //this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, flipSprite, rotation);
+    //this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, flipSprite, rotation);
 };
 
 Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
@@ -63,6 +63,6 @@ Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, flipSprit
     this.drawCentredAt(ctx, cx, cy, flipSprite, rotation);
     
     // Top and Bottom wraps
-    this.drawCentredAt(ctx, cx, cy - sh, flipSprite, rotation);
-    this.drawCentredAt(ctx, cx, cy + sh, flipSprite, rotation);
+    //this.drawCentredAt(ctx, cx, cy - sh, flipSprite, rotation);
+    //this.drawCentredAt(ctx, cx, cy + sh, flipSprite, rotation);
 };

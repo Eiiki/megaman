@@ -13,13 +13,6 @@ function Bullet(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
-    // Make a noise when I am created (i.e. fired)
-    if(this.fireSound.currentTime === 0 || this.fireSound.currentTime > 0.4){
-        this.fireSound.pause();
-        this.fireSound.currentTime = 0;
-    }
-    this.fireSound.play();
-
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.bullet;
     
@@ -37,16 +30,9 @@ function Bullet(descr) {
 Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
-Bullet.prototype.fireSound = new Audio(
-    "sounds/megaman_fire_bullet.wav");
 Bullet.prototype.zappedSound = new Audio(
-    "sounds/megaman_takes_hit.wav");
-    
-// Initial, inheritable, default valuesBullet.prototype.cx = 200;
-/*Bullet.prototype.cy = 200;
-Bullet.prototype.cx = 200;
-Bullet.prototype.velX = 20;
-Bullet.prototype.velY = 0;*/
+    "sounds/enemy_takes_hit.wav");
+
 
 Bullet.prototype.update = function (du) {
 
@@ -58,7 +44,10 @@ Bullet.prototype.update = function (du) {
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
-    if(this.cx > g_canvas.width || this.cx < 0) return entityManager.KILL_ME_NOW;
+    if(this.cx > g_canvas.width || this.cx < 0){
+        this.takeBulletHit();
+        return entityManager.KILL_ME_NOW;
+    }
 
     this.wrapPosition();
     
@@ -83,9 +72,8 @@ Bullet.prototype.getRadius = function () {
 
 Bullet.prototype.takeBulletHit = function () {
     this.kill();
-    
     // Make a noise when I am zapped by another bullet
-    this.zappedSound.play();
+    util.playSoundNow(this.zappedSound, 0.2);
 };
 
 Bullet.prototype.render = function (ctx) {

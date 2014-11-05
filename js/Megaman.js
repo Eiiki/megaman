@@ -19,6 +19,7 @@ function Megaman(descr) {
     this._initialJumpSpeed = 12;
 
     this._isFiringBullet = false;
+    this._hasJumped = false;
 };
 
 Megaman.prototype = new Entity();
@@ -38,15 +39,13 @@ Megaman.prototype.isFlipped = false;
 
 Megaman.prototype.jumpSound = new Audio(
     "sounds/megaman_jump.wav");
+Megaman.prototype.fireSound = new Audio(
+    "sounds/megaman_fire_bullet.wav");
 
-Megaman.prototype._playJumpSound = function(){
-    this.jumpSound.pause();
-    this.jumpSound.currentTime = 0;
-    this.jumpSound.play();
-};
 
 var g_runningSprite = 0;
-var g_hasShotBullet = 0;
+var g_bulletSpriteCnt = 0;
+var g_hasShotBullet = false;
 
 Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     var velX = this.velX,
@@ -58,29 +57,36 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     else if(velX > 0) this.isFlipped = false;
 
     if(oldVelX === 0) g_runningSprite = 0;
-    if(this._isFiringBullet) g_hasShotBullet++;
+    if(this._isFiringBullet){
+        g_hasShotBullet = true;
+        g_bulletSpriteCnt++;
+    }
 
     if(velY !== 0){
-        this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.jumping :
-                                             g_sprites.megaman_jump;
+        this.sprite = g_hasShotBullet && g_hasShotBullet ? 
+        g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
     }else{
         if(velX === 0){
-            this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.still :
-                                                 g_sprites.megaman_still;
+            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
+            g_sprites.megaman_fire.still : g_sprites.megaman_still;
         }
         else{
             var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
 
-            this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.running[runningSpriteIdx] : 
-                                                 g_sprites.megaman_running[runningSpriteIdx];
+            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
+            g_sprites.megaman_fire.running[runningSpriteIdx] : g_sprites.megaman_running[runningSpriteIdx];
         }
     }
 
-    if(g_runningSprite >= g_sprites.megaman_running.length * framesPerSprite)
-        g_runningSprite = 0;
+    if(g_runningSprite >= g_sprites.megaman_running.length * framesPerSprite) g_runningSprite = 0;
 
-    if(g_hasShotBullet > 10)
-        g_hasShotBullet = 0;
+    if(g_hasShotBullet && g_bulletSpriteCnt < 20){
+        g_bulletSpriteCnt++;
+    }else{
+        g_bulletSpriteCnt = 0;
+        g_hasShotBullet = false;
+    }
+
 };
 
 Megaman.prototype.update = function (du) {
@@ -98,7 +104,7 @@ Megaman.prototype.update = function (du) {
     }
 
     // Handle firing
-    this._isFiringBullet = this.maybeFireBullet();
+    this.maybeFireBullet();
 
     spatialManager.register(this);
     //Update the sprite
@@ -149,9 +155,12 @@ Megaman.prototype.updatePosition = function (du) {
 
     //HORIZONTAL POSITION UPDATE
     //
-    if(oldVelY === 0 && keys[this.KEY_JUMP]){
+    if(keyUpKeys[this.KEY_JUMP]) this._hasJumped = false;
+    
+    if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
         //The character is on the ground and starts to jump
         this.velY = this._initialJumpSpeed;
+        this._hasJumped = true;
     }
     if(oldVelY !== 0){
         if(util.almostEqual(oldVelY, 0)){
@@ -164,23 +173,26 @@ Megaman.prototype.updatePosition = function (du) {
     }
 
     this.cy -= du * this.velY;
-    if(this.cy >= maxY){
+    if(this.cy > maxY){
         this.cy = maxY;
         this.velY = 0;
-        this._playJumpSound();
+        util.playSoundNow(this.jumpSound);
     }
     this.cy = util.clampRange(this.cy, minY, maxY);
 };
 
 Megaman.prototype.maybeFireBullet = function () {
-    if (keys[this.KEY_FIRE]) {
+    if(!keys[this.KEY_FIRE]) this._isFiringBullet=false;
+
+    if (keys[this.KEY_FIRE] && !this._isFiringBullet) {
         var velY = 0,
             velX = this.isFlipped ? -10 : 10;
+        this._isFiringBullet = true;
+
         entityManager.fireBullet(
            this.cx, this.cy, velX, velY);
-        return true;
+        util.playSoundNow(this.fireSound, 0.2);
     }
-    return false;
 };
 
 Megaman.prototype.getRadius = function () {

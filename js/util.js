@@ -89,6 +89,19 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
     return this.square(dx) + this.square(dy);
 },
 
+// SOUNDS
+// ======
+playSoundNow: function(sound, delay){
+    if(delay === undefined) delay = 0;
+    
+    if(sound.currentTime > delay){
+        //Stops the current sound and plays it from beginning
+        sound.pause();
+        sound.currentTime = 0;
+    }
+    sound.play();
+},
+
 
 // CANVAS OPS
 // ==========

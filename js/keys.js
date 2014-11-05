@@ -3,13 +3,16 @@
 // =================
 
 var keys = [];
+var keyUpKeys = [];
 
 function handleKeydown(evt) {
     keys[evt.keyCode] = true;
+    keyUpKeys[evt.keyCode] = false;
 }
 
 function handleKeyup(evt) {
     keys[evt.keyCode] = false;
+    keyUpKeys[evt.keyCode] = true;
 }
 
 // Inspects, and then clears, a key's state

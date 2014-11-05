@@ -5,7 +5,7 @@
 "use strict";
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Brick(descr) {
+function Bricks(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
     
@@ -16,12 +16,15 @@ function Brick(descr) {
     this._scale = 1;
 };
 
-Brick.prototype = new Entity();
+Bricks.prototype = new Entity();
 
-Brick.prototype.height = 0;
-Brick.prototype.width = 0;
+Bricks.prototype.height = 0;
+Bricks.prototype.width = 0;
 
-Brick.prototype.updateBricks = function(oldBrickX, oldBrickY, nextBrickX, nextBrickY){
+
+
+/*
+Ground.prototype.updateBricks = function(oldBrickX, oldBrickY, nextBrickX, nextBrickY){
 
 	var pX = oldBrickX,  pY = oldBrickY,
 		nX = nextBrickX, nY = nextBrickY;
@@ -51,7 +54,7 @@ Brick.prototype.updateBricks = function(oldBrickX, oldBrickY, nextBrickX, nextBr
 	}
 };
 
-Brick.prototype.collidesWithBrick = function(prevX, prevY, nextX, nextY){
+Ground.prototype.collidesWithBrick = function(prevX, prevY, nextX, nextY){
 
 	var oldBrickX = Math.floor( (prevX - this.xBase) / (this.brickWidth  + this.brickMargin));
 	var oldBrickY = Math.floor( (prevY - this.yBase) / (this.brickHeight + this.brickMargin));
@@ -63,9 +66,8 @@ Brick.prototype.collidesWithBrick = function(prevX, prevY, nextX, nextY){
 };
 
 
-Brick.prototype.render = function(ctx){
+Ground.prototype.render = function(ctx){
 	var bricks = this.gatherBricks();
 	this.drawWallFromBricks(ctx, bricks);
 };
-
-
+*/
