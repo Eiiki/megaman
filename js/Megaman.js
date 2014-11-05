@@ -34,60 +34,57 @@ Megaman.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 Megaman.prototype.launchVel = 2;
 Megaman.prototype.numSubSteps = 1;
 
+Megaman.prototype.isFlipped = false;
+
 Megaman.prototype.jumpSound = new Audio(
     "sounds/megaman_jump.wav");
 
+Megaman.prototype._playJumpSound = function(){
+    this.jumpSound.pause();
+    this.jumpSound.currentTime = 0;
+    this.jumpSound.play();
+};
+
 var g_runningSprite = 0;
 var g_hasShotBullet = 0;
+
 Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     var velX = this.velX,
         velY = this.velY;
-
     var framesPerSprite = 8;
+
     //Mirror the sprite around its Y-axis
-    if(velX < 0)     g_megamanFlipSprite = true;
-    else if(velX > 0) g_megamanFlipSprite = false;
+    if(velX < 0)      this.isFlipped = true;
+    else if(velX > 0) this.isFlipped = false;
 
     if(oldVelX === 0) g_runningSprite = 0;
+    if(this._isFiringBullet) g_hasShotBullet++;
 
     if(velY !== 0){
-        if(this._isFiringBullet){
-            this.sprite = g_sprites.megaman_fire.jumping;
-            g_hasShotBullet++;
-        }
-        else
-            this.sprite = g_sprites.megaman_jump;
+        this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.jumping :
+                                             g_sprites.megaman_jump;
     }else{
         if(velX === 0){
-            if(this._isFiringBullet){
-                this.sprite = g_sprites.megaman_fire.still;
-                g_hasShotBullet++;
-            }else{
-                this.sprite = g_sprites.megaman_still;
-            }
+            this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.still :
+                                                 g_sprites.megaman_still;
         }
         else{
-            if(this._isFiringBullet){
-                this.sprite = g_sprites.megaman_fire.running[Math.floor(g_runningSprite++ / framesPerSprite)];
-                g_hasShotBullet++;
-            }else{
-                this.sprite = g_sprites.megaman_running[Math.floor(g_runningSprite++ / framesPerSprite)];
-            }
+            var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
+
+            this.sprite = this._isFiringBullet ? g_sprites.megaman_fire.running[runningSpriteIdx] : 
+                                                 g_sprites.megaman_running[runningSpriteIdx];
         }
     }
 
     if(g_runningSprite >= g_sprites.megaman_running.length * framesPerSprite)
         g_runningSprite = 0;
 
-    if(g_hasShotBullet > 10){
+    if(g_hasShotBullet > 10)
         g_hasShotBullet = 0;
-        this._isFiringBullet = false;
-    }
 };
 
 Megaman.prototype.update = function (du) {
-    
-    // TODO: YOUR STUFF HERE! --- Unregister and check for death
+
     spatialManager.unregister(this);
     if(this._isDeadNow) return spatialManager.KILL_ME_NOW;
     
@@ -101,9 +98,8 @@ Megaman.prototype.update = function (du) {
     }
 
     // Handle firing
-    if(this.maybeFireBullet()) this._isFiringBullet = true;
+    this._isFiringBullet = this.maybeFireBullet();
 
-    // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register
     spatialManager.register(this);
     //Update the sprite
     this._updateSprite(oldVelX, oldVelY);
@@ -118,13 +114,11 @@ Megaman.prototype.computeSubStep = function (du) {
 };
 
 var NOMINAL_GRAVITY = 0.7;
-
 Megaman.prototype.computeGravity = function () {
     return NOMINAL_GRAVITY;
 };
 
 Megaman.prototype.computeThrustX = function () {
-    
     var direction = 0;
     
     if (keys[this.KEY_RIGHT]) {
@@ -137,56 +131,51 @@ Megaman.prototype.computeThrustX = function () {
 };
 
 Megaman.prototype.updatePosition = function (du) {
-
-    var halfWidth = this.sprite.width/2 * this._scale,
-        halfHeight = this.sprite.height/2 * this._scale;
-    var maxX = g_canvas.width  - halfWidth,
-        minX = halfWidth;
-    var maxY = g_canvas.height - halfHeight,
-        minY = halfHeight;
+    var spriteHalfWidth = this.sprite.width/2 * this._scale,
+        spriteHalfHeight = this.sprite.height/2 * this._scale;
+    var maxX = g_canvas.width  - spriteHalfWidth,
+        minX = spriteHalfWidth;
+    var maxY = g_canvas.height - spriteHalfHeight,
+        minY = spriteHalfHeight;
     var oldVelX = this.velX,
         oldVelY = this.velY;
+    var accelY = this.computeGravity();
 
+    //VERTICAL POSITION UODATE
+    //
     this.velX = this.computeThrustX();
     this.cx = util.clampRange(this.cx + (du * this.velX), minX, maxX);
 
-    //Compute horizontal position
-    var maxVelY = this._initialJumpSpeed;
-    var accelY = this.computeGravity();
 
-    if(oldVelY === 0){
-        if(keys[this.KEY_JUMP])
-            this.velY = maxVelY;
-        else if(this.cy < maxY - halfWidth)
-            oldVelY = -0.35;
+    //HORIZONTAL POSITION UPDATE
+    //
+    if(oldVelY === 0 && keys[this.KEY_JUMP]){
+        //The character is on the ground and starts to jump
+        this.velY = this._initialJumpSpeed;
     }
     if(oldVelY !== 0){
-        if(util.almostEqual(oldVelY, 0))
+        if(util.almostEqual(oldVelY, 0)){
             //The character starts falling towards the earth again
             this.velY = -0.5;
-        else
+        }else{
             //The character travels up or towards the ground
             this.velY -= accelY * du;
+        }
     }
 
     this.cy -= du * this.velY;
-
     if(this.cy >= maxY){
+        this.cy = maxY;
         this.velY = 0;
-        this.jumpSound.pause();
-        this.jumpSound.currentTime = 0;
-        this.jumpSound.play();
+        this._playJumpSound();
     }
-
-    keys[this.KEY_JUMP] = false;
     this.cy = util.clampRange(this.cy, minY, maxY);
 };
 
 Megaman.prototype.maybeFireBullet = function () {
-    
     if (keys[this.KEY_FIRE]) {
         var velY = 0,
-            velX = g_megamanFlipSprite ? -10 : 10;
+            velX = this.isFlipped ? -10 : 10;
         entityManager.fireBullet(
            this.cx, this.cy, velX, velY);
         return true;
@@ -205,12 +194,10 @@ Megaman.prototype.halt = function () {
 
 Megaman.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
-    // pass my scale into the sprite, for drawing
-
     this.sprite.scale = this._scale;
 
     this.sprite.drawWrappedCentredAt(
-	   ctx, this.cx, this.cy
+	   ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
 };

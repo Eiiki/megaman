@@ -21,7 +21,7 @@ function createMegaman() {
         cx : 100,
         cy : 100,
         velX : 0,
-        velY : 0
+        velY : -0.5
     });
 }
 
@@ -101,7 +101,8 @@ function requestPreloads() {
 
     var requiredImages = {
         megaman_sprite : "sprites/8bitmegaman.png",
-        bullet_sprite  : "sprites/bullet.png"
+        bullet_sprite  : "sprites/bullet.png",
+        brick : "sprites/TileBrick.jpg"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -183,6 +184,10 @@ function preloadDone() {
 
     g_sprites.bullet = new Sprite(
         g_images.bullet_sprite
+    );
+
+    g_sprites.brick = new Sprite(
+        g_images.brick
     );
 
     //g_sprites.bullet = new Sprite(g_images.ship);

@@ -36,11 +36,15 @@ register: function(entity) {
     var spatialID = entity.getSpatialID();
 
     // TODO: YOUR STUFF HERE!
+    var w = entity.sprite.width * entity._scale,
+        h = entity.sprite.height * entity._scale;
     var thisEntity = {
-            posX : pos.posX,
-            posY : pos.posY,
-            radius : entity.getRadius()
-        };
+        posX   : pos.posX - w/2,
+        posY   : pos.posY - h/2,
+        width  : w,
+        height : h
+    };
+
     this._entities[spatialID] = thisEntity;
 },
 
@@ -105,7 +109,7 @@ render: function(ctx) {
 
     for (var ID in this._entities) {
         var e = this._entities[ID];
-        util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+        util.strokeBox(ctx,e.posX, e.posY, e.width, e.height);
     }
     ctx.strokeStyle = oldStyle;
 }

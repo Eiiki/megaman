@@ -112,6 +112,12 @@ fillCircle: function (ctx, x, y, r) {
     ctx.fill();
 },
 
+strokeBox: function(ctx, x, y, w, h){
+    ctx.beginPath();
+    ctx.rect(x,y,w,h);
+    ctx.stroke();
+},
+
 fillBox: function (ctx, x, y, w, h, style) {
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = style;
