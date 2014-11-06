@@ -35,23 +35,22 @@ register: function(entity) {
     var pos = entity.getPos();
     var spatialID = entity.getSpatialID();
 
-    // TODO: YOUR STUFF HERE!
+    // This needs better implementation
     var w = entity.sprite.width * entity._scale,
         h = entity.sprite.height * entity._scale;
-    var thisEntity = {
+
+    this._entities[spatialID] = {
         posX   : pos.posX - w/2,
         posY   : pos.posY - h/2,
         width  : w,
         height : h
     };
-
-    this._entities[spatialID] = thisEntity;
 },
 
 unregister: function(entity) {
     var spatialID = entity.getSpatialID();
 
-    // TODO: YOUR STUFF HERE!
+    // This needs better implementation
     var e = this._entities[spatialID];
     if(e){
         e.posY = undefined;

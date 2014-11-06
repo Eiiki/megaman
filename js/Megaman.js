@@ -63,14 +63,17 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     }
 
     if(velY !== 0){
+        //Sprite is jumping, either firingor not
         this.sprite = g_hasShotBullet && g_hasShotBullet ? 
         g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
     }else{
         if(velX === 0){
+            //Sprite is still, either firing or not
             this.sprite = g_hasShotBullet && g_hasShotBullet ? 
             g_sprites.megaman_fire.still : g_sprites.megaman_still;
         }
         else{
+            //Sprite is running, either firing or not
             var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
 
             this.sprite = g_hasShotBullet && g_hasShotBullet ? 
@@ -155,8 +158,12 @@ Megaman.prototype.updatePosition = function (du) {
 
     //HORIZONTAL POSITION UPDATE
     //
+    /*
+    * keyUpKeys[keyCode] is true if and only if a given key with 
+      keycode keyCode has been pushed down and released again
+    */
     if(keyUpKeys[this.KEY_JUMP]) this._hasJumped = false;
-    
+
     if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
         //The character is on the ground and starts to jump
         this.velY = this._initialJumpSpeed;
@@ -181,17 +188,23 @@ Megaman.prototype.updatePosition = function (du) {
     this.cy = util.clampRange(this.cy, minY, maxY);
 };
 
+//Fires one bullet after each keypress.
+/*
+* keyUpKeys[keyCode] is true if and only if a given key with 
+  keycode keyCode has been pushed down and released again
+*/
 Megaman.prototype.maybeFireBullet = function () {
-    if(!keys[this.KEY_FIRE]) this._isFiringBullet=false;
+    if(keyUpKeys[this.KEY_FIRE]) this._isFiringBullet = false;
 
     if (keys[this.KEY_FIRE] && !this._isFiringBullet) {
         var velY = 0,
             velX = this.isFlipped ? -10 : 10;
-        this._isFiringBullet = true;
 
         entityManager.fireBullet(
            this.cx, this.cy, velX, velY);
         util.playSoundNow(this.fireSound, 0.2);
+
+        this._isFiringBullet = true;
     }
 };
 
