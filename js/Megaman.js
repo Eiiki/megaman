@@ -158,11 +158,14 @@ Megaman.prototype.updatePosition = function (du) {
 
     //HORIZONTAL POSITION UPDATE
     //
-    /*
+    /************************************************************
     * keyUpKeys[keyCode] is true if and only if a given key with 
       keycode keyCode has been pushed down and released again
-    */
-    if(keyUpKeys[this.KEY_JUMP]) this._hasJumped = false;
+    *************************************************************/
+    if(keyUpKeys[this.KEY_JUMP]){
+        if(this._hasJumped && this.velY > 0)this.velY=0;
+        this._hasJumped = false;
+    }
 
     if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
         //The character is on the ground and starts to jump
