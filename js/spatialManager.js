@@ -43,7 +43,8 @@ register: function(entity) {
         posX   : pos.posX - w/2,
         posY   : pos.posY - h/2,
         width  : w,
-        height : h
+        height : h,
+        entity : entity
     };
 },
 
@@ -51,11 +52,7 @@ unregister: function(entity) {
     var spatialID = entity.getSpatialID();
 
     // This needs better implementation
-    var e = this._entities[spatialID];
-    if(e){
-        e.posY = undefined;
-        e.posX = undefined;
-    }
+    delete this._entities[spatialID];
 },
 
 findEntityInRange: function(posX, posY, radius) {

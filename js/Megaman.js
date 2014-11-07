@@ -163,7 +163,8 @@ Megaman.prototype.updatePosition = function (du) {
       keycode keyCode has been pushed down and released again
     *************************************************************/
     if(keyUpKeys[this.KEY_JUMP]){
-        if(this._hasJumped && this.velY > 0)this.velY=0;
+        //So the megaman can jump low and high in the air
+        if(this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
         this._hasJumped = false;
     }
 
