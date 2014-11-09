@@ -205,6 +205,8 @@ Megaman.prototype.updatePosition = function (du) {
     this.cy -= du * this.velY;
 
     //tjékkar á lóðréttu collision við umhverfi
+    if (this.cx - spriteHalfWidth < 0) this.cx = spriteHalfWidth;
+
     if ((Map.isColliding(this.cx + spriteHalfWidth, this.cy + -1 * spriteHalfHeight) ||
         Map.isColliding(this.cx - spriteHalfWidth, this.cy + -1 * spriteHalfHeight)) &&
         this.velY >= 0) this.velY = -0.5;
