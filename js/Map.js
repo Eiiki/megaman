@@ -63,6 +63,15 @@ update : function(du) {
 
 
 render : function(ctx) {
+	var img = g_sprites.map.image;
+	var w = img.width;
+	var h = img.height;
+
+	ctx.save();
+	ctx.scale(2,2);
+	ctx.drawImage(img, 16, 1696, w, h, 0, 0, w, h);
+	ctx.restore();
+
 	ctx.save();
 	ctx.fillStyle   = 'red';
 	ctx.strokeStyle = 'white';
@@ -76,15 +85,6 @@ render : function(ctx) {
 			}
 		}
 	}
-	ctx.restore();
-
-	var img = g_sprites.map.image;
-	var w = img.width;
-	var h = img.height;
-
-	ctx.save();
-	ctx.scale(2,2);
-	ctx.drawImage(img, 16, 1696, w, h, 0, 0, w, h);
 	ctx.restore();
 }
 }
