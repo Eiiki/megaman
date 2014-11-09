@@ -36,6 +36,7 @@ Megaman.prototype.launchVel = 2;
 Megaman.prototype.numSubSteps = 1;
 
 Megaman.prototype.isFlipped = false;
+Megaman.prototype.isFalling = false;
 
 Megaman.prototype.jumpSound = new Audio(
     "sounds/megaman_jump.wav");
@@ -140,8 +141,15 @@ Megaman.prototype.computeThrustX = function () {
 };
 
 Megaman.prototype.updatePosition = function (du) {
-    var spriteHalfWidth = this.sprite.width/2 * this._scale,
-        spriteHalfHeight = this.sprite.height/2 * this._scale;
+    
+    // setti inn fastar tölur hér þar sem breytilega stærðin var
+    // að fokka upp collision detectioninu á óútreiknanlegan hátt
+
+    // þarf að hreinsa upp collisionið og setja upp í sér class sem
+    // megaman og vondir kallar sem collida við background erfa frá
+    //    #ThirdWeekProblems 
+    var spriteHalfWidth  = 25, //this.sprite.width/2 * this._scale,
+        spriteHalfHeight = 33;//this.sprite.height/2 * this._scale;
     var maxX = g_canvas.width  - spriteHalfWidth,
         minX = spriteHalfWidth;
     var maxY = g_canvas.height - spriteHalfHeight,
@@ -153,8 +161,15 @@ Megaman.prototype.updatePosition = function (du) {
     //VERTICAL POSITION UODATE
     //
     this.velX = this.computeThrustX();
-    this.cx = util.clampRange(this.cx + (du * this.velX), minX, maxX);
-
+    var nextX = this.cx + this.velX * du;
+    //this.cx = util.clampRange(this.cx + (du * this.velX), minX, maxX);
+    
+    var flipped = this.isFlipped ? -1 : 1;
+    var xAdjusted = flipped * spriteHalfWidth + nextX;
+    
+    // tjékkar á láréttu collission við umhverfi
+    if (!Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5) &&
+        !Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5)) this.cx = nextX;
 
     //HORIZONTAL POSITION UPDATE
     //
@@ -164,7 +179,7 @@ Megaman.prototype.updatePosition = function (du) {
     *************************************************************/
     if(keyUpKeys[this.KEY_JUMP]){
         //So the megaman can jump low and high in the air
-        if(this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
+        if (this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
         this._hasJumped = false;
     }
 
@@ -172,6 +187,7 @@ Megaman.prototype.updatePosition = function (du) {
         //The character is on the ground and starts to jump
         this.velY = this._initialJumpSpeed;
         this._hasJumped = true;
+
     }
     if(oldVelY !== 0){
         if(util.almostEqual(oldVelY, 0)){
@@ -184,12 +200,24 @@ Megaman.prototype.updatePosition = function (du) {
     }
 
     this.cy -= du * this.velY;
-    if(this.cy > maxY){
-        this.cy = maxY;
+
+    //tjékkar á lóðréttu collision við umhverfi
+    if ((Map.isColliding(this.cx + spriteHalfWidth, this.cy + -1 * spriteHalfHeight) ||
+        Map.isColliding(this.cx - spriteHalfWidth, this.cy + -1 * spriteHalfHeight)) &&
+        this.velY >= 0) this.velY = -0.5;
+
+    if(Map.isColliding(this.cx + spriteHalfWidth, this.cy + spriteHalfHeight) ||
+       Map.isColliding(this.cx - spriteHalfWidth, this.cy + spriteHalfHeight)) {
+        this.cy = Map.getYPosition(this.cy);
         this.velY = 0;
-        util.playSoundNow(this.jumpSound);
+        // þarf að finna betri stað fyrir þetta
+        //util.playSoundNow(this.jumpSound);
+        this.isFalling = false;
+    } else if (!this.isFalling && this.velY <= 0){
+        this.velY = -0.5;
+        this.isFalling = true;
     }
-    this.cy = util.clampRange(this.cy, minY, maxY);
+    //this.cy = util.clampRange(this.cy, minY, maxY);
 };
 
 //Fires one bullet after each keypress.

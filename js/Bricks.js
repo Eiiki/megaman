@@ -3,7 +3,6 @@
 // ==========
 
 "use strict";
-
 // A generic contructor which accepts an arbitrary descriptor object
 function Bricks(descr) {
     // Common inherited setup logic from Entity

@@ -11,7 +11,7 @@ var util = {
 // COLLISIONS
 // ======
 
-//Return ture iff. circle1 and circle2 collides
+//Return true iff. circle1 and circle2 collides
 circlesCollides : function(x1, y1, r1, x2, y2, r2){
     //(R0-R1)^2 <= (x0-x1)^2+(y0-y1)^2 <= (R0+R1)^2
     var r_diff = util.square(r1-r2);
