@@ -150,8 +150,8 @@ Megaman.prototype.updatePosition = function (du) {
     // þarf að hreinsa upp collisionið og setja upp í sér class sem
     // megaman og vondir kallar sem collida við background erfa frá
     //    #ThirdWeekProblems 
-    var spriteHalfWidth  = 25, //this.sprite.width/2 * this._scale,
-        spriteHalfHeight = 33;//this.sprite.height/2 * this._scale;
+    var spriteHalfWidth  = 16, //this.sprite.width/2 * this._scale,
+        spriteHalfHeight = 32;//this.sprite.height/2 * this._scale;
     var maxX = g_canvas.width  - spriteHalfWidth,
         minX = spriteHalfWidth;
     var maxY = g_canvas.height - spriteHalfHeight,

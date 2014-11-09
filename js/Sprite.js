@@ -40,7 +40,7 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
                   -w/2,-h/2, w, h);
     if(flipSprite) ctx.scale(-1,1);
     ctx.restore();
-};  
+};
 
 Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
     
