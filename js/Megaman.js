@@ -47,6 +47,8 @@ Megaman.prototype.fireSound = new Audio(
 var g_runningSprite = 0;
 var g_bulletSpriteCnt = 0;
 var g_hasShotBullet = false;
+var g_megamanX;
+var g_megamanY;
 
 Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
     var velX = this.velX,
@@ -157,6 +159,8 @@ Megaman.prototype.updatePosition = function (du) {
     var oldVelX = this.velX,
         oldVelY = this.velY;
     var accelY = this.computeGravity();
+    g_megamanX = this.cx;
+    g_megamanY = this.cy;
 
     //VERTICAL POSITION UODATE
     //
@@ -187,7 +191,6 @@ Megaman.prototype.updatePosition = function (du) {
         //The character is on the ground and starts to jump
         this.velY = this._initialJumpSpeed;
         this._hasJumped = true;
-
     }
     if(oldVelY !== 0){
         if(util.almostEqual(oldVelY, 0)){
