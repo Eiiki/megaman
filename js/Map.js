@@ -73,6 +73,7 @@ render : function(ctx) {
 	ctx.restore();
 
 	ctx.save();
+	ctx.globalAlpha = 0.4;
 	ctx.fillStyle   = 'red';
 	ctx.strokeStyle = 'white';
 	for (var i = 0; i < this._tiles.length; i++) {
