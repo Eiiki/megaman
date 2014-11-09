@@ -44,7 +44,7 @@ Bullet.prototype.update = function (du) {
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
-    if(this.cx > g_canvas.width || this.cx < 0){
+    if(this.cx > g_canvas.width + g_camX || this.cx < g_camX){
         this.takeBulletHit();
         return entityManager.KILL_ME_NOW;
     }
