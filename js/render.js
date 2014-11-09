@@ -6,9 +6,13 @@ var g_undoBox = false;
 var g_doFlipFlop = false;
 var g_doRender = true;
 var g_camCoords = true;
+var g_makeTiles = true;
+var g_renderTiles = true;
 
 var g_frameCounter = 1;
 
+var TOGGLE_MAKE_TILES = 'J'.charCodeAt(0);
+var TOGGLE_RENDER_TILES = 'K'.charCodeAt(0);
 var TOGGLE_CLEAR = 'C'.charCodeAt(0);
 var TOGGLE_BOX = 'B'.charCodeAt(0);
 var TOGGLE_UNDO_BOX = 'U'.charCodeAt(0);
@@ -20,6 +24,8 @@ function render(ctx) {
     
     // Process various option toggles
     //
+    if (eatKey(TOGGLE_MAKE_TILES)) g_makeTiles = !g_makeTiles;
+    if (eatKey(TOGGLE_RENDER_TILES)) g_renderTiles = !g_renderTiles;
     if (eatKey(TOGGLE_CLEAR)) g_doClear = !g_doClear;
     if (eatKey(TOGGLE_BOX)) g_doBox = !g_doBox;
     if (eatKey(TOGGLE_UNDO_BOX)) g_undoBox = !g_undoBox;

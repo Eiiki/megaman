@@ -61,17 +61,7 @@ update : function(du) {
 
 },
 
-
-render : function(ctx) {
-	var img = g_sprites.map.image;
-	var w = img.width;
-	var h = img.height;
-
-	ctx.save();
-	ctx.scale(2,2);
-	ctx.drawImage(img, 16, 1696, w, h, 0, 0, w, h);
-	ctx.restore();
-
+renderTiles : function(ctx) {
 	ctx.save();
 	ctx.globalAlpha = 0.4;
 	ctx.fillStyle   = 'red';
@@ -87,5 +77,18 @@ render : function(ctx) {
 		}
 	}
 	ctx.restore();
+},
+
+render : function(ctx) {
+	var img = g_sprites.map.image;
+	var w = img.width;
+	var h = img.height;
+
+	ctx.save();
+	ctx.scale(2,2);
+	ctx.drawImage(img, 16, 1696, w, h, 0, 0, w, h);
+	ctx.restore();
+
+	if (g_renderTiles) this.renderTiles(ctx);
 }
 }

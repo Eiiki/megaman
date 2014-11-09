@@ -15,7 +15,7 @@ function handleMouse(evt) {
     g_mouseY = evt.clientY - g_canvas.offsetTop;
 
     // býr til nýjan tile í map eða fjarlægir hann
-    if (evt.which) Map.toggleTile(g_mouseX + g_camX, g_mouseY);
+    if (evt.which) if (g_makeTiles) Map.toggleTile(g_mouseX + g_camX, g_mouseY);
     
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
