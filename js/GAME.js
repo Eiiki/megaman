@@ -165,6 +165,19 @@ function preloadDone() {
         )
     ];
 
+    g_sprites.megaman_climbing = [
+        new Sprite(
+            g_images.megaman_sprite,
+            61,245,
+            20,32
+        ),
+        new Sprite(
+            g_images.megaman_sprite,
+            84,245,
+            20,32
+        )
+    ];
+
     g_sprites.megaman_fire = {
         still : new Sprite(
             g_images.megaman_sprite,
