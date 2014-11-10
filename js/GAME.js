@@ -11,8 +11,6 @@ A short, less complex, playable version of the classic Megaman
 
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
-var g_camX = 0;
-var g_camY = 0;
 
 // ====================
 // CREATE INITIAL SHIPS
@@ -20,7 +18,7 @@ var g_camY = 0;
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 100,
+        cx : 1900,
         cy : 100,
         velX : 0,
         velY : -0.5
@@ -88,14 +86,10 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 function renderSimulation(ctx) {
     ctx.save();
-    g_camX = g_megamanX > g_canvas.width/2 ? g_megamanX - g_canvas.width/2 : 0;
-    g_camY = 0;
-    
-    if(g_camCoords){
-        ctx.fillText("cx:      "+Math.round(g_megamanX)+",    cy: "+Math.round(g_megamanY),10,10);
-        ctx.fillText("camX: "+Math.round(g_camX)+",   camY: "+Math.round(g_camY), 10,22);
-    }
-    ctx.translate(-g_camX, g_camY);
+    global.camX = global.megamanX > g_canvas.width/2 ? global.megamanX - g_canvas.width/2 : 0;
+    global.camY = 0;
+
+    ctx.translate(-global.camX, global.camY);
     entityManager.render(ctx);
     
     if (g_renderSpatialDebug) spatialManager.render(ctx);
@@ -156,6 +150,19 @@ function preloadDone() {
             16,24
         )
 
+    ];
+    
+    g_sprites.megaman_climbing = [
+        new Sprite(
+            g_images.megaman_sprite,
+            61,245,
+            20,32
+        ),
+        new Sprite(
+            g_images.megaman_sprite,
+            84,245,
+            20,32
+        )
     ];
 
     g_sprites.megaman_fire = {

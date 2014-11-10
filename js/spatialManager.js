@@ -36,8 +36,8 @@ register: function(entity) {
     var spatialID = entity.getSpatialID();
 
     // This needs better implementation
-    var w = entity.sprite.width * entity._scale,
-        h = entity.sprite.height * entity._scale;
+    var w = entity.width  || entity.sprite.width * entity._scale,
+        h = entity.height || entity.sprite.height * entity._scale;
 
     this._entities[spatialID] = {
         posX   : pos.posX - w/2,
