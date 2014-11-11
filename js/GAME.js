@@ -217,7 +217,11 @@ function preloadDone() {
 
     entityManager.init();
     createMegaman();
-    audioManager.play("sounds/snake_man.wav", 0.5); // bg music
+    audioManager.play("sounds/snake_man_intro.wav", 0.2, false); 
+    // start playing after the intro
+    setTimeout(function() {
+        audioManager.play("sounds/snake_man.wav", 0.2, true); // bg music
+    }, 3650); // snake_man_intro.wav is 3.5 secs. So the 3650 ms is a magic number to make it sound good (poor I know)
 
     main.init();
 }

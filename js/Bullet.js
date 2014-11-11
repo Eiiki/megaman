@@ -30,8 +30,7 @@ function Bullet(descr) {
 Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
-Bullet.prototype.zappedSound = new Audio(
-    "sounds/enemy_takes_hit.wav");
+Bullet.prototype.zappedSound = "sounds/enemy_takes_hit.wav";
 
 
 Bullet.prototype.update = function (du) {
@@ -73,7 +72,7 @@ Bullet.prototype.getRadius = function () {
 Bullet.prototype.takeBulletHit = function () {
     this.kill();
     // Make a noise when I am zapped by another bullet
-    util.playSoundNow(this.zappedSound, 0.2);
+    audioManager.play(this.zappedSound);
 };
 
 Bullet.prototype.render = function (ctx) {
