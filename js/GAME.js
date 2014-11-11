@@ -2,9 +2,7 @@
 // MEGAMAN
 // =========
 /*
-
 A short, less complex, playable version of the classic Megaman
-
 */
 
 "use strict";
@@ -18,8 +16,8 @@ var g_ctx = g_canvas.getContext("2d");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 1900,
-        cy : 100,
+        cx : 1700,
+        cy : 3520,
         velX : 0,
         velY : -0.5
     });
@@ -86,10 +84,11 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 function renderSimulation(ctx) {
     ctx.save();
-    global.camX = global.megamanX > g_canvas.width/2 ? global.megamanX - g_canvas.width/2 : 0;
-    global.camY = 0;
+    var x = global.megamanX;
+    //ctx.scale(0.1,0.1);
+    global.camX = x > g_canvas.width/2 ? global.megamanX - g_canvas.width/2 : 0;
 
-    ctx.translate(-global.camX, global.camY);
+    ctx.translate(-global.camX, -global.camY);
     entityManager.render(ctx);
     
     if (g_renderSpatialDebug) spatialManager.render(ctx);
