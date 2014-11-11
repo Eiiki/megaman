@@ -210,6 +210,9 @@ Megaman.prototype.computeThrustY = function() {
     return directionY;
 }
 
+var g_goUpLevel = false;
+var g_goDownLevel = false;
+
 Megaman.prototype.updatePosition = function (du) {
     
     // setti inn fastar tölur hér þar sem breytilega stærðin var
@@ -277,7 +280,7 @@ Megaman.prototype.updatePosition = function (du) {
 
     var top_bottom_collides = Math.max(rightTopCollision, leftTopCollision, rightBottomCollision, leftBottomCollision),
         left_right_collides = Math.max(topXAdjusted, bottomXAdjusted);
-    //isClimbing is true iff. the megaman collides with the stair
+    // isClimbing is true iff. the megaman collides with the stair
     this.isClimbing = Math.max(top_bottom_collides, left_right_collides) === 2;
 
     if(this.isClimbing){
@@ -308,6 +311,8 @@ Megaman.prototype.updatePosition = function (du) {
     }
     global.megamanX = this.cx;
     global.megamanY = this.cy;
+    if (this.cy < global.camY && global.camY > global.mapHeight) global.camY -= 480;
+    if (this.cy > global.camY + 480) global.camY += 480;
 };
 
 //Fires one bullet after each keypress.

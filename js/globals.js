@@ -28,5 +28,7 @@ var global = {
 	megamanX : 0,
 	megamanY : 0,
 	camX : 0,
-	camY : 0
+	camY : 3392,
+
+	mapHeight: 3392 - 7 * 480 // þetta er camY - sjöföld hæð canvasins
 };

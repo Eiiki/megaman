@@ -17,7 +17,7 @@ function handleMouse(evt) {
             + document.documentElement.scrollTop;
 
     // býr til nýjan tile í map eða fjarlægir hann
-    if (evt.which) if (g_makeTiles) Map.toggleTile(g_mouseX + global.camX, g_mouseY);
+    if (evt.which) if (g_makeTiles) Map.toggleTile(g_mouseX + global.camX, g_mouseY + global.camY);
     
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
