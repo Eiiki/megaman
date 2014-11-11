@@ -321,7 +321,7 @@ Megaman.prototype.updatePosition = function (du) {
 Megaman.prototype.maybeFireBullet = function () {
     if(keyUpKeys[this.KEY_FIRE]) this._isFiringBullet = false;
 
-    if (keys[this.KEY_FIRE] && !this._isFiringBullet) {
+    if (keys[this.KEY_FIRE] && !this._isFiringBullet && !this.isClimbing) {
         var velY = 0,
             velX = this.isFlipped ? -10 : 10;
 
