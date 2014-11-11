@@ -1,27 +1,11 @@
 /*
 
-entityManager.js
-
-A module which handles arbitrary entity-management for "Asteroids"
-
-
-We create this module as a single global object, and initialise it
-with suitable 'data' and 'methods'.
-
-"Private" properties are denoted by an underscore prefix convention.
+audioManager.js
 
 */
 
 
 "use strict";
-
-
-// Tell jslint not to complain about my use of underscore prefixes (nomen),
-// my flattening of some indentation (white), or my use of incr/decr ops 
-// (plusplus).
-//
-/*jslint nomen: true, white: true, plusplus: true*/
-
 
 var audioManager = {
 
