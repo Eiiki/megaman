@@ -217,7 +217,7 @@ function preloadDone() {
 
     entityManager.init();
     createMegaman();
-    audioManager.play("sounds/snake_man.wav", 0.5); // bg music
+    audioManager.play("sounds/snake_man.wav", 0.2, true); // bg music
 
     main.init();
 }
