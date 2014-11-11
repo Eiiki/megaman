@@ -285,7 +285,7 @@ Megaman.prototype.updatePosition = function (du) {
         this.isFalling = false;
         this.velY = 0;
         var oldY = this.cy;
-        this.cy += this.computeThrustY();
+        this.cy += this.computeThrustY()*du;
         if(oldY !== this.cy){
             g_climbingSpriteIdx++;
             g_climbingSpriteIdx = g_climbingSpriteIdx >= g_sprites.megaman_climbing.length*10 ? 0 : g_climbingSpriteIdx;
