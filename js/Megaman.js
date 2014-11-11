@@ -43,10 +43,8 @@ Megaman.prototype.isFlipped = false;
 Megaman.prototype.isFalling = false;
 Megaman.prototype.isClimbing = false;
 
-Megaman.prototype.jumpSound = new Audio(
-    "sounds/megaman_jump.wav");
-Megaman.prototype.fireSound = new Audio(
-    "sounds/megaman_fire_bullet.wav");
+Megaman.prototype.jumpSound ="sounds/megaman_jump.wav";
+Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 
 
 /*
@@ -307,7 +305,7 @@ Megaman.prototype.updatePosition = function (du) {
             this.velY = -0.5;
             this.isFalling = true;
         }
-        if(oldVelY < 0 && this.velY === 0) util.playSoundNow(this.jumpSound);
+        if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     }
     global.megamanX = this.cx;
     global.megamanY = this.cy;
@@ -329,7 +327,7 @@ Megaman.prototype.maybeFireBullet = function () {
 
         entityManager.fireBullet(
            this.cx, this.cy, velX, velY);
-        util.playSoundNow(this.fireSound, 0.2);
+        audioManager.play(this.fireSound);
 
         this._isFiringBullet = true;
     }
