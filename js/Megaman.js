@@ -278,8 +278,16 @@ Megaman.prototype.updatePosition = function (du) {
 
     var top_bottom_collides = Math.max(rightTopCollision, leftTopCollision, rightBottomCollision, leftBottomCollision),
         left_right_collides = Math.max(topXAdjusted, bottomXAdjusted);
+
     // isClimbing is true iff. the megaman collides with the stair
-    this.isClimbing = Math.max(top_bottom_collides, left_right_collides) === 2 && (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing);
+    if (Math.max(leftBottomCollision, rightBottomCollision) === 3 && keys[this.KEY_UP] && !this.isClimbing) {
+        // this is only the case where he's standing on top of a stair and to make sure he can't "go up on it"
+        this.isClimbing = false;
+    } else {
+        this.isClimbing = (Math.max(top_bottom_collides, left_right_collides) === 2 ||
+                           Math.max(top_bottom_collides, left_right_collides) === 3) && 
+                           (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing);
+    }
 
     if(this.isClimbing){
         this.isFalling = false;
@@ -295,7 +303,8 @@ Megaman.prototype.updatePosition = function (du) {
             //The megaman jumps up and collides its head with a tile
             this.velY = -0.5;
         }
-        if(rightBottomCollision === 1 || leftBottomCollision === 1) {
+        if(rightBottomCollision === 1 || leftBottomCollision === 1 || 
+           rightBottomCollision === 3 || leftBottomCollision === 3) {
             //Check wether the megaman is colliding with the ground of the map
             this.cy = Map.getYPosition(this.cy);
             this.velY = 0;
