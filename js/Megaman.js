@@ -27,13 +27,13 @@ function Megaman(descr) {
 
 Megaman.prototype = new Entity();
 
+Megaman.prototype.KEY_UP  = 38;//'up'.charCodeAt(0);
+Megaman.prototype.KEY_DOWN = 40;//'down'.charCodeAt(0);
+Megaman.prototype.KEY_LEFT   = 37;//'left'.charCodeAt(0);
+Megaman.prototype.KEY_RIGHT  = 39;//'right'.charCodeAt(0);
 
-Megaman.prototype.KEY_JUMP  = 'W'.charCodeAt(0);
-Megaman.prototype.KEY_LEFT  = 'A'.charCodeAt(0);
-Megaman.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
-Megaman.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
-
-Megaman.prototype.KEY_FIRE   = ' '.charCodeAt(0);
+Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
+Megaman.prototype.KEY_FIRE   = 'A'.charCodeAt(0);
 
 // Initial, inheritable, default values
 Megaman.prototype.launchVel = 2;
@@ -199,7 +199,7 @@ Megaman.prototype.computeThrustX = function () {
 Megaman.prototype.computeThrustY = function() {
     var directionY = 0;
 
-    if (keys[this.KEY_JUMP]) {
+    if (keys[this.KEY_UP]) {
         directionY -= this._climbSpeed;
     }
     if (keys[this.KEY_DOWN]) {
@@ -279,7 +279,7 @@ Megaman.prototype.updatePosition = function (du) {
     var top_bottom_collides = Math.max(rightTopCollision, leftTopCollision, rightBottomCollision, leftBottomCollision),
         left_right_collides = Math.max(topXAdjusted, bottomXAdjusted);
     // isClimbing is true iff. the megaman collides with the stair
-    this.isClimbing = Math.max(top_bottom_collides, left_right_collides) === 2;
+    this.isClimbing = Math.max(top_bottom_collides, left_right_collides) === 2 && (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing);
 
     if(this.isClimbing){
         this.isFalling = false;
@@ -291,11 +291,11 @@ Megaman.prototype.updatePosition = function (du) {
             g_climbingSpriteIdx = g_climbingSpriteIdx >= g_sprites.megaman_climbing.length*10 ? 0 : g_climbingSpriteIdx;
         }
     }else{
-        if ((rightTopCollision || leftTopCollision) && this.velY >= 0){
+        if ((rightTopCollision === 1 || leftTopCollision === 1) && this.velY >= 0){
             //The megaman jumps up and collides its head with a tile
             this.velY = -0.5;
         }
-        if(rightBottomCollision || leftBottomCollision) {
+        if(rightBottomCollision === 1 || leftBottomCollision === 1) {
             //Check wether the megaman is colliding with the ground of the map
             this.cy = Map.getYPosition(this.cy);
             this.velY = 0;
