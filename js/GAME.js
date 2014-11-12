@@ -105,6 +105,7 @@ function requestPreloads() {
 
     var requiredImages = {
         megaman_sprite : "sprites/8bitmegaman.png",
+        megaman_health : "sprites/megaman_health.png",
         bullet_sprite  : "sprites/bullet.png",
         brick : "sprites/TileBrick.jpg",
         map: "sprites/MegaManIII-SnakeMan-clean.png"
@@ -197,8 +198,11 @@ function preloadDone() {
             146, 40,
             29,30
         )
-
     };
+
+    g_sprites.megaman_health = new Sprite(
+        g_images.megaman_health
+    );
 
     g_sprites.map = new Sprite(
         g_images.map

@@ -23,6 +23,8 @@ function Megaman(descr) {
 
     this._isFiringBullet = false;
     this._hasJumped = false;
+
+    this._health = 50;//this.maxHealth;
 };
 
 Megaman.prototype = new Entity();
@@ -46,6 +48,7 @@ Megaman.prototype.isClimbing = false;
 Megaman.prototype.jumpSound ="sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 
+Megaman.prototype.maxHealth = 100;
 
 /*
 var climbingSpriteIdx = 0;
@@ -305,7 +308,7 @@ Megaman.prototype.updatePosition = function (du) {
         }
         if(rightBottomCollision === 1 || leftBottomCollision === 1 || 
            rightBottomCollision === 3 || leftBottomCollision === 3) {
-            //Check wether the megaman is colliding with the ground of the map
+            //Check whether the megaman is colliding with the ground of the map
             this.cy = Map.getYPosition(this.cy);
             this.velY = 0;
             this.isFalling = false;
@@ -318,6 +321,8 @@ Megaman.prototype.updatePosition = function (du) {
     }
     global.megamanX = this.cx;
     global.megamanY = this.cy;
+
+    // check if megaman is going off screen and move camera
     if (this.cy < global.camY && global.camY > global.mapHeight) global.camY -= 480;
     if (this.cy > global.camY + 480) global.camY += 480;
 };
@@ -359,4 +364,34 @@ Megaman.prototype.render = function (ctx) {
 	   ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
+
+    this.drawHealth(ctx);
+};
+
+Megaman.prototype.drawHealth = function(ctx) {
+    var sprite = g_sprites.megaman_health;
+    var oldWidth = sprite.width;
+    var oldHeight = sprite.height;
+
+    var origScale = sprite.scale;
+    // whoop magic numbers
+    sprite.scale = 0.85;
+    var s = sprite.scale;
+    var cx = global.camX + 44;
+    var cy = global.camY + 30 + s*(sprite.height)/2;
+
+    sprite.drawWrappedCentredAt(
+        ctx, cx, cy
+    );
+    var healthRatio = 1 - this._health / this.maxHealth;
+    var topLeft = [cx - s*(sprite.width)/2, cy - s*(sprite.height)/2]; // [x, y]
+    // draw a black box over the health we've lost
+    var oldFillStyle = ctx.fillStyle;
+    ctx.fillStyle = 'black';
+    ctx.fillRect(topLeft[0], topLeft[1], s*sprite.width, s*(healthRatio * sprite.height));
+    ctx.fillStyle = oldFillStyle;
+
+    sprite.scale = origScale;
+    sprite.width = oldWidth;
+    sprite.height = oldHeight;
 };
