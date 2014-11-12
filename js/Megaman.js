@@ -24,7 +24,8 @@ function Megaman(descr) {
     this._isFiringBullet = false;
     this._hasJumped = false;
 
-    this._health = 50;//this.maxHealth;
+    // just for display purposes start with half health for now ONLY 
+    this._health = this.maxHealth / 2; //this.maxHealth
 };
 
 Megaman.prototype = new Entity();
