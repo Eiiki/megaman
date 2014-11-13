@@ -16,7 +16,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 1700,
+        cx : 100,
         cy : 3520,
         velX : 0,
         velY : -0.5
