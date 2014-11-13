@@ -168,8 +168,14 @@ Megaman.prototype.update = function (du) {
     }
 
     // move camera when megaman transisiton between levels of the map
-    if (this.cy < global.camY && global.camY > global.mapHeight) global.camY -= 480;
-    if (this.cy > global.camY + 480 && !global.fellOffEdge) global.camY += 480;
+    if (this.cy < global.camY && global.camY > global.mapHeight){
+        global.camY -= 480;
+        global.mapPart++;
+    }
+    if (this.cy > global.camY + 480 && !global.fellOffEdge) {
+        global.camY += 480;
+        global.mapPart--;
+    }
 
     // Handle firing
     this.maybeFireBullet();
@@ -216,9 +222,6 @@ Megaman.prototype.computeThrustY = function() {
     return directionY;
 }
 
-var g_goUpLevel = false;
-var g_goDownLevel = false;
-
 Megaman.prototype.updatePosition = function (du) {
     
     // setti inn fastar tölur hér þar sem breytilega stærðin var
@@ -236,7 +239,7 @@ Megaman.prototype.updatePosition = function (du) {
     //VERTICAL POSITION UODATE
     //
     this.velX = this.computeThrustX();
-    var nextX = this.cx + this.velX * du;
+    var nextX = this.isClimbing ? this.cx : this.cx + this.velX * du;
     
     var flipped = this.isFlipped ? -1 : 1;
     var xAdjusted = flipped * spriteHalfWidth + nextX;
@@ -276,6 +279,9 @@ Megaman.prototype.updatePosition = function (du) {
             }
         }
     }
+    
+    // if megaman is climbing and jumps he will stop climbing
+    if (keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
 
     this.cy -= du * this.velY;
     //Check wether any of the corner edges of the megaman intersects with the stairs
@@ -285,7 +291,9 @@ Megaman.prototype.updatePosition = function (du) {
         leftBottomCollision  = Map.isColliding(this.cx - spriteHalfWidth, this.cy + spriteHalfHeight);
 
     var top_bottom_collides = Math.max(rightTopCollision, leftTopCollision, rightBottomCollision, leftBottomCollision),
-        left_right_collides = Math.max(topXAdjusted, bottomXAdjusted);
+        left_right_collides = Math.max(topXAdjusted, bottomXAdjusted),
+        right_top_bottom_collides = Math.max(rightTopCollision, rightBottomCollision),
+        left_top_bottom_collides  = Math.max(leftTopCollision, leftBottomCollision);
 
     // isClimbing is true iff. the megaman collides with the stair
     if (Math.max(leftBottomCollision, rightBottomCollision) === 3 && keys[this.KEY_UP] && !this.isClimbing) {
@@ -297,7 +305,16 @@ Megaman.prototype.updatePosition = function (du) {
                            (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing);
     }
 
+
     if(this.isClimbing){
+        // snaps megaman to the center of the ladder he's climbing
+        if (right_top_bottom_collides === 2 || right_top_bottom_collides === 3) {
+            this.cx = Map.getXPosition(this.cx + spriteHalfWidth);
+        }
+        if (left_top_bottom_collides === 2 || left_top_bottom_collides === 3) {
+            this.cx = Map.getXPosition(this.cx - spriteHalfWidth);
+        }
+
         this.isFalling = false;
         this.velY = 0;
         var oldY = this.cy;

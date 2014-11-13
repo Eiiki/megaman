@@ -151,15 +151,18 @@ isColliding : function(x, y) {
 getYPosition : function(y) {
 	var yTileCoords = Math.floor(y / this.tileHeight);
 
-	// 38 er bara fasti sem virkar i.e. magic number
 	return yTileCoords * this.tileHeight + this.tileHeight - global.megamanHeight/2;
+},
+
+getXPosition : function(x) {
+	var xTileCoords = Math.floor(x / this.tileWidth);
+	return xTileCoords * this.tileWidth + this.tileWidth/2;
 },
 
 toggleTile : function(x, y) {
 	var tileCoords = this.calculateTileCoords(x, y);
 	this._tiles[tileCoords.y][tileCoords.x] = this._tiles[tileCoords.y][tileCoords.x] ? 0 : 1;
 },
-
 
 update : function(du) {
 

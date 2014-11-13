@@ -85,8 +85,25 @@ function processDiagnostics() {
 function renderSimulation(ctx) {
     ctx.save();
     var x = global.megamanX;
+    var y = global.megamanY;
+    var canvasHalfWidth = g_canvas.width/2;
+    var part = global.mapPart; 
     //ctx.scale(0.1,0.1);
-    global.camX = x > g_canvas.width/2 ? global.megamanX - g_canvas.width/2 : 0;
+    global.camX = x > g_canvas.width/2 ? x - canvasHalfWidth: 0;
+
+    // all the numbers here are just coordinates on the map image corresponding to
+    // the starts and ends of "map parts" which are used to keep track of the current
+    // heigt level of the map
+    if (x > g_canvas.width/2) global.camX = x - canvasHalfWidth;
+    if (x > 1792 && part === 1 || part === 2 || part === 3 && x < 1792) global.camX = 1792 - canvasHalfWidth;
+    if (part === 3 && x > 2817) global.camX = 2817 - canvasHalfWidth;
+    if (part === 2 && x < 2817 + canvasHalfWidth && x > 2817 - canvasHalfWidth) global.camX = 2817 - canvasHalfWidth;
+    if (part === 2 && x > 2817 && y > 3100) global.camX = x - canvasHalfWidth;
+    if (part === 2 && x > 3840 || part === 3 && x > 3200 || part === 4 || part === 5) global.camX = 3840 - canvasHalfWidth;
+    if (part === 6 && x < 3840) global.camX = 3840 - canvasHalfWidth;
+    if (part === 6 && x > 5377 || part === 7) global.camX = 5377 - canvasHalfWidth;
+    if (part === 8 && x < 5377) global.camX = 5377 - canvasHalfWidth;
+    if (part === 8 && x > 8448) global.camX = 8448 - canvasHalfWidth;
 
     ctx.translate(-global.camX, -global.camY);
     entityManager.render(ctx);
