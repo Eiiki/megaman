@@ -23,12 +23,13 @@ var NOMINAL_UPDATE_INTERVAL = 16.666;
 var SECS_TO_NOMINALS = 1000 / NOMINAL_UPDATE_INTERVAL;
 
 var global = {
-	megamanHeight : 52,
-	megamanWidth  : 32,
+	megamanHeight : 45,
+	megamanWidth  : 28,
 	megamanX : 0,
 	megamanY : 0,
 	camX : 0,
 	camY : 3392,
+	fellOffEdge: false,
 
 	mapHeight: 3392 - 7 * 480 // þetta er camY - sjöföld hæð canvasins
 };
