@@ -29,6 +29,7 @@ var global = {
 	megamanY : 0,
 	camX : 0,
 	camY : 3392,
+	isTransitioning :false,
 	fellOffEdge: false,
 	mapPart: 1,
 

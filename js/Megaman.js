@@ -41,6 +41,8 @@ Megaman.prototype.KEY_FIRE   = 'A'.charCodeAt(0);
 // Initial, inheritable, default values
 Megaman.prototype.launchVel = 2;
 Megaman.prototype.numSubSteps = 1;
+Megaman.prototype.nextCamY = global.camY;
+Megaman.prototype.transSpeed = 0.0001;
 
 Megaman.prototype.isFlipped = false;
 Megaman.prototype.isFalling = false;
@@ -169,12 +171,27 @@ Megaman.prototype.update = function (du) {
 
     // move camera when megaman transisiton between levels of the map
     if (this.cy < global.camY && global.camY > global.mapHeight){
-        global.camY -= 480;
+        this.nextCamY -= 480;
         global.mapPart++;
-    }
+    } 
     if (this.cy > global.camY + 480 && !global.fellOffEdge) {
-        global.camY += 480;
+        this.nextCamY += 480;
         global.mapPart--;
+    }
+    if(this.velY < -2){
+        this.transSpeed = 2;
+    } else {
+     this.transSpeed = 0.5;
+    }
+
+    if(global.camY > this.nextCamY){
+        global.camY -= 20*this.transSpeed;
+        global.isTransitioning = true;
+    } else if(global.camY < this.nextCamY){
+        global.camY += 20*this.transSpeed;
+        global.isTransitioning=true;
+    } else if(global.isTransitioning) {
+        global.isTransitioning = false;
     }
 
     // Handle firing
@@ -219,6 +236,7 @@ Megaman.prototype.computeThrustY = function() {
     if (keys[this.KEY_DOWN]) {
         directionY += this._climbSpeed;
     }
+    if(global.isTransitioning) return directionY/2;
     return directionY;
 }
 
@@ -283,7 +301,10 @@ Megaman.prototype.updatePosition = function (du) {
     // if megaman is climbing and jumps he will stop climbing
     if (keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
 
+    this.velY = global.isTransitioning ? this.velY/2 : this.velY;
     this.cy -= du * this.velY;
+
+
     //Check wether any of the corner edges of the megaman intersects with the stairs
     var rightTopCollision  = Map.isColliding(this.cx + spriteHalfWidth, this.cy - spriteHalfHeight),
         leftTopCollision = Map.isColliding(this.cx - spriteHalfWidth, this.cy - spriteHalfHeight);
@@ -320,7 +341,7 @@ Megaman.prototype.updatePosition = function (du) {
         var oldY = this.cy;
         this.cy += this.computeThrustY()*du;
         if(oldY !== this.cy){
-            g_climbingSpriteIdx++;
+            g_climbingSpriteIdx += du;
             g_climbingSpriteIdx = g_climbingSpriteIdx >= g_sprites.megaman_climbing.length*10 ? 0 : g_climbingSpriteIdx;
         }
     }else{
