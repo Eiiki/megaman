@@ -17,10 +17,6 @@ function Megaman(descr) {
     this.width = global.megamanWidth;
     this.height = global.megamanHeight;
 
-    this._climbSpeed = 2.5;
-    this._verticalSpeed = 4;
-    this._initialJumpSpeed = 12;
-
     this._isFiringBullet = false;
     this._hasJumped = false;
 
@@ -30,16 +26,18 @@ function Megaman(descr) {
 
 Megaman.prototype = new Entity();
 
-Megaman.prototype.KEY_UP  = 38;//'up'.charCodeAt(0);
-Megaman.prototype.KEY_DOWN = 40;//'down'.charCodeAt(0);
-Megaman.prototype.KEY_LEFT   = 37;//'left'.charCodeAt(0);
-Megaman.prototype.KEY_RIGHT  = 39;//'right'.charCodeAt(0);
+Megaman.prototype.KEY_UP    = 38;
+Megaman.prototype.KEY_DOWN  = 40;
+Megaman.prototype.KEY_LEFT  = 37;
+Megaman.prototype.KEY_RIGHT = 39;
 
-Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
-Megaman.prototype.KEY_FIRE   = 'A'.charCodeAt(0);
+Megaman.prototype.KEY_JUMP = 'S'.charCodeAt(0);
+Megaman.prototype.KEY_FIRE = 'A'.charCodeAt(0);
 
 // Initial, inheritable, default values
-Megaman.prototype.launchVel = 2;
+Megaman.prototype.verticalSpeed = 4;
+Megaman.prototype.initialJumpSpeed = 12;
+Megaman.prototype.climbSpeed = 2.5;
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
 
@@ -47,60 +45,11 @@ Megaman.prototype.isFlipped = false;
 Megaman.prototype.isFalling = false;
 Megaman.prototype.isClimbing = false;
 
-Megaman.prototype.jumpSound ="sounds/megaman_jump.wav";
+Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 
 Megaman.prototype.maxHealth = 100;
 
-/*
-var climbingSpriteIdx = 0;
-
-Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
-    var velX = this.velX,
-        velY = this.velY;
-    var framesPerSprite = 8;
-
-    //Mirror the sprite around its Y-axis
-    if(velX < 0)      this.isFlipped = true;
-    else if(velX > 0) this.isFlipped = false;
-
-    if(oldVelX === 0) g_runningSprite = 0;
-    if(this._isFiringBullet){
-        g_hasShotBullet = true;
-        g_bulletSpriteCnt++;
-    }
-
-    if(this.isClimbing) {
-        this.sprite = g_sprites.megaman_climbing[climbingSpriteIdx];
-    }else if(velY !== 0){
-        //Sprite is jumping, either firingor not
-        this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-        g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
-    }else{
-        if(velX === 0){
-            //Sprite is still, either firing or not
-            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-            g_sprites.megaman_fire.still : g_sprites.megaman_still;
-        }
-        else{
-            //Sprite is running, either firing or not
-            var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
-
-            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-            g_sprites.megaman_fire.running[runningSpriteIdx] : g_sprites.megaman_running[runningSpriteIdx];
-        }
-    }
-
-    if(g_runningSprite >= g_sprites.megaman_running.length * framesPerSprite) g_runningSprite = 0;
-
-    if(g_hasShotBullet && g_bulletSpriteCnt < 20){
-        g_bulletSpriteCnt++;
-    }else{
-        g_bulletSpriteCnt = 0;
-        g_hasShotBullet = false;
-    }
-};
-*/
 
 var g_runningSprite = 0;
 var g_bulletSpriteCnt = 0;
@@ -112,7 +61,7 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
         velY = this.velY;
     var framesPerSprite = 8;
 
-    //Mirror the sprite around its Y-axis
+    //Flip megaman, i.e. mirror the sprite around its Y-axis
     if(velX < 0)      this.isFlipped = true;
     else if(velX > 0) this.isFlipped = false;
 
@@ -126,20 +75,20 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
         this.sprite = g_sprites.megaman_climbing[Math.floor(g_climbingSpriteIdx/10)];
     }else if(velY !== 0){
         //Sprite is jumping, either firingor not
-        this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-        g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
+        this.sprite = g_hasShotBullet ? 
+            g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
     }else{
         if(velX === 0){
             //Sprite is still, either firing or not
-            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-            g_sprites.megaman_fire.still : g_sprites.megaman_still;
+            this.sprite = g_hasShotBullet ? 
+                g_sprites.megaman_fire.still : g_sprites.megaman_still;
         }
         else{
             //Sprite is running, either firing or not
             var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
 
-            this.sprite = g_hasShotBullet && g_hasShotBullet ? 
-            g_sprites.megaman_fire.running[runningSpriteIdx] : g_sprites.megaman_running[runningSpriteIdx];
+            this.sprite = g_hasShotBullet ? 
+                g_sprites.megaman_fire.running[runningSpriteIdx] : g_sprites.megaman_running[runningSpriteIdx];
         }
     }
 
@@ -147,7 +96,7 @@ Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
 
     if(g_hasShotBullet && g_bulletSpriteCnt < 20){
         g_bulletSpriteCnt++;
-    }else{
+    }else if(g_hasShotBullet && g_hasShotBullet){
         g_bulletSpriteCnt = 0;
         g_hasShotBullet = false;
     }
@@ -177,13 +126,13 @@ Megaman.prototype.update = function (du) {
         this.nextCamY += 480;
         global.mapPart--;
     }
-
+    
     if(global.camY > this.nextCamY){
-        global.camY -= 20;
+        global.camY -= global.transitionSpeed;
         global.isTransitioning = true;
     } else if(global.camY < this.nextCamY){
-        global.camY += 20;
-        global.isTransitioning=true;
+        global.camY += global.transitionSpeed;
+        global.isTransitioning = true;
     } else if(global.isTransitioning) {
         global.isTransitioning = false;
     }
@@ -204,19 +153,18 @@ Megaman.prototype.computeSubStep = function (du) {
     this.updatePosition(du);   
 };
 
-var NOMINAL_GRAVITY = 0.7;
 Megaman.prototype.computeGravity = function () {
-    return NOMINAL_GRAVITY;
+    return global.gravity;
 };
 
 Megaman.prototype.computeThrustX = function () {
     var directionX = 0;
 
     if (keys[this.KEY_RIGHT]) {
-        directionX += this._verticalSpeed;
+        directionX += this.verticalSpeed;
     }
     if (keys[this.KEY_LEFT]) {
-        directionX -= this._verticalSpeed;
+        directionX -= this.verticalSpeed;
     }
     return directionX;
 };
@@ -225,10 +173,10 @@ Megaman.prototype.computeThrustY = function() {
     var directionY = 0;
 
     if (keys[this.KEY_UP]) {
-        directionY -= this._climbSpeed;
+        directionY -= this.climbSpeed;
     }
     if (keys[this.KEY_DOWN]) {
-        directionY += this._climbSpeed;
+        directionY += this.climbSpeed;
     }
     if(global.isTransitioning) return directionY/2;
     return directionY;
@@ -242,8 +190,8 @@ Megaman.prototype.updatePosition = function (du) {
     // þarf að hreinsa upp collisionið og setja upp í sér class sem
     // megaman og vondir kallar sem collida við background erfa frá
     //    #ThirdWeekProblems 
-    var spriteHalfWidth  = global.megamanWidth/2,
-        spriteHalfHeight = global.megamanHeight/2;
+    var spriteHalfWidth  = this.width/2,
+        spriteHalfHeight = this.height/2;
     var oldVelX = this.velX,
         oldVelY = this.velY;
     var accelY = this.computeGravity();
@@ -278,7 +226,7 @@ Megaman.prototype.updatePosition = function (du) {
 
         if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
             //The character is on the ground and starts to jump
-            this.velY = this._initialJumpSpeed;
+            this.velY = this.initialJumpSpeed;
             this._hasJumped = true;
         }
         if(oldVelY !== 0){

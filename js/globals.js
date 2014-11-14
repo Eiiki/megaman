@@ -29,9 +29,10 @@ var global = {
 	megamanY : 0,
 	camX : 0,
 	camY : 3392,
-	isTransitioning :false,
-	fellOffEdge: false,
-	mapPart: 1,
-
-	mapHeight: 3392 - 7 * 480 // þetta er camY - sjöföld hæð canvasins
+	isTransitioning : false,
+	fellOffEdge : false,
+	mapPart : 1,
+	transitionSpeed : 20,
+	gravity : 0.7
 };
+global.mapHeight = global.camY - 7 * g_canvas.width;

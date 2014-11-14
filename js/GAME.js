@@ -16,7 +16,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 100,
+        cx : 1900,
         cy : 3520,
         velX : 0,
         velY : -0.5
@@ -88,7 +88,7 @@ function renderSimulation(ctx) {
     var y = global.megamanY;
     var canvasHalfWidth = g_canvas.width/2;
     var part = global.mapPart; 
-    //ctx.scale(0.1,0.1);
+
     global.camX = x > g_canvas.width/2 ? x - canvasHalfWidth: 0;
 
     // all the numbers here are just coordinates on the map image corresponding to
@@ -124,7 +124,6 @@ function requestPreloads() {
         megaman_sprite : "sprites/8bitmegaman.png",
         megaman_health : "sprites/megaman_health.png",
         bullet_sprite  : "sprites/bullet.png",
-        brick : "sprites/TileBrick.jpg",
         map: "sprites/MegaManIII-SnakeMan-clean.png"
     };
 
@@ -229,20 +228,16 @@ function preloadDone() {
         g_images.bullet_sprite
     );
 
-    g_sprites.brick = new Sprite(
-        g_images.brick
-    );
-
-    //g_sprites.bullet = new Sprite(g_images.ship);
-    //g_sprites.bullet.scale = 0.25;
-
     entityManager.init();
     createMegaman();
     audioManager.play("sounds/snake_man_intro.wav", 0.2, false); 
-    // start playing after the intro
+
     setTimeout(function() {
-        audioManager.play("sounds/snake_man.mp3", 0.2, true); // bg music
-    }, 3650); // snake_man_intro.wav is 3.5 secs. So the 3650 ms is a magic number to make it sound good (poor I know)
+        // setTimeout function is called 3.65 seconds after the code reaches it. That is the time
+        // the snake_man_intro.wav takes to finish playing. The additional .15 seconds are some sort
+        // of a magic that works
+        audioManager.play("sounds/snake_man.mp3", 0.2, true);
+    }, 3650);
 
     main.init();
 }
