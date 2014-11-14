@@ -42,7 +42,6 @@ Megaman.prototype.KEY_FIRE   = 'A'.charCodeAt(0);
 Megaman.prototype.launchVel = 2;
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
-Megaman.prototype.transSpeed = 0.0001;
 
 Megaman.prototype.isFlipped = false;
 Megaman.prototype.isFalling = false;
@@ -178,17 +177,12 @@ Megaman.prototype.update = function (du) {
         this.nextCamY += 480;
         global.mapPart--;
     }
-    if(this.velY < -2){
-        this.transSpeed = 2;
-    } else {
-     this.transSpeed = 0.5;
-    }
 
     if(global.camY > this.nextCamY){
-        global.camY -= 20*this.transSpeed;
+        global.camY -= 20;
         global.isTransitioning = true;
     } else if(global.camY < this.nextCamY){
-        global.camY += 20*this.transSpeed;
+        global.camY += 20;
         global.isTransitioning=true;
     } else if(global.isTransitioning) {
         global.isTransitioning = false;
