@@ -26,81 +26,101 @@ function Megaman(descr) {
 
 Megaman.prototype = new Entity();
 
+Megaman.prototype.maxHealth = 100;
+
+// Key values
 Megaman.prototype.KEY_UP    = 38;
 Megaman.prototype.KEY_DOWN  = 40;
 Megaman.prototype.KEY_LEFT  = 37;
 Megaman.prototype.KEY_RIGHT = 39;
+Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
+Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 
-Megaman.prototype.KEY_JUMP = 'S'.charCodeAt(0);
-Megaman.prototype.KEY_FIRE = 'A'.charCodeAt(0);
-
-// Initial, inheritable, default values
-Megaman.prototype.verticalSpeed = 4;
+// Velocity values
+Megaman.prototype.verticalSpeed    = 4;
 Megaman.prototype.initialJumpSpeed = 12;
-Megaman.prototype.climbSpeed = 2.5;
-Megaman.prototype.numSubSteps = 1;
-Megaman.prototype.nextCamY = global.camY;
+Megaman.prototype.climbSpeed       = 2.5;
 
+// Position values
 Megaman.prototype.isFlipped = false;
 Megaman.prototype.isFalling = false;
 Megaman.prototype.isClimbing = false;
 
+// Values for rendering
+Megaman.prototype.numSubSteps = 1;
+Megaman.prototype.nextCamY = global.camY;
+
+// Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 
-Megaman.prototype.maxHealth = 100;
+// Sprite indexes
+Megaman.prototype.spriteRenderer = {
+    running : {
+        renderTimes : 8,
+        idx : 0,
+        cnt : 0
+    },
+    bullet : {
+        renderTimes : 20,
+        idx : 0,
+        cnt : 0
+    },
+    climbing : {
+        renderTimes : 10,
+        idx : 0,
+        cnt : 0
+    }
+};
 
-
-var g_runningSprite = 0;
-var g_bulletSpriteCnt = 0;
-var g_hasShotBullet = false;
 var g_climbingSpriteIdx = 0;
 
 Megaman.prototype._updateSprite = function(oldVelX, oldVelY){
+    // the s_ variables represents the sprites for megaman
+    var s_running  = this.spriteRenderer.running,
+        s_bullet   = this.spriteRenderer.bullet,
+        s_climbing = this.spriteRenderer.climbing;
     var velX = this.velX,
         velY = this.velY;
-    var framesPerSprite = 8;
+    var hasShotBullet = this._isFiringBullet || s_bullet.cnt > 0;
 
     //Flip megaman, i.e. mirror the sprite around its Y-axis
     if(velX < 0)      this.isFlipped = true;
     else if(velX > 0) this.isFlipped = false;
 
-    if(oldVelX === 0) g_runningSprite = 0;
-    if(this._isFiringBullet){
-        g_hasShotBullet = true;
-        g_bulletSpriteCnt++;
-    }
-
     if(this.isClimbing) {
-        this.sprite = g_sprites.megaman_climbing[Math.floor(g_climbingSpriteIdx/10)];
+        this.sprite = g_sprites.megaman_climbing[Math.floor(g_climbingSpriteIdx / s_climbing.renderTimes)];
     }else if(velY !== 0){
         //Sprite is jumping, either firingor not
-        this.sprite = g_hasShotBullet ? 
+        this.sprite = hasShotBullet ? 
             g_sprites.megaman_fire.jumping : g_sprites.megaman_jump;
     }else{
         if(velX === 0){
             //Sprite is still, either firing or not
-            this.sprite = g_hasShotBullet ? 
+            this.sprite = hasShotBullet ? 
                 g_sprites.megaman_fire.still : g_sprites.megaman_still;
         }
         else{
             //Sprite is running, either firing or not
-            var runningSpriteIdx = Math.floor(g_runningSprite++ / framesPerSprite);
-
-            this.sprite = g_hasShotBullet ? 
-                g_sprites.megaman_fire.running[runningSpriteIdx] : g_sprites.megaman_running[runningSpriteIdx];
+            this.sprite = hasShotBullet ? 
+                g_sprites.megaman_fire.running[s_running.idx] : g_sprites.megaman_running[s_running.idx];
         }
     }
 
-    if(g_runningSprite >= g_sprites.megaman_running.length * framesPerSprite) g_runningSprite = 0;
-
-    if(g_hasShotBullet && g_bulletSpriteCnt < 20){
-        g_bulletSpriteCnt++;
-    }else if(g_hasShotBullet && g_hasShotBullet){
-        g_bulletSpriteCnt = 0;
-        g_hasShotBullet = false;
+    //Update sprite running
+    if(oldVelX === 0 || s_running.cnt >= g_sprites.megaman_running.length * s_running.renderTimes) {
+        s_running.idx = 0;
+        s_running.cnt = 0;
+    }else if(velX !== 0){
+        s_running.idx = Math.floor(s_running.cnt / s_running.renderTimes);
+        s_running.cnt++;
     }
 
+    //Update sprite bullet
+    if((hasShotBullet && s_bullet.cnt < s_bullet.renderTimes) || (!s_bullet.cnt && this._isFiringBullet)) 
+        s_bullet.cnt++;
+    else if(hasShotBullet) 
+        s_bullet.cnt = 0;
 };
 
 Megaman.prototype.update = function (du) {
@@ -126,7 +146,7 @@ Megaman.prototype.update = function (du) {
         this.nextCamY += 480;
         global.mapPart--;
     }
-    
+
     if(global.camY > this.nextCamY){
         global.camY -= global.transitionSpeed;
         global.isTransitioning = true;
