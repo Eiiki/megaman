@@ -143,6 +143,25 @@ calculateTileCoords : function(x, y) {
 	return { x : xTileCoords, y : yTileCoords };
 },
 
+//Returns a array of the tiles that the bounding box of a given object collides with
+cornerCollisions : function(x, y, w, h){
+	var rightTopCollision    = this.isColliding(x + w/2, y - h/2),
+        leftTopCollision     = this.isColliding(x - w/2, y - h/2);
+    var rightBottomCollision = this.isColliding(x + w/2, y + h/2),
+        leftBottomCollision  = this.isColliding(x - w/2, y + h/2);
+
+   	return [leftTopCollision, rightTopCollision, rightBottomCollision, leftBottomCollision];
+},
+
+collidesWithStair : function(lt, rt, rb, lb){
+	//leftTop, rightTop, rightBottom, leftBottom
+	var corners = [lt, rt, rb, lb];
+	for(var n in corners){
+		if(corners[n] === 2 || corners[n] === 3) return true;
+	}
+	return false;
+},
+
 isColliding : function(x, y) {
 	var tileCoords = this.calculateTileCoords(x, y);
 	return this._tiles[tileCoords.y][tileCoords.x];
@@ -150,7 +169,6 @@ isColliding : function(x, y) {
 
 getYPosition : function(y) {
 	var yTileCoords = Math.floor(y / this.tileHeight);
-
 	return yTileCoords * this.tileHeight + this.tileHeight - global.megamanHeight/2;
 },
 
