@@ -287,7 +287,6 @@ Megaman.prototype.updatePosition = function (du) {
     //
     this._computeVelocityY(du, oldVelY);
     this.cy -= du * this.velY;
-    if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     
     // if megaman is climbing and jumps he will stop climbing
     if(keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
@@ -335,6 +334,7 @@ Megaman.prototype.updatePosition = function (du) {
         }
     }
 
+    if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     global.megamanX = this.cx;
     global.megamanY = this.cy;
 
