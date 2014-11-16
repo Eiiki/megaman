@@ -56,8 +56,6 @@ unregister: function(entity) {
 },
 
 findEntityInRange: function(posX, posY, radius) {
-    //entityManager.deferredSetup();
-    
     var entities = entityManager._categories;
     var closest,
         closestPos = Number.POSITIVE_INFINITY,

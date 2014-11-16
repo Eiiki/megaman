@@ -171,7 +171,7 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
 Megaman.prototype.update = function (du) {
 
     spatialManager.unregister(this);
-    if(this._isDeadNow) return spatialManager.KILL_ME_NOW;
+    if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
     var oldX = this.cx,
         oldY = this.cy;
@@ -218,11 +218,6 @@ Megaman.prototype.update = function (du) {
     *************************************************************/
     this.canShootNow = keyUpKeys[this.KEY_FIRE];
     this.canJumpNow  = keyUpKeys[this.KEY_JUMP];
-
-    //call this for now to run the entityManager.deferredSetup over and over
-    if(!this.isColliding()){
-        spatialManager.register(this);
-    }
 };
 
 Megaman.prototype.computeSubStep = function (du) {

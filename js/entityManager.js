@@ -28,7 +28,7 @@ var entityManager = {
 // "PRIVATE" DATA
 
 _character  : [],
-_enemies   : [],
+_enemies    : [],
 _bullets    : [],
 _MAP        : [Map],
 
@@ -120,7 +120,6 @@ render: function(ctx) {
 
         for (var i = 0; i < aCategory.length; ++i) {
             aCategory[i].render(ctx);
-            
         }
         debugY += 10;
     }

@@ -40,6 +40,8 @@ Dada.prototype.isFalling  = false;
 // Values for rendering
 Dada.prototype.numSubSteps = 1;
 
+Dada.prototype.health = 1; // dies after one megaman hit
+
 // Sprite indexes
 Dada.prototype.spriteRenderer = {
     moving : {
@@ -96,7 +98,7 @@ Dada.prototype._computeVelocityY = function(du, oldVelY){
 Dada.prototype.update = function (du) {
 
     spatialManager.unregister(this);
-    if(this._isDeadNow) return spatialManager.KILL_ME_NOW;
+    if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
     var oldX = this.cx,
         oldY = this.cy;
@@ -108,7 +110,11 @@ Dada.prototype.update = function (du) {
         this.computeSubStep(dStep);
     }
 
+    // handle collisions and stuff
+    if (this.health <= 0) this.kill();
+
     spatialManager.register(this);
+
     //Update the sprite
     this._updateSprite(du, oldX, oldY);
 
@@ -123,12 +129,11 @@ Dada.prototype.update = function (du) {
     this.RIGHT = false;
     //this.LEFT = true;
     //this.SHORTJUMP = true;
-
-    //call this for now to run the entityManager.deferredSetup over and over
-    if(!this.isColliding()){
-        spatialManager.register(this);
-    }
 };
+
+Dada.prototype.takeBulletHit = function() {
+    this.health -= 1;
+}
 
 Dada.prototype.computeSubStep = function (du) {
     this.updatePosition(du);   
