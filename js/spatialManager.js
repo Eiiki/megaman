@@ -56,10 +56,8 @@ unregister: function(entity) {
 },
 
 findEntityInRange: function(posX, posY, radius) {
-
-    // TODO: YOUR STUFF HERE!
-    entityManager.deferredSetup();
-    /*
+    //entityManager.deferredSetup();
+    
     var entities = entityManager._categories;
     var closest,
         closestPos = Number.POSITIVE_INFINITY,
@@ -95,7 +93,7 @@ findEntityInRange: function(posX, posY, radius) {
     if( util.circlesCollides(posX, posY, radius, closest.cx, closest.cy, closest.getRadius()) ){
         return closest;
     }
-    */
+    
     return false;
 },
 

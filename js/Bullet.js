@@ -29,9 +29,10 @@ function Bullet(descr) {
 
 Bullet.prototype = new Entity();
 
+Bullet.prototype.creator = 'none'; // who fired me?
+
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.zappedSound = "sounds/enemy_takes_hit.wav";
-
 
 Bullet.prototype.update = function (du) {
 
@@ -49,16 +50,17 @@ Bullet.prototype.update = function (du) {
     }
 
     this.wrapPosition();
-    
-    // TODO? NO, ACTUALLY, I JUST DID THIS BIT FOR YOU! :-)
-    //
+
     // Handle collisions
-    //
+    // don't kill this bullet if the hotentity is the creator of the bullet
+    // also don't call the "takeBulletHit" function if you hit the creator
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
-        if (canTakeHit) canTakeHit.call(hitEntity);
-        return entityManager.KILL_ME_NOW;
+        var type = hitEntity.type;
+        if (canTakeHit && type !== this.creator) canTakeHit.call(hitEntity);
+
+        if (type !== this.creator) return entityManager.KILL_ME_NOW;
     }
     
     // TODO: YOUR STUFF HERE! --- (Re-)Register

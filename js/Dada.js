@@ -14,8 +14,8 @@ function Dada(descr) {
     
     // Set drawing scale
     this._scale = 0.6;
-    this.width = this.sprite.width;
-    this.height = this.sprite.height;
+    this.width = this.sprite.width * this._scale;
+    this.height = this.sprite.height * this._scale;
 };
 
 Dada.prototype = new Entity();
@@ -31,7 +31,7 @@ Dada.prototype.RIGHT = false;
 // Velocity values
 Dada.prototype.verticalSpeed    = 4;
 Dada.prototype.highJumpSpeed = 12;
-Dada.prototype.shortJumpSpeed = 3;
+Dada.prototype.shortJumpSpeed = 6;
 
 // Position values
 Dada.prototype.isFlipped  = false;
@@ -79,6 +79,8 @@ Dada.prototype._computeVelocityY = function(du, oldVelY){
     if(oldVelY === 0 && this.HIGHJUMP){
         //The character is on the ground and starts to jump
         this.velY = this.highJumpSpeed;
+    } else if (oldVelY === 0 && this.SHORTJUMP) {
+        this.velY = this.shortJumpSpeed;
     }
     if(oldVelY !== 0){
         if(util.almostEqual(oldVelY, 0)){
@@ -120,6 +122,7 @@ Dada.prototype.update = function (du) {
     this.LEFT = false;
     this.RIGHT = false;
     //this.LEFT = true;
+    //this.SHORTJUMP = true;
 
     //call this for now to run the entityManager.deferredSetup over and over
     if(!this.isColliding()){

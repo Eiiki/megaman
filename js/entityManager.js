@@ -32,8 +32,6 @@ _enemies   : [],
 _bullets    : [],
 _MAP        : [Map],
 
-_bShowRocks : true,
-
 // "PRIVATE" METHODS
 
 _forEachOf: function(aCategory, fn) {
@@ -60,12 +58,13 @@ init: function() {
     //this.generateMegaman();
 },
 
-fireBullet: function(cx, cy, velX, velY) {
+fireBullet: function(cx, cy, velX, velY, creator) {
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
-        velY : velY
+        velY : velY,
+        creator : creator
     }));
 },
 
@@ -118,9 +117,6 @@ render: function(ctx) {
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
-        /*if (!this._bShowRocks && 
-            aCategory == this._rocks)
-            continue;*/
 
         for (var i = 0; i < aCategory.length; ++i) {
             aCategory[i].render(ctx);

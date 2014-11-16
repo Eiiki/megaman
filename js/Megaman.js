@@ -26,8 +26,6 @@ function Megaman(descr) {
 
 Megaman.prototype = new Entity();
 
-Megaman.prototype.maxHealth = 100;
-
 // Key values
 Megaman.prototype.KEY_UP    = 38;
 Megaman.prototype.KEY_DOWN  = 40;
@@ -57,6 +55,9 @@ Megaman.prototype.nextCamY = global.camY;
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
+
+Megaman.prototype.maxHealth = 100;
+Megaman.prototype.type = 'megaman'; // used for firing bullet
 
 // Sprite indexes
 Megaman.prototype.spriteRenderer = {
@@ -352,11 +353,15 @@ Megaman.prototype.maybeFireBullet = function () {
             velX = this.isFlipped ? -10 : 10;
 
         entityManager.fireBullet(
-           this.cx, this.cy, velX, velY);
+           this.cx, this.cy, velX, velY, this.type);
         audioManager.play(this.fireSound);
 
         this._isFiringBullet = true;
     }
+};
+
+Megaman.prototype.takeBulletHit = function() {
+    // to be implemented
 };
 
 Megaman.prototype.getRadius = function () {
