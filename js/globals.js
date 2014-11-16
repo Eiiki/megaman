@@ -32,7 +32,7 @@ var global = {
 	isTransitioning : false,
 	fellOffEdge : false,
 	mapPart : 1,
-	transitionSpeed : 20,
+	transitionSpeed : 15,
 	gravity : 0.7
 };
 global.mapHeight = global.camY - 7 * g_canvas.width;

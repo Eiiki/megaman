@@ -184,8 +184,8 @@ function preloadDone() {
     g_sprites.megaman_fire = {
         still : new Sprite(
             g_images.megaman_sprite,
-            14,45,
-            31,24
+            4,45,
+            41,26
         ),
         running : [
             new Sprite(

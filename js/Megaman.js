@@ -90,8 +90,10 @@ Megaman.prototype._updateSprite = function (du, oldX, oldY){
     var hasShotBullet = this._isFiringBullet || s_bullet.cnt > 0;
 
     //Flip megaman, i.e. mirror the sprite around its Y-axis
-    if(velX < 0)      this.isFlipped = true;
-    else if(velX > 0) this.isFlipped = false;
+    if(!this.isClimbing){
+        if(velX < 0)      this.isFlipped = true;
+        else if(velX > 0) this.isFlipped = false;
+    }
 
     if(this.isClimbing) {
         this.sprite = g_sprites.megaman_climbing[s_climbing.idx];
@@ -136,53 +138,32 @@ Megaman.prototype._updateSprite = function (du, oldX, oldY){
     }
 };
 
-Megaman.prototype._updateClimbing = function(du){
-    //Check wether any of the corner edges of the megaman intersects with the stairs:
-    /*
-        * collisions[0] represents the value of the LEFT  TOP    tile that the megaman colides with -> ltColl
-        * collisions[1] represents the value of the RIGHT TOP    tile that the megaman colides with -> rtColl
-        * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
-        * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
-    */
-    var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
-    var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
+Megaman.prototype._computeVelocityY = function(du, oldVelY){
+    var accelY = this.computeGravity();
 
-    if (Math.max(lbColl, rbColl) === 3 && keys[this.KEY_UP] && !this.isClimbing) {
-        // this is only the case where he's standing on top of a stair and to make sure he can't "go up on it"
-        this.isClimbing = false;
-    } else {
-        this.isClimbing = (Map.collidesWithStair(ltColl, rtColl, rbColl, lbColl) && 
-                          (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing));
-    }
-
-    if(this.isClimbing){
-        // snaps megaman to the center of the ladder he's climbing
-        if (Map.collidesWithStair(rtColl, rbColl)) {
-            this.cx = Map.getXPosition(this.cx + this.width/2);
-        }
-        if (Map.collidesWithStair(ltColl, lbColl)) {
-            this.cx = Map.getXPosition(this.cx - this.width/2);
+    if(!this.isClimbing){
+        if(this.canJumpNow){
+            //So the megaman can jump low and high in the air
+            if (this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
+            this._hasJumped = false;
         }
 
-        this.isFalling = false;
-        this.velY = 0;
-        this.cy += this.computeThrustY() * du;
-    }else{
-        if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
-            //The megaman jumps up and collides its head with a tile
-            this.velY = -0.5;
+        if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
+            //The character is on the ground and starts to jump
+            this.velY = this.initialJumpSpeed;
+            this._hasJumped = true;
         }
-        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
-            //Check whether the megaman is colliding with the ground of the map
-            this.cy = Map.getYPosition(this.cy);
-            this.velY = 0;
-            this.isFalling = false;
-        }else if(!this.isFalling && this.velY <= 0){
-            //Starts falling down
-            this.velY = -0.5;
-            this.isFalling = true;
+        if(oldVelY !== 0){
+            if(util.almostEqual(oldVelY, 0)){
+                //The character starts falling towards the earth again
+                this.velY = -0.5;
+            }else{
+                //The character travels up or towards the ground
+                this.velY -= accelY * du;
+            }
         }
     }
+    this.velY = global.isTransitioning ? this.velY/2 : this.velY;
 };
 
 Megaman.prototype.update = function (du) {
@@ -201,20 +182,22 @@ Megaman.prototype.update = function (du) {
     }
 
     // move camera when megaman transisiton between levels of the map
-    if (this.cy < global.camY && global.camY > global.mapHeight){
-        this.nextCamY -= 480;
-        global.mapPart++;
-    } 
-    if (this.cy > global.camY + 480 && !global.fellOffEdge) {
-        this.nextCamY += 480;
-        global.mapPart--;
+    if(!global.isTransitioning){
+        if (this.cy < global.camY && global.camY > global.mapHeight){
+            this.nextCamY -= 480;
+            global.mapPart++;
+        } 
+        else if (this.cy > global.camY + 480 && !global.fellOffEdge) {
+            this.nextCamY += 480;
+            global.mapPart--;
+        }
     }
 
     if(global.camY > this.nextCamY){
-        global.camY -= global.transitionSpeed;
+        global.camY = Math.max(this.nextCamY, global.camY - global.transitionSpeed * du);
         global.isTransitioning = true;
     } else if(global.camY < this.nextCamY){
-        global.camY += global.transitionSpeed;
+        global.camY = Math.min(this.nextCamY, global.camY + global.transitionSpeed * du);
         global.isTransitioning = true;
     } else if(global.isTransitioning) {
         global.isTransitioning = false;
@@ -232,7 +215,7 @@ Megaman.prototype.update = function (du) {
       keycode keyCode has been pushed down and released again
     *************************************************************/
     this.canShootNow = keyUpKeys[this.KEY_FIRE];
-    this.canJumpNow  = keyUpKeys[this.KEY_JUMP];
+    this.canJumpNow  = keyUpKeys[this.KEY_JUMP] && this.velY === 0;
 
     //call this for now to run the entityManager.deferredSetup over and over
     if(!this.isColliding()){
@@ -274,7 +257,6 @@ Megaman.prototype.computeThrustY = function() {
 }
 
 Megaman.prototype.updatePosition = function (du) {
-    
     // setti inn fastar tölur hér þar sem breytilega stærðin var
     // að fokka upp collision detectioninu á óútreiknanlegan hátt
 
@@ -285,7 +267,6 @@ Megaman.prototype.updatePosition = function (du) {
         spriteHalfHeight = this.height/2;
     var oldVelX = this.velX,
         oldVelY = this.velY;
-    var accelY = this.computeGravity();
 
     //VERTICAL POSITION UODATE
     //
@@ -296,51 +277,69 @@ Megaman.prototype.updatePosition = function (du) {
     var xAdjusted = flipped * spriteHalfWidth + nextX;
     
     // tjékkar á láréttu collission við umhverfi
-    var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5),
-        bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5);
+    var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5), //afhverju + 5 ?
+        bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5); //afhverju - 5 ?
     if (topXAdjusted !== 1 && bottomXAdjusted !== 1){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
     //HORIZONTAL POSITION UPDATE
     //
-    if(!this.isClimbing){
-        if(this.canJumpNow){
-            //So the megaman can jump low and high in the air
-            if (this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
-            this._hasJumped = false;
-        }
-
-        if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
-            //The character is on the ground and starts to jump
-            this.velY = this.initialJumpSpeed;
-            this._hasJumped = true;
-        }
-        if(oldVelY !== 0){
-            if(util.almostEqual(oldVelY, 0)){
-                //The character starts falling towards the earth again
-                this.velY = -0.5;
-            }else{
-                //The character travels up or towards the ground
-                this.velY -= accelY * du;
-            }
-        }
-    }
+    this._computeVelocityY(du, oldVelY);
+    this.cy -= du * this.velY;
+    if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     
     // if megaman is climbing and jumps he will stop climbing
-    if (keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
+    if(keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
 
-    this.velY = global.isTransitioning ? this.velY/2 : this.velY;
-    this.cy -= du * this.velY;
+    /*
+        * collisions[0] represents the value of the LEFT  TOP    tile that the megaman colides with -> ltColl
+        * collisions[1] represents the value of the RIGHT TOP    tile that the megaman colides with -> rtColl
+        * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
+        * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
+    */
+    var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
+    var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
 
-    this._updateClimbing(du);
-    if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
+    var wasClimbing = this.isClimbing;
+    this.isClimbing = !(Math.max(lbColl, rbColl) === 3 && keys[this.KEY_UP] && !this.isClimbing) && 
+                        (Map.collidesWithStair(ltColl, rtColl, rbColl, lbColl) && 
+                        (keys[this.KEY_UP] || keys[this.KEY_DOWN] || this.isClimbing));
+
+    if(this.isClimbing){
+        // snaps megaman to the center of the ladder he's climbing
+        if (Map.collidesWithStair(rtColl, rbColl)) {
+            this.cx = Map.getXPosition(this.cx + this.width/2);
+        }
+        if (Map.collidesWithStair(ltColl, lbColl)) {
+            this.cx = Map.getXPosition(this.cx - this.width/2);
+        }
+
+        this.isFalling = false;
+        this.velY = 0;
+        this.cy += this.computeThrustY() * du;
+    }else{
+        if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
+            //The megaman jumps up and collides its head with a tile
+            this.velY = -0.5;
+        }
+        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
+            //Check whether the megaman is colliding with the ground of the map
+            this.cy = Map.getYPosition(this.cy);
+            this.velY = 0;
+            this.isFalling = false;
+        }else if(!this.isFalling && this.velY <= 0){
+            //Starts falling down
+            this.velY = wasClimbing ? 0 : -0.5;
+            this.isFalling = wasClimbing ? false : true;
+        }
+    }
 
     global.megamanX = this.cx;
     global.megamanY = this.cy;
 
     // check if the camera translation system should follow megaman or not
-    if (Map.isColliding(this.cx, this.cy) === null) global.fellOffEdge = true;
+    if(Map.isColliding(this.cx, this.cy) === null) global.fellOffEdge = true;
 };
 
 //Fires one bullet after each keypress.
