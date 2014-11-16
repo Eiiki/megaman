@@ -28,6 +28,7 @@ var entityManager = {
 // "PRIVATE" DATA
 
 _character  : [],
+_enemies   : [],
 _bullets    : [],
 _MAP        : [Map],
 
@@ -52,7 +53,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._MAP, this._bullets, this._character];
+    this._categories = [this._MAP, this._bullets, this._character, this._enemies];
 },
 
 init: function() {
@@ -70,6 +71,12 @@ fireBullet: function(cx, cy, velX, velY) {
 
 generateMegaman : function(descr) {
     this._character.push(new Megaman(descr));
+},
+
+generateEnemy : function(type, descr) {
+    if (type === 'dada') this._enemies.push(new Dada(descr));
+
+    console.log("generated enemy"); 
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

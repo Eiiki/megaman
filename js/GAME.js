@@ -16,7 +16,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 1900,
+        cx : 200,
         cy : 3520,
         velX : 0,
         velY : -0.5
@@ -124,7 +124,9 @@ function requestPreloads() {
         megaman_sprite : "sprites/8bitmegaman.png",
         megaman_health : "sprites/megaman_health.png",
         bullet_sprite  : "sprites/bullet.png",
-        map: "sprites/MegaManIII-SnakeMan-clean.png"
+        map: "sprites/MegaManIII-SnakeMan-clean.png",
+        // AI
+        dada : "sprites/dada.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -216,6 +218,32 @@ function preloadDone() {
         )
     };
 
+    // ==========
+    // AI sprites
+    // ==========
+    g_sprites.dada_moving = [
+        new Sprite(
+            g_images.dada,
+            0, 0,
+            90, 92
+        ),
+        new Sprite(
+            g_images.dada,
+            90, 0,
+            90, 92
+        ),
+        new Sprite(
+            g_images.dada,
+            180, 0,
+            90, 92
+        ),
+        new Sprite(
+            g_images.dada,
+            270, 0,
+            90, 92
+        )
+    ];
+
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
     );
@@ -238,6 +266,13 @@ function preloadDone() {
         // of a magic that works
         audioManager.play("sounds/snake_man.mp3", 0.2, true);
     }, 3650);
+
+    entityManager.generateEnemy('dada', {
+        cx : 400,
+        cy : 3520,
+        velX : 0,
+        velY : -0.5
+    });
 
     main.init();
 }

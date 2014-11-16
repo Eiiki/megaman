@@ -325,7 +325,7 @@ Megaman.prototype.updatePosition = function (du) {
         }
         if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
             //Check whether the megaman is colliding with the ground of the map
-            this.cy = Map.getYPosition(this.cy);
+            this.cy = Map.getYPosition(this.cy, this.height);
             this.velY = 0;
             this.isFalling = false;
         }else if(!this.isFalling && this.velY <= 0){

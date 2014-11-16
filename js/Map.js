@@ -167,9 +167,9 @@ isColliding : function(x, y) {
 	return this._tiles[tileCoords.y][tileCoords.x];
 },
 
-getYPosition : function(y) {
+getYPosition : function(y, height) {
 	var yTileCoords = Math.floor(y / this.tileHeight);
-	return yTileCoords * this.tileHeight + this.tileHeight - global.megamanHeight/2;
+	return yTileCoords * this.tileHeight + this.tileHeight - height/2;
 },
 
 getXPosition : function(x) {
