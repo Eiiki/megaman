@@ -127,8 +127,8 @@ Dada.prototype.update = function (du) {
     this.SHORTJUMP = false;
     this.LEFT = false;
     this.RIGHT = false;
-    //this.LEFT = true;
-    //this.SHORTJUMP = true;
+    this.LEFT = true;
+    this.SHORTJUMP = true;
 };
 
 Dada.prototype.takeBulletHit = function() {

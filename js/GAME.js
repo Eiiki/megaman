@@ -225,22 +225,22 @@ function preloadDone() {
         new Sprite(
             g_images.dada,
             0, 0,
-            90, 92
+            85, 92
         ),
         new Sprite(
             g_images.dada,
             90, 0,
-            90, 92
+            85, 92
         ),
         new Sprite(
             g_images.dada,
-            180, 0,
-            90, 92
+            175, 0,
+            85, 92
         ),
         new Sprite(
             g_images.dada,
-            270, 0,
-            90, 92
+            265, 0,
+            85, 92
         )
     ];
 
