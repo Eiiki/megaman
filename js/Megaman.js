@@ -145,7 +145,8 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
         if(this.canJumpNow){
             //So the megaman can jump low and high in the air
             if (this._hasJumped && this.velY > 0) this.velY -= 0.6*this.velY;
-            this._hasJumped = false;
+            //can't jump again unless he have landed on the ground
+            if(this.velY === 0) this._hasJumped = false;
         }
 
         if(oldVelY === 0 && keys[this.KEY_JUMP] && !this._hasJumped){
@@ -215,7 +216,7 @@ Megaman.prototype.update = function (du) {
       keycode keyCode has been pushed down and released again
     *************************************************************/
     this.canShootNow = keyUpKeys[this.KEY_FIRE];
-    this.canJumpNow  = keyUpKeys[this.KEY_JUMP] && this.velY === 0;
+    this.canJumpNow  = keyUpKeys[this.KEY_JUMP];
 
     //call this for now to run the entityManager.deferredSetup over and over
     if(!this.isColliding()){
