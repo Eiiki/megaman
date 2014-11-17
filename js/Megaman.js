@@ -288,10 +288,31 @@ Megaman.prototype.updatePosition = function (du) {
     var oldVelX = this.velX,
         oldVelY = this.velY;
 
-    //VERTICAL POSITION UODATE
+    //HORIZONTAL POSITION UODATE
     //
     this.velX = this.computeThrustX() * du;
     var nextX = this.isClimbing ? this.cx : this.cx + this.velX;
+
+    // handle collision with entities in game and stuff
+    // he goes backwards a bit on collision
+    if (this.isInvuln) {
+        this._invulnTimer -= du;
+        // if we're invulnerable and got more than half of that time left
+        // move us backwards during
+        if (this._invulnTimer > this.invulnDuration / 2) {
+            nextX -= this.isFlipped ? -this.moveBackwardsSpeed * du : this.moveBackwardsSpeed * du;
+        }
+    }
+    var hitEntity = this.isColliding();
+    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
+        // COLLISION
+        this._health -= 5; // needs adjusting
+        this.isInvuln = true;
+    }
+    if (this._invulnTimer <= 0) {
+        this._invulnTimer = this.invulnDuration;
+        this.isInvuln = false;
+    }
     
     var flipped = this.isFlipped ? -1 : 1;
     var xAdjusted = flipped * spriteHalfWidth + nextX;
@@ -303,7 +324,7 @@ Megaman.prototype.updatePosition = function (du) {
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
-    //HORIZONTAL POSITION UPDATE
+    //VERTICAL POSITION UPDATE
     //
     this._computeVelocityY(du, oldVelY);
     this.cy -= du * this.velY;
@@ -352,27 +373,6 @@ Megaman.prototype.updatePosition = function (du) {
             this.velY = wasClimbing ? 0 : -0.5;
             this.isFalling = wasClimbing ? false : true;
         }
-    }
-
-    // handle collision with entities in game and stuff
-    // he goes backwards a bit on collision
-    if (this.isInvuln) {
-        this._invulnTimer -= du;
-        // if were invulnerable and got more than half of that time left
-        // move us backwards during
-        if (this._invulnTimer > this.invulnDuration / 2) {
-            this.cx -= this.isFlipped ? -this.moveBackwardsSpeed * du : this.moveBackwardsSpeed * du;
-        }
-    }
-    var hitEntity = this.isColliding();
-    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
-        // COLLISION
-        this._health -= 5; // needs adjusting
-        this.isInvuln = true;
-    }
-    if (this._invulnTimer <= 0) {
-        this._invulnTimer = this.invulnDuration;
-        this.isInvuln = false;
     }
 
     if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
