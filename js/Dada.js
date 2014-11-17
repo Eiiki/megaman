@@ -120,13 +120,13 @@ Dada.prototype.update = function (du) {
 
     // two short jumps and one high jump repeated
     if (this.timeSinceJump <= 0 &&
-        !this.isFalling && 
+        this.velY === 0 && 
         (this.jumpCnt >= 0 && this.jumpCnt <= 1)) {
         this.SHORTJUMP = true;
         this.jumpCnt++;
         this.timeSinceJump = this.minJumpTime; // reset
     } else if (this.timeSinceJump <= 0 && 
-                !this.isFalling &&
+                this.velY === 0 &&
                (this.jumpCnt === 2)) {
         this.HIGHJUMP = true;
         this.jumpCnt = 0;
