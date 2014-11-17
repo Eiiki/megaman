@@ -146,6 +146,16 @@ function preloadDone() {
         265,4,
         26,30
     );
+    g_sprites.megaman_invulnerable = new Sprite(
+        g_images.megaman_sprite,
+        280, 45,
+        30, 30
+    );
+    g_sprites.megaman_explosion = new Sprite(
+        g_images.megaman_sprite,
+        272, 275,
+        50, 55
+    );
     g_sprites.megaman_running = [
         new Sprite(
             g_images.megaman_sprite,

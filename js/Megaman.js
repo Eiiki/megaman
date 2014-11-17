@@ -24,6 +24,7 @@ function Megaman(descr) {
     this._health = this.maxHealth / 2; //this.maxHealth
 
     this._invulnTimer = this.invulnDuration;
+    g_sprites.megaman_explosion.scale = 2.2;
 };
 
 Megaman.prototype = new Entity();
@@ -37,9 +38,10 @@ Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
 Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 
 // Velocity values
-Megaman.prototype.verticalSpeed    = 4;
-Megaman.prototype.initialJumpSpeed = 12;
-Megaman.prototype.climbSpeed       = 2.5;
+Megaman.prototype.verticalSpeed      = 4;
+Megaman.prototype.initialJumpSpeed   = 12;
+Megaman.prototype.climbSpeed         = 2.5;
+Megaman.prototype.moveBackwardsSpeed = 1.5; 
 
 // Position values
 Megaman.prototype.isFlipped  = false;
@@ -62,7 +64,7 @@ Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 Megaman.prototype.maxHealth = 100;
 Megaman.prototype.type = 'megaman'; // used for firing bullet
 Megaman.prototype.isInvuln = false; // invulnerable
-Megaman.prototype.invulnDuration = 1.5 * SECS_TO_NOMINALS;
+Megaman.prototype.invulnDuration = 1.0 * SECS_TO_NOMINALS;
 
 // Sprite indexes
 Megaman.prototype.spriteRenderer = {
@@ -142,6 +144,11 @@ Megaman.prototype._updateSprite = function (du, oldX, oldY){
         s_climbing.cnt += Math.round(du) || 1;
         s_climbing.cnt = s_climbing.cnt >= g_sprites.megaman_climbing.length * 10 ? 0 : s_climbing.cnt;
     }
+
+    // for part of the update invulnerable sprite, see render
+    if (this.isInvuln && this._invulnTimer > this.invulnDuration / 2) {
+        this.sprite = g_sprites.megaman_invulnerable;
+    }
 };
 
 Megaman.prototype._computeVelocityY = function(du, oldVelY){
@@ -180,6 +187,16 @@ Megaman.prototype.update = function (du) {
 
     var oldX = this.cx,
         oldY = this.cy;
+
+    // hopefully disable controls if we are in a collision with an enemy (the first half)
+    if (this._invulnTimer < this.invulnDuration && this._invulnTimer > this.invulnDuration / 2) {
+        keys[this.KEY_UP] = false;
+        keys[this.KEY_DOWN] = false;
+        keys[this.KEY_LEFT] = false;
+        keys[this.KEY_RIGHT] = false;
+        keys[this.KEY_JUMP] = false;
+        keys[this.KEY_FIRE] = false;
+    }
 
     // Perform movement substeps
     var steps = this.numSubSteps;
@@ -338,17 +355,19 @@ Megaman.prototype.updatePosition = function (du) {
     }
 
     // handle collision with entities in game and stuff
-    // if he's in air, he goes backwards a bit
-    // otherwise he just stays put.
-    if (this.isInvuln) this._invulnTimer -= du;
+    // he goes backwards a bit on collision
+    if (this.isInvuln) {
+        this._invulnTimer -= du;
+        // if were invulnerable and got more than half of that time left
+        // move us backwards during
+        if (this._invulnTimer > this.invulnDuration / 2) {
+            this.cx -= this.isFlipped ? -this.moveBackwardsSpeed * du : this.moveBackwardsSpeed * du;
+        }
+    }
     if (this.isColliding() && !this.isInvuln) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
-        if (this.velY !== 0) {
-            // in air, move backwards
-            this.cx -= this.isFlipped ? -this.width * 3 : this.width * 3; // r sum value
-        }
     }
     if (this._invulnTimer <= 0) {
         this._invulnTimer = this.invulnDuration;
@@ -396,9 +415,37 @@ Megaman.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     this.sprite.scale = this._scale;
 
-    this.sprite.drawWrappedCentredAt(
-	   ctx, this.cx, this.cy, this.isFlipped
-    );
+    // draw explosion if an enemy collides with us
+    // alternate every x second
+    // this can perhaps be simplified some... but whatever, it works! :D
+    if (this.isInvuln) {
+        if (this._invulnTimer < this.invulnDuration/2 && 
+            Math.floor((this._invulnTimer * 10)) % 10 == 0) {
+            // yes a little hack.. whatever. After half the invuln duration
+            // start just making megaman sprite blink instead of the explosion
+            // normal sprite drawing
+            this.sprite.drawWrappedCentredAt(
+               ctx, this.cx, this.cy, this.isFlipped
+            );
+        } else if (Math.floor((this._invulnTimer * 10)) % 10 == 0) {
+            // normal sprite drawing
+            this.sprite.drawWrappedCentredAt(
+               ctx, this.cx, this.cy, this.isFlipped
+            );
+            // explosion
+            var oldAlpha = ctx.globalAlpha;
+            ctx.globalAlpha = 0.7;
+            g_sprites.megaman_explosion.drawWrappedCentredAt(
+                ctx, this.cx, this.cy, false
+            );
+            ctx.globalAlpha = oldAlpha; 
+        }
+    } else {
+        // normal sprite drawing
+        this.sprite.drawWrappedCentredAt(
+           ctx, this.cx, this.cy, this.isFlipped
+        );
+    }
     this.sprite.scale = origScale;
 
     this.drawHealth(ctx);
