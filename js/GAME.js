@@ -259,16 +259,17 @@ function preloadDone() {
     entityManager.init();
     createMegaman();
 
+    // delay both background songs to allow them a bit of time to load to avoid
+    // them not playing
     var delay = 500;
     setTimeout(function() {
         audioManager.play("sounds/snake_man_intro.wav", 0.2, false);
     }, delay); 
     setTimeout(function() {
-        // setTimeout function is called 3.55 seconds after the code reaches it. That is the time
-        // the snake_man_intro.wav takes to finish playing. The additional .05 seconds are some sort
-        // of a magic that works
+        // setTimeout function is called 3.50 seconds after the code reaches it. That is the time
+        // the snake_man_intro.wav takes to finish playing. 
         audioManager.play("sounds/snake_man.mp3", 0.2, true);
-    }, 3550 + delay);
+    }, 3500 + delay);
 
     entityManager.generateEnemy('dada', {
         cx : 400,
