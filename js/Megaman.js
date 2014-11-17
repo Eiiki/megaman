@@ -230,7 +230,7 @@ Megaman.prototype.update = function (du) {
     // Handle firing
     this.maybeFireBullet();
 
-    if (!this.isInvuln) spatialManager.register(this);
+    spatialManager.register(this);
     
     //Update the sprite
     this._updateSprite(du, oldX, oldY);
@@ -420,15 +420,21 @@ Megaman.prototype.render = function (ctx) {
     // alternate every x second
     // this can perhaps be simplified some... but whatever, it works! :D
     if (this.isInvuln) {
-        if (this._invulnTimer < this.invulnDuration/2 && 
-            Math.floor((this._invulnTimer * 10)) % 10 == 0) {
+        // blink controlles the rate of alternating sprites here
+        // yes... probably couldve variablized the number 8 here but damn it!
+        var blink = this._invulnTimer < this.invulnDuration && this._invulnTimer > this.invulnDuration * 7 / 8 ||
+                    this._invulnTimer < this.invulnDuration * 6 / 8 && this._invulnTimer > this.invulnDuration * 5 / 8 ||
+                    this._invulnTimer < this.invulnDuration * 4 / 8 && this._invulnTimer > this.invulnDuration * 3 / 8 ||
+                    this._invulnTimer < this.invulnDuration * 2 / 8 && this._invulnTimer > this.invulnDuration * 1 / 8;
+
+        if (this._invulnTimer < this.invulnDuration/2 && blink) {
             // yes a little hack.. whatever. After half the invuln duration
             // start just making megaman sprite blink instead of the explosion
             // normal sprite drawing
             this.sprite.drawWrappedCentredAt(
                ctx, this.cx, this.cy, this.isFlipped
             );
-        } else if (Math.floor((this._invulnTimer * 10)) % 10 == 0) {
+        } else if (blink) {
             // normal sprite drawing
             this.sprite.drawWrappedCentredAt(
                ctx, this.cx, this.cy, this.isFlipped
