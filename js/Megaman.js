@@ -22,6 +22,8 @@ function Megaman(descr) {
 
     // just for display purposes start with half health for now ONLY 
     this._health = this.maxHealth / 2; //this.maxHealth
+
+    this._invulnTimer = this.invulnDuration;
 };
 
 Megaman.prototype = new Entity();
@@ -56,8 +58,11 @@ Megaman.prototype.nextCamY = global.camY;
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 
+// misc
 Megaman.prototype.maxHealth = 100;
 Megaman.prototype.type = 'megaman'; // used for firing bullet
+Megaman.prototype.isInvuln = false; // invulnerable
+Megaman.prototype.invulnDuration = 1.5 * SECS_TO_NOMINALS;
 
 // Sprite indexes
 Megaman.prototype.spriteRenderer = {
@@ -208,7 +213,8 @@ Megaman.prototype.update = function (du) {
     // Handle firing
     this.maybeFireBullet();
 
-    spatialManager.register(this);
+    if (!this.isInvuln) spatialManager.register(this);
+    
     //Update the sprite
     this._updateSprite(du, oldX, oldY);
 
@@ -329,6 +335,25 @@ Megaman.prototype.updatePosition = function (du) {
             this.velY = wasClimbing ? 0 : -0.5;
             this.isFalling = wasClimbing ? false : true;
         }
+    }
+
+    // handle collision with entities in game and stuff
+    // if he's in air, he goes backwards a bit
+    // otherwise he just stays put.
+    if (this.isInvuln) this._invulnTimer -= du;
+    if (this.isColliding() && !this.isInvuln) {
+        // COLLISION
+        this._health -= 5; // needs adjusting
+        this.isInvuln = true;
+        console.log("collision!!");
+        if (this.velY !== 0) {
+            // in air, move backwards
+            this.cx -= this.isFlipped ? -this.width * 3 : this.width * 3; // r sum value
+        }
+    }
+    if (this._invulnTimer <= 0) {
+        this._invulnTimer = this.invulnDuration;
+        this.isInvuln = false;
     }
 
     if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
