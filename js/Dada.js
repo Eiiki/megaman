@@ -30,10 +30,10 @@ Dada.prototype.HIGHJUMP = false;
 Dada.prototype.LEFT = false;
 Dada.prototype.RIGHT = false;
 Dada.prototype.jumpCnt = 0;
-Dada.prototype.minJumpTime = 0.5 * SECS_TO_NOMINALS;
+Dada.prototype.minJumpTime = 0.1 * SECS_TO_NOMINALS;
 
 // Velocity values
-Dada.prototype.verticalSpeed  = 4;
+Dada.prototype.verticalSpeed  = 3;
 Dada.prototype.highJumpSpeed  = 15;
 Dada.prototype.shortJumpSpeed = 6;
 
@@ -116,7 +116,7 @@ Dada.prototype.update = function (du) {
 
     // update time
     this.timeSinceJump -= du;
-    console.log("time since jump: " + this.timeSinceJump); 
+    //console.log("time since jump: " + this.timeSinceJump); 
 
     // two short jumps and one high jump repeated
     if (this.timeSinceJump <= 0 &&
