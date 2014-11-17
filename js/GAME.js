@@ -264,11 +264,11 @@ function preloadDone() {
         audioManager.play("sounds/snake_man_intro.wav", 0.2, false);
     }, delay); 
     setTimeout(function() {
-        // setTimeout function is called 3.65 seconds after the code reaches it. That is the time
-        // the snake_man_intro.wav takes to finish playing. The additional .15 seconds are some sort
+        // setTimeout function is called 3.55 seconds after the code reaches it. That is the time
+        // the snake_man_intro.wav takes to finish playing. The additional .05 seconds are some sort
         // of a magic that works
         audioManager.play("sounds/snake_man.mp3", 0.2, true);
-    }, 3650 + delay);
+    }, 3550 + delay);
 
     entityManager.generateEnemy('dada', {
         cx : 400,
