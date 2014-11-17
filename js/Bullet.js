@@ -52,15 +52,19 @@ Bullet.prototype.update = function (du) {
     this.wrapPosition();
 
     // Handle collisions
-    // don't kill this bullet if the hotentity is the creator of the bullet
+    // don't kill this bullet if the hit entity is the creator of the bullet
     // also don't call the "takeBulletHit" function if you hit the creator
+
+    // plus all enemies hurt megaman and not each other
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         var type = hitEntity.type;
-        if (canTakeHit && type !== this.creator) canTakeHit.call(hitEntity);
+        if (canTakeHit && ((this.creator === 'megaman' && type !== 'megaman') ||
+            (this.creator !== 'megaman' && type === 'megaman'))) canTakeHit.call(hitEntity);
 
-        if (type !== this.creator) return entityManager.KILL_ME_NOW;
+        if ((this.creator === 'megaman' && type !== 'megaman') ||
+            (this.creator !== 'megaman' && type === 'megaman')) return entityManager.KILL_ME_NOW;
     }
     
     // TODO: YOUR STUFF HERE! --- (Re-)Register
