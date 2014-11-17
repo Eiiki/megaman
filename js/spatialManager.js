@@ -88,7 +88,7 @@ findEntityInRange: function(posX, posY, radius) {
         }
     }
 
-    if( util.circlesCollides(posX, posY, radius, closest.cx, closest.cy, closest.getRadius()) ){
+    if( closest && util.circlesCollides(posX, posY, radius, closest.cx, closest.cy, closest.getRadius()) ){
         return closest;
     }
     
