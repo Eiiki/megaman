@@ -20,7 +20,7 @@ function Dada(descr) {
     this.timeSinceJump = this.minJumpTime; // counter
 };
 
-Dada.prototype = new Entity();
+Dada.prototype = new Enemy();
 
 Dada.prototype.type = 'dada';
 
@@ -29,7 +29,7 @@ Dada.prototype.SHORTJUMP = false;
 Dada.prototype.HIGHJUMP = false;
 Dada.prototype.LEFT = false;
 Dada.prototype.RIGHT = false;
-Dada.prototype.jumpCnt = 0;
+Dada.prototype.jumpCnt = 2;
 Dada.prototype.minJumpTime = 0.1 * SECS_TO_NOMINALS;
 
 // Velocity values
@@ -40,9 +40,6 @@ Dada.prototype.shortJumpSpeed = 6;
 // Position values
 Dada.prototype.isFlipped  = false;
 Dada.prototype.isFalling  = false;
-
-// Values for rendering
-Dada.prototype.numSubSteps = 1;
 
 Dada.prototype.health = 1; // dies after one megaman hit
 
@@ -104,7 +101,6 @@ Dada.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-
     // update time
     this.timeSinceJump -= du;
 
@@ -133,13 +129,11 @@ Dada.prototype.update = function (du) {
 *                          A. I.                            *
 *************************************************************/
 Dada.prototype.decideActions = function(du) {
-// reset all our previous decisions
+    // reset all our previous decisions
     this.SHORTJUMP = false;
     this.HIGHJUMP = false;
     this.LEFT = this.LEFT; // remember direction, only change on high jump
     this.RIGHT = this.RIGHT;
-
-    //console.log("time since jump: " + this.timeSinceJump); 
 
     // two short jumps and one high jump repeated
     if (this.timeSinceJump <= 0 &&
@@ -165,18 +159,6 @@ Dada.prototype.decideActions = function(du) {
     }
 };
 
-Dada.prototype.takeBulletHit = function() {
-    this.health -= 1;
-};
-
-Dada.prototype.computeSubStep = function (du) {
-    this.updatePosition(du);   
-};
-
-Dada.prototype.computeGravity = function () {
-    return global.gravity;
-};
-
 Dada.prototype.computeThrustX = function () {
     var directionX = 0;
 
@@ -189,78 +171,3 @@ Dada.prototype.computeThrustX = function () {
     return directionX;
 };
 
-Dada.prototype.updatePosition = function (du) {
-    // setti inn fastar tölur hér þar sem breytilega stærðin var
-    // að fokka upp collision detectioninu á óútreiknanlegan hátt
-
-    // þarf að hreinsa upp collisionið og setja upp í sér class sem
-    // megaman og vondir kallar sem collida við background erfa frá
-    //    #ThirdWeekProblems 
-    var spriteHalfWidth  = this.width/2,
-        spriteHalfHeight = this.height/2;
-    var oldVelX = this.velX,
-        oldVelY = this.velY;
-
-    //VERTICAL POSITION UODATE
-    //
-    this.velX = this.computeThrustX() * du;
-    var nextX = this.cx + this.velX;
-    
-    var flipped = this.isFlipped ? -1 : 1;
-    var xAdjusted = flipped * spriteHalfWidth + nextX;
-    
-    // tjékkar á láréttu collission við umhverfi
-    var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5), //afhverju + 5 ?
-        bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5); //afhverju - 5 ?
-    if (topXAdjusted !== 1 && bottomXAdjusted !== 1){
-        this.cx = Math.max(spriteHalfWidth, nextX);
-    }
-
-    //HORIZONTAL POSITION UPDATE
-    //
-    this._computeVelocityY(du, oldVelY);
-    this.cy -= du * this.velY;
-
-    /*
-        * collisions[0] represents the value of the LEFT  TOP    tile that the megaman colides with -> ltColl
-        * collisions[1] represents the value of the RIGHT TOP    tile that the megaman colides with -> rtColl
-        * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
-        * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
-    */
-    var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
-    var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
-
-    if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
-        //The entity jumps up and collides its head with a tile
-        this.velY = -0.5;
-    }
-    if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
-        //Check whether the entity is colliding with the ground of the map
-        this.cy = Map.getYPosition(this.cy, this.height);
-        this.velY = 0;
-        this.isFalling = false;
-    }else if(!this.isFalling && this.velY <= 0){
-        //Starts falling down
-        this.velY = -0.5;
-        this.isFalling = true;
-    }
-};
-
-Dada.prototype.getRadius = function () {
-    return (Math.max(this.sprite.width, this.sprite.height) / 2) * this._scale;
-};
-
-Dada.prototype.halt = function () {
-    this.velX = 0;
-    this.velY = 0;
-};
-
-Dada.prototype.render = function (ctx) {
-    var origScale = this.sprite.scale;
-    this.sprite.scale = this._scale;
-
-    this.sprite.drawWrappedCentredAt(
-       ctx, this.cx, this.cy, this.isFlipped
-    );
-    this.sprite.scale = origScale;
-};

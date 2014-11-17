@@ -345,7 +345,6 @@ Megaman.prototype.updatePosition = function (du) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
-        console.log("collision!!");
         if (this.velY !== 0) {
             // in air, move backwards
             this.cx -= this.isFlipped ? -this.width * 3 : this.width * 3; // r sum value
