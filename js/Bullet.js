@@ -64,7 +64,10 @@ Bullet.prototype.update = function (du) {
             (this.creator !== 'megaman' && type === 'megaman'))) canTakeHit.call(hitEntity);
 
         if ((this.creator === 'megaman' && type !== 'megaman') ||
-            (this.creator !== 'megaman' && type === 'megaman')) return entityManager.KILL_ME_NOW;
+            (this.creator !== 'megaman' && type === 'megaman')) {
+            audioManager.play(this.zappedSound);
+            return entityManager.KILL_ME_NOW;
+        }
     }
     
     // TODO: YOUR STUFF HERE! --- (Re-)Register
