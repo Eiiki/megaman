@@ -104,18 +104,41 @@ Dada.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-    /************************************************************
-    *                          A. I.                            *
-    *************************************************************/
-    //this.decideActions(du);
-    // reset all our previous decisions
+
+    // update time
+    this.timeSinceJump -= du;
+
+    this.decideActions(du); // AI
+    
+    var oldX = this.cx,
+        oldY = this.cy;
+
+    // Perform movement substeps
+    var steps = this.numSubSteps;
+    var dStep = du / steps;
+    for (var i = 0; i < steps; ++i) {
+        this.computeSubStep(dStep);
+    }
+
+    // handle collisions and stuff
+    if (this.health <= 0) this.kill();
+
+    spatialManager.register(this);
+
+    //Update the sprite
+    this._updateSprite(du, oldX, oldY);
+};
+
+/************************************************************
+*                          A. I.                            *
+*************************************************************/
+Dada.prototype.decideActions = function(du) {
+// reset all our previous decisions
     this.SHORTJUMP = false;
     this.HIGHJUMP = false;
     this.LEFT = this.LEFT; // remember direction, only change on high jump
     this.RIGHT = this.RIGHT;
 
-    // update time
-    this.timeSinceJump -= du;
     //console.log("time since jump: " + this.timeSinceJump); 
 
     // two short jumps and one high jump repeated
@@ -140,30 +163,11 @@ Dada.prototype.update = function (du) {
             this.LEFT = false;
         }
     }
-
-    
-    var oldX = this.cx,
-        oldY = this.cy;
-
-    // Perform movement substeps
-    var steps = this.numSubSteps;
-    var dStep = du / steps;
-    for (var i = 0; i < steps; ++i) {
-        this.computeSubStep(dStep);
-    }
-
-    // handle collisions and stuff
-    if (this.health <= 0) this.kill();
-
-    spatialManager.register(this);
-
-    //Update the sprite
-    this._updateSprite(du, oldX, oldY);
 };
 
 Dada.prototype.takeBulletHit = function() {
     this.health -= 1;
-}
+};
 
 Dada.prototype.computeSubStep = function (du) {
     this.updatePosition(du);   
