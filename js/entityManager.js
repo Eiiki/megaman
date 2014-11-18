@@ -81,7 +81,13 @@ generateEnemy : function(type, descr) {
         var entity = new petiteSnakey(descr);
         this._enemies.push(entity);
         // I need access to the enemy entity for de-spawning purposes
-        return entity;;
+        return entity;
+    }
+    if (type === 'potton'){
+        this._enemies.push(new Potton(descr));
+    }
+    if (type === 'potton_ball'){
+        this._enemies.push(new Potton_ball(descr));
     }
 },
 

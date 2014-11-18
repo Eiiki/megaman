@@ -30,8 +30,6 @@ playByID : function(ID, vol, loop) {
     if (vol === undefined) vol = 1;
     if (loop === undefined) loop = false;
 
-    console.log(this._audio);
-
     this._audio[ID].volume = vol;
     this._audio[ID].loop = loop;
     this._audio[ID].play();

@@ -24,8 +24,8 @@ audioManager.set("sounds/boss.mp3", "sounds/boss.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3520,
+        cx : 2000,
+        cy : 3200,
         velX : 0,
         velY : -0.5
     });
@@ -135,7 +135,9 @@ function requestPreloads() {
         map: "sprites/MegaManIII-SnakeMan-clean.png",
         // AI
         dada : "sprites/dada.png",
-        petiteSnakey : "sprites/small_frog.png"
+        petiteSnakey : "sprites/small_frog.png",
+        potton_copter : "sprites/potton_copter.png",
+        potton_ball : "sprites/potton_ball.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -281,6 +283,31 @@ function preloadDone() {
         )
     ];
 
+    g_sprites.potton_copter = [
+        new Sprite(
+            g_images.potton_copter,
+            -1, 0,
+            23, 20
+        ),
+        new Sprite(
+            g_images.potton_copter,
+            23, 0,
+            25, 20
+        )
+    ];
+    g_sprites.potton_ball = [
+        new Sprite(
+            g_images.potton_ball,
+            0, 0,
+            20, 25
+        ),
+        new Sprite(
+            g_images.potton_ball,
+            22, 0,
+            25, 25
+        )
+    ];
+
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
     );
@@ -316,6 +343,15 @@ function preloadDone() {
     setTimeout(function() {
         audioManager.playByID("sounds/boss.mp3", 0.35, true);
     }, 8800 + delay);*/
+
+    entityManager.generateEnemy('potton', {
+        cx : 1800,
+        cy : 3120
+    });
+    entityManager.generateEnemy('potton', {
+        cx : 1800,
+        cy : 3020
+    });
 
     main.init();
 }
