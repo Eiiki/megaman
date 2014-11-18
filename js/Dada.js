@@ -125,6 +125,58 @@ Dada.prototype.update = function (du) {
     this._updateSprite(du, oldX, oldY);
 };
 
+Dada.prototype.updatePosition = function (du) {
+    // setti inn fastar tölur hér þar sem breytilega stærðin var
+    // að fokka upp collision detectioninu á óútreiknanlegan hátt
+    var spriteHalfWidth  = this.width/2,
+        spriteHalfHeight = this.height/2;
+    var oldVelX = this.velX,
+        oldVelY = this.velY;
+
+    //VERTICAL POSITION UODATE
+    //
+    
+    this.velX = this.computeThrustX() * du;
+    var nextX = this.cx + this.velX;
+    var flipped = this.isFlipped ? -1 : 1;
+    var xAdjusted = flipped * spriteHalfWidth + nextX;
+    
+    // tjékkar á láréttu collission við umhverfi
+    var isColliding = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
+    if (isColliding[0] !== 1 && isColliding[3] !== 1 && isColliding[1] !== 1 && isColliding[2] !== 1){
+        this.cx = Math.max(spriteHalfWidth, nextX);
+    }
+
+    //HORIZONTAL POSITION UPDATE
+    //
+    this._computeVelocityY(du, oldVelY);
+    this.cy -= du * this.velY;
+
+    /*
+        * collisions[0] represents the value of the LEFT  TOP    tile that the megaman colides with -> ltColl
+        * collisions[1] represents the value of the RIGHT TOP    tile that the megaman colides with -> rtColl
+        * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
+        * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
+    */
+    var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
+    var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
+
+    if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
+        //Check whether the entity is colliding with the ground of the map
+        this.cy = Map.getYPosition(this.cy, this.height);
+        this.velY = 0;
+        this.isFalling = false;
+    }else if(this.isFalling && this.velY <= 0){
+        //Starts falling down
+        this.velY = -0.5;
+        this.isFalling = true;
+    }
+    if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
+        //The entity jumps up and collides its head with a tile
+        this.velY = -0.5;
+    }
+};
+
 /************************************************************
 *                          A. I.                            *
 *************************************************************/
