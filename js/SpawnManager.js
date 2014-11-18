@@ -20,7 +20,6 @@ update : function(du) {
 			}
 		}
 		if(global.camX > 200 && global.camX < 800){
-			console.log(this._possibleEnemies);
 	        if(this._possibleEnemies[0] === 0){
 	            entityManager.generateEnemy('dada', {
 	            cx : 700,
