@@ -59,6 +59,7 @@ Megaman.prototype.nextCamY = global.camY;
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
+Megaman.prototype.takesHitSound = "sounds/megaman_takes_hit.wav";
 
 // misc
 Megaman.prototype.maxHealth = 100;
@@ -308,6 +309,7 @@ Megaman.prototype.updatePosition = function (du) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
+        audioManager.play(this.takesHitSound);
     }
     if (this._invulnTimer <= 0) {
         this._invulnTimer = this.invulnDuration;
