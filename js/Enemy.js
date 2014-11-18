@@ -41,7 +41,7 @@ Enemy.prototype.updatePosition = function (du) {
     
     // tjékkar á láréttu collission við umhverfi
     var isColliding = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
-    if (isColliding[0] !== 1 || isColliding[3] !== 1){
+    if (isColliding[0] !== 1 && isColliding[3] !== 1 && isColliding[1] !== 1 && isColliding[2] !== 1){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
@@ -59,19 +59,19 @@ Enemy.prototype.updatePosition = function (du) {
     var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
     var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
 
-    if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
-        //The entity jumps up and collides its head with a tile
-        this.velY = -0.5;
-    }
     if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
         //Check whether the entity is colliding with the ground of the map
         this.cy = Map.getYPosition(this.cy, this.height);
         this.velY = 0;
         this.isFalling = false;
-    }else if(!this.isFalling && this.velY <= 0){
+    }else if(this.isFalling && this.velY <= 0){
         //Starts falling down
         this.velY = -0.5;
         this.isFalling = true;
+    }
+    if ((ltColl === 1 || rtColl === 1) && this.velY >= 0){
+        //The entity jumps up and collides its head with a tile
+        this.velY = -0.5;
     }
 };
 
