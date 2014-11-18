@@ -25,6 +25,11 @@ function Megaman(descr) {
 
     this._invulnTimer = this.invulnDuration;
     g_sprites.megaman_explosion.scale = 2.2;
+
+    // for the immobilization
+    this.reset_verticalSpeed = this.verticalSpeed;
+    this.reset_initialJumpSpeed = this.initialJumpSpeed;
+    this.reset_climbSpeed = this.climbSpeed;
 };
 
 Megaman.prototype = new Entity();
@@ -191,12 +196,7 @@ Megaman.prototype.update = function (du) {
 
     // hopefully disable controls if we are in a collision with an enemy (the first half)
     if (this._invulnTimer < this.invulnDuration && this._invulnTimer > this.invulnDuration / 2) {
-        keys[this.KEY_UP] = false;
-        keys[this.KEY_DOWN] = false;
-        keys[this.KEY_LEFT] = false;
-        keys[this.KEY_RIGHT] = false;
-        keys[this.KEY_JUMP] = false;
-        keys[this.KEY_FIRE] = false;
+        this.immobilize(true);
     }
 
     // Perform movement substeps
@@ -242,6 +242,25 @@ Megaman.prototype.update = function (du) {
     *************************************************************/
     this.canShootNow = keyUpKeys[this.KEY_FIRE];
     this.canJumpNow  = keyUpKeys[this.KEY_JUMP];
+};
+
+Megaman.prototype.immobilize = function (set) {
+        if (set) {
+            this.verticalSpeed = 0;
+            this.initialJumpSpeed = 0;
+            this.climbSpeed = 0;
+        } else {
+            this.verticalSpeed = this.reset_verticalSpeed;
+            this.initialJumpSpeed = this.reset_initialJumpSpeed;
+            this.climbSpeed = this.reset_climbSpeed;
+        }
+        /* old implementation
+        keys[this.KEY_UP] = false;
+        keys[this.KEY_DOWN] = false;
+        keys[this.KEY_LEFT] = false;
+        keys[this.KEY_RIGHT] = false;
+        keys[this.KEY_JUMP] = false;
+        keys[this.KEY_FIRE] = false;*/
 };
 
 Megaman.prototype.computeSubStep = function (du) {
@@ -302,6 +321,9 @@ Megaman.prototype.updatePosition = function (du) {
         // move us backwards during
         if (this._invulnTimer > this.invulnDuration / 2) {
             nextX -= this.isFlipped ? -this.moveBackwardsSpeed * du : this.moveBackwardsSpeed * du;
+        }
+        if (this._invulnTimer < this.invulnDuration / 2) {
+            this.immobilize(false); // enable movement again
         }
     }
     var hitEntity = this.isColliding();
