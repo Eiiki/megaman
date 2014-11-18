@@ -74,7 +74,9 @@ generateMegaman : function(descr) {
 },
 
 generateEnemy : function(type, descr) {
-    if (type === 'dada') this._enemies.push(new Dada(descr));
+    if (type === 'dada'){
+        this._enemies.push(new Dada(descr));
+    }
 
     console.log("generated enemy"); 
 },
@@ -102,13 +104,13 @@ update: function(du) {
                 // remove the dead guy, and shuffle the others down to
                 // prevent a confusing gap from appearing in the array
                 aCategory.splice(i,1);
+                Spawner.death(this._enemies.length);
             }
             else {
                 ++i;
             }
         }
     }
-    Spawner.death(this._enemies.length);
 
 },
 
