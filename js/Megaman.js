@@ -323,7 +323,6 @@ Megaman.prototype.updatePosition = function (du) {
             nextX -= this.isFlipped ? -this.moveBackwardsSpeed * du : this.moveBackwardsSpeed * du;
             var NextCollides = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
             if(NextCollides[0] === 1 || NextCollides[1] === 1){nextX = oldNextX;}
-            console.log(NextCollides);
         }
         if (this._invulnTimer < this.invulnDuration / 2) {
             this.immobilize(false); // enable movement again
