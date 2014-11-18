@@ -73,4 +73,11 @@ petiteSnakey.prototype.update = function (du) {
 petiteSnakey.prototype.render = function (ctx) {
     var offSet = this.isFlipped ? this.sprite.width/2 : 0;
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped);
+
+    if (this.health <= 0) {
+        entityManager.generateEnemy('explosion', {
+            cx : this.cx,
+            cy : this.cy
+        });
+    }
 };

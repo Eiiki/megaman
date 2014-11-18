@@ -190,5 +190,12 @@ Potton.prototype.render = function (ctx) {
        ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
+
+    if (this.health <= 0) {
+        entityManager.generateEnemy('explosion', {
+            cx : this.cx,
+            cy : this.cy
+        });
+    }
 };
 

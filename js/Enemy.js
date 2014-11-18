@@ -52,4 +52,13 @@ Enemy.prototype.render = function (ctx) {
        ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
+
+    // be careful, if you overwrite this render in your own enemies, make
+    // sure you include the explosion on death!
+    if (this.health <= 0) {
+        entityManager.generateEnemy('explosion', {
+            cx : this.cx,
+            cy : this.cy
+        });
+    }
 };

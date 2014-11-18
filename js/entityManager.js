@@ -89,6 +89,9 @@ generateEnemy : function(type, descr) {
     if (type === 'potton_ball'){
         this._enemies.push(new Potton_ball(descr));
     }
+    if (type === 'explosion'){
+        this._enemies.push(new Explosion(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

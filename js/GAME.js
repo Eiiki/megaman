@@ -137,7 +137,8 @@ function requestPreloads() {
         dada : "sprites/dada.png",
         petiteSnakey : "sprites/small_frog.png",
         potton_copter : "sprites/potton_copter.png",
-        potton_ball : "sprites/potton_ball.png"
+        potton_ball : "sprites/potton_ball.png",
+        explosion : "sprites/explosion.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -305,6 +306,28 @@ function preloadDone() {
             g_images.potton_ball,
             22, 0,
             25, 25
+        )
+    ];
+    g_sprites.explosion = [
+        new Sprite(
+            g_images.explosion,
+            0, 0,
+            15, 15
+        ),
+        new Sprite(
+            g_images.explosion,
+            15, 0,
+            15, 15
+        ),
+        new Sprite(
+            g_images.explosion,
+            30, 0,
+            15, 15
+        ),
+        new Sprite(
+            g_images.explosion,
+            45, 0,
+            15, 15
         )
     ];
 
