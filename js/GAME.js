@@ -10,6 +10,14 @@ A short, less complex, playable version of the classic Megaman
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
+// ===============
+// SET AUDIO (and hope it loads maybe)
+// ===============
+audioManager.set("sounds/snake_man_intro.wav", "sounds/snake_man_intro.wav");
+audioManager.set("sounds/snake_man.wav", "sounds/snake_man.wav");
+audioManager.set("sounds/boss_intro.wav", "sounds/boss_intro.wav");
+audioManager.set("sounds/boss.wav", "sounds/boss.wav");
+
 // ====================
 // CREATE INITIAL SHIPS
 // ====================
@@ -273,13 +281,22 @@ function preloadDone() {
     // them not playing
     var delay = 500;
     setTimeout(function() {
-        audioManager.play("sounds/snake_man_intro.wav", 0.2, false);
+        audioManager.playByID("sounds/snake_man_intro.wav", 0.2, false);
     }, delay); 
     setTimeout(function() {
         // setTimeout function is called 3.50 seconds after the code reaches it. That is the time
         // the snake_man_intro.wav takes to finish playing. 
-        audioManager.play("sounds/snake_man.mp3", 0.2, true);
+        audioManager.playByID("sounds/snake_man.wav", 0.2, true);
     }, 3500 + delay);
+
+    // if boss
+    /*setTimeout(function() {
+        audioManager.pause("sounds/snake_man.wav");
+        audioManager.playByID("sounds/boss_intro.wav", 0.35, false);
+    }, delay);
+    setTimeout(function() {
+        audioManager.playByID("sounds/boss.wav", 0.35, true);
+    }, 8800 + delay);*/
 
     entityManager.generateEnemy('dada', {
         cx : 400,
