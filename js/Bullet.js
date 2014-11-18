@@ -49,7 +49,6 @@ Bullet.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    this.wrapPosition();
 
     // Handle collisions
     // don't kill this bullet if the hit entity is the creator of the bullet
@@ -70,6 +69,11 @@ Bullet.prototype.update = function (du) {
         }
     }
     
+    if (this.cx < global.camX || this.cx > global.camX + g_canvas.width ||
+        this.cy < global.camY || this.cy > global.camY + g_canvas.height) 
+    {
+        return entityManager.KILL_ME_NOW;
+    }
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
 };

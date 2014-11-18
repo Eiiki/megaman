@@ -426,7 +426,13 @@ Megaman.prototype.maybeFireBullet = function () {
 };
 
 Megaman.prototype.takeBulletHit = function() {
-    // to be implemented
+    var hitEntity = this.isColliding();
+    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
+        // COLLISION
+        this._health -= 5; // needs adjusting
+        this.isInvuln = true;
+        audioManager.play(this.takesHitSound);
+    }
 };
 
 Megaman.prototype.getRadius = function () {
