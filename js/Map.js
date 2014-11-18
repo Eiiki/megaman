@@ -211,7 +211,6 @@ render : function(ctx) {
 
 	ctx.save();
 	ctx.scale(2,2);
-	//ctx.drawImage(img, 16, 1696, w, h, 0, 0, w, h);
 	ctx.drawImage(img, -16, 0, w, h);
 	ctx.restore();
 

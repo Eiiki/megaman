@@ -8,9 +8,10 @@
 
 // Construct a "sprite" from the given `image`,
 //
-function Sprite(image, sx, sy, width, height) {
+function Sprite(image, sx, sy, width, height, scale) {
     if(sx === undefined) sx = 0;
     if(sy === undefined) sy = 0;
+    if(scale === undefined) scale = 1;
 
     this.sx = sx;
     this.sy = sy;
@@ -18,7 +19,7 @@ function Sprite(image, sx, sy, width, height) {
     this.height = height || image.height;
 
     this.image = image;
-    this.scale = 1;
+    this.scale = scale;
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, rotation) {

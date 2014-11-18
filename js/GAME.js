@@ -134,7 +134,8 @@ function requestPreloads() {
         bullet_sprite  : "sprites/bullet.png",
         map: "sprites/MegaManIII-SnakeMan-clean.png",
         // AI
-        dada : "sprites/dada.png"
+        dada : "sprites/dada.png",
+        petiteSnakey : "sprites/small_frog.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -259,6 +260,24 @@ function preloadDone() {
             g_images.dada,
             265, 0,
             85, 92
+        )
+    ];
+
+    g_sprites.petiteSnakey = [
+        new Sprite(
+            g_images.petiteSnakey,
+            0, 0,
+            30, 25, 2
+        ),
+        new Sprite(
+            g_images.petiteSnakey,
+            32, 0,
+            30, 25, 2
+        ),
+        new Sprite(
+            g_images.petiteSnakey,
+            64, 0,
+            30, 25, 2
         )
     ];
 

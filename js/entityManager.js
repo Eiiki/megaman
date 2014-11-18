@@ -77,8 +77,12 @@ generateEnemy : function(type, descr) {
     if (type === 'dada'){
         this._enemies.push(new Dada(descr));
     }
-
-    console.log("generated enemy"); 
+    if (type === 'petiteSnakey') {
+        var entity = new petiteSnakey(descr);
+        this._enemies.push(entity);
+        // I need access to the enemy entity for de-spawning purposes
+        return entity;;
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
