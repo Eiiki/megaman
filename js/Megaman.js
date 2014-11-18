@@ -333,6 +333,7 @@ Megaman.prototype.updatePosition = function (du) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
+        this.isClimbing = false;
         audioManager.play(this.takesHitSound);
     }
     if (this._invulnTimer <= 0) {
@@ -431,6 +432,7 @@ Megaman.prototype.takeBulletHit = function() {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
+        this.isClimbing = false;
         audioManager.play(this.takesHitSound);
     }
 };
