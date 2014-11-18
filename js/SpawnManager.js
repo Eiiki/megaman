@@ -52,13 +52,14 @@ update : function(du) {
 		}
 		if(global.camX > 200 && global.camX < 800){
 	        if(this._possibleEnemies[0] === 0){
+	            this._possibleEnemies[0] = 1;
+	            this.canSpawnAgain=false;
 	            entityManager.generateEnemy('dada', {
 	            cx : 700,
 	            cy : 3520,
 	            velX : 0,
 	            velY : -0.5
 	            });
-	            this._possibleEnemies[0] = 1;
 	        }
 	    }
 	    // spawn petiteSnakeys for map part 1
