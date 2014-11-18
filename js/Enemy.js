@@ -33,16 +33,15 @@ Enemy.prototype.updatePosition = function (du) {
 
     //VERTICAL POSITION UODATE
     //
+    
     this.velX = this.computeThrustX() * du;
     var nextX = this.cx + this.velX;
-    
     var flipped = this.isFlipped ? -1 : 1;
     var xAdjusted = flipped * spriteHalfWidth + nextX;
     
     // tjékkar á láréttu collission við umhverfi
-    var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5), //afhverju + 5 ?
-        bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5); //afhverju - 5 ?
-    if (topXAdjusted !== 1 && bottomXAdjusted !== 1){
+    var isColliding = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
+    if (isColliding[0] !== 1 || isColliding[3] !== 1){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
