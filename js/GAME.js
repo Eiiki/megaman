@@ -298,13 +298,6 @@ function preloadDone() {
         audioManager.playByID("sounds/boss.mp3", 0.35, true);
     }, 8800 + delay);*/
 
-    entityManager.generateEnemy('dada', {
-        cx : 400,
-        cy : 3520,
-        velX : 0,
-        velY : -0.5
-    });
-
     main.init();
 }
 

@@ -187,7 +187,6 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
 };
 
 Megaman.prototype.update = function (du) {
-
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 

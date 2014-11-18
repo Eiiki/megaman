@@ -31,6 +31,7 @@ _character  : [],
 _enemies    : [],
 _bullets    : [],
 _MAP        : [Map],
+_spawner    : [Spawner],
 
 // "PRIVATE" METHODS
 
@@ -51,7 +52,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._MAP, this._bullets, this._character, this._enemies];
+    this._categories = [this._MAP, this._bullets, this._character, this._spawner, this._enemies];
 },
 
 init: function() {
