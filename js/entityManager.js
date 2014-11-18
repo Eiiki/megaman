@@ -108,6 +108,7 @@ update: function(du) {
             }
         }
     }
+    Spawner.death(this._enemies.length);
 
 },
 

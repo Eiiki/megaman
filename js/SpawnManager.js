@@ -8,23 +8,32 @@
 "use strict";
 
 var Spawner = {
-	didSpawnDada : false,
+	//[lvl1 dada]
+	_possibleEnemies : [0],
 
 update : function(du) {
 	if(global.mapPart === 1){
 		if(global.camX > 200 && global.camX < 800){
-	        if(entityManager._enemies.length === 0 && this.didSpawnDada === false){
+	        if(this._possibleEnemies[0] === 0){
 	            entityManager.generateEnemy('dada', {
 	            cx : 700,
 	            cy : 3520,
 	            velX : 0,
 	            velY : -0.5
 	            });
-	            this.didSpawnDada = true;
+	            this._possibleEnemies[0] = 1;
 	        }
-	    } else if(this.didSpawnDada === true && entityManager._enemies.length === 0){
-	        this.didSpawnDada = false;
 	    }
+	}
+},
+
+death : function (enemiesLeft){
+	if(global.mapPart === 1){
+		if(enemiesLeft < 1){
+			if(global.camX < 200 || global.camX > 800){
+				this._possibleEnemies[0] = 0;
+			}
+		}
 	}
 },
 
