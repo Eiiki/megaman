@@ -314,7 +314,7 @@ function preloadDone() {
         new Sprite(
             g_images.explosion,
             0, 0,
-            15, 15
+            16, 16
         ),
         new Sprite(
             g_images.explosion,

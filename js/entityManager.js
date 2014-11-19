@@ -116,8 +116,9 @@ update: function(du) {
             if (status === this.KILL_ME_NOW) {
                 // remove the dead guy, and shuffle the others down to
                 // prevent a confusing gap from appearing in the array
+                var pos = [aCategory[i].spawncx,aCategory[i].spawncy];
+                Spawner.death(pos);
                 aCategory.splice(i,1);
-                Spawner.death(this._enemies.length);
             }
             else {
                 ++i;
