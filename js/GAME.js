@@ -312,8 +312,8 @@ function preloadDone() {
     g_sprites.explosion = [
         new Sprite(
             g_images.explosion,
-            0, 0,
-            14, 16
+            1, 2,
+            12, 12
         ),
         new Sprite(
             g_images.explosion,
@@ -322,13 +322,13 @@ function preloadDone() {
         ),
         new Sprite(
             g_images.explosion,
-            30, 0,
-            15, 15
+            33, 3,
+            10, 10
         ),
         new Sprite(
             g_images.explosion,
-            45, 0,
-            15, 15
+            48, 4,
+            8, 8
         )
     ];
 
