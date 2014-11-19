@@ -341,7 +341,8 @@ Megaman.prototype.updatePosition = function (du) {
     }
     var hitEntity = this.isColliding();
     if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && 
-        hitEntity.type !== 'goodie') {
+        hitEntity.type !== 'goodie' && 
+        hitEntity.type !== 'misteryBox') {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;

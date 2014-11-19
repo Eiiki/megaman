@@ -25,7 +25,9 @@ _possibleEnemies : [[],[
 						{type: 'potton',cx:3360, cy:3020,alive:false,canSpawnAgain:true},
 						{type: 'potton',cx:3560, cy:3040,alive:false,canSpawnAgain:true},
 						{type: 'potton',cx:3760, cy:3060,alive:false,canSpawnAgain:true},
-						{type: 'potton',cx:3910, cy:3040,alive:false,canSpawnAgain:true}
+						{type: 'potton',cx:3910, cy:3040,alive:false,canSpawnAgain:true},
+						{type: 'bubukan',cx:3390, cy:3260,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
+						{type: 'bubukan',cx:3710, cy:3260,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}
 					],
 					[
 						{type: 'bigsnakey', cx: 1972, cy: 2536, alive: false, canSpawnAgain: true},
@@ -38,7 +40,10 @@ _possibleEnemies : [[],[
 						{type: 'big_life',cx:2704,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
 						{type: 'big_life',cx:2832,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
 					],
-					[],[],[
+					[],[
+						{type: 'misteryBox',cx:3887,cy:1842,alive:false,canSpawnAgain:true,oneTime:false},
+						{type: 'misteryBox',cx:3951,cy:1842,alive:false,canSpawnAgain:true,oneTime:false}
+					],[
 						{type: 'big_life',cx:5200,cy:1076, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
 					],[],[]
 					],

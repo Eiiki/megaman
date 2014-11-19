@@ -5,7 +5,6 @@
 function misteryBox(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
-    
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.misteryBox[0];
     this.spriteArray = g_sprites.misteryBox;
@@ -32,7 +31,6 @@ misteryBox.prototype.spriteRenderer = {
 misteryBox.prototype._updateSprite = function (du){
     // the s_ variables represents the sprites
     var s_blink  = this.spriteRenderer.blink;
-
     //Sprite is blink
     this.sprite = this.spriteArray[s_blink.idx];
     //Update sprite blink
