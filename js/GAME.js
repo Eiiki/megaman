@@ -188,7 +188,7 @@ function preloadDone() {
         velX : 0,
         velY : 0
     });
-    entityManager.generateEnemy('goodie', {
+    entityManager.generateEnemy('misteryBox', {
         cx : 350,
         cy : 3770,
         velX : 0,
