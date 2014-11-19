@@ -77,7 +77,10 @@ bigSnakey.prototype.update = function (du) {
     if (this.timeSinceShot >= 145 && !this.hasShot && !this.megamanBehind()) { this.fireBullet(); } 
     if (this.timeSinceShot >= 160) { this.hasShot = false; }
 
-    if (this.health <= 0) this.kill();
+    if (this.health <= 0) {
+        this.onDeath(); // make bombs and goodies 
+        this.kill();
+    }
 
     spatialManager.register(this);
 
@@ -89,8 +92,4 @@ bigSnakey.prototype.render = function (ctx) {
     var offSet = this.isFlipped ? this.sprite.width/2 : 0;
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped);
     this.drawNec(1);
-
-    if (this.health <= 0) {
-        this.onDeath();
-    }
 };

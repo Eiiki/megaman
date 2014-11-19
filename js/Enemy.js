@@ -44,6 +44,7 @@ Enemy.prototype.halt = function () {
     this.velY = 0;
 };
 
+// include this in your update if (health <= 0)
 Enemy.prototype.onDeath = function() {
     entityManager.generateEnemy('goodie', {
         cx : this.cx,
@@ -65,10 +66,4 @@ Enemy.prototype.render = function (ctx) {
        ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
-
-    // be careful, if you overwrite this render in your own enemies, make
-    // sure you include the explosion and goodie on death!
-    if (this.health <= 0) {
-        this.onDeath();
-    }
 };

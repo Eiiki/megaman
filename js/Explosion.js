@@ -81,9 +81,4 @@ Explosion.prototype.render = function (ctx) {
        ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
-
-    // be careful, if you overwrite this render in your own enemies, make
-    // sure you include the explosion on death!
-
-    // for obvious reasons, this is omitted here
 };

@@ -111,7 +111,10 @@ Potton.prototype.update = function (du) {
     }
 
     // handle collisions and stuff
-    if (this.health <= 0) this.kill();
+    if (this.health <= 0) {
+        this.onDeath(); // make bombs and goodies 
+        this.kill();
+    }
 
     spatialManager.register(this);
 
@@ -190,9 +193,5 @@ Potton.prototype.render = function (ctx) {
        ctx, this.cx, this.cy, this.isFlipped
     );
     this.sprite.scale = origScale;
-
-    if (this.health <= 0) {
-        this.onDeath();
-    }
 };
 
