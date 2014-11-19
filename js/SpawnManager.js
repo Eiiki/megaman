@@ -13,12 +13,13 @@ _possibleEnemies : [[],[
 					{type: 'dada',cx:700, cy:3520,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
 					{type: 'petiteSnakey',cx:648, cy:3560,alive:false,canSpawnAgain:true},
 					{type: 'petiteSnakey',cx:1065, cy:3688,alive:false,canSpawnAgain:true},
-					{type: 'petiteSnakey',cx:1353, cy:3624,alive:false,canSpawnAgain:true}]
+					{type: 'petiteSnakey',cx:1353, cy:3624,alive:false,canSpawnAgain:true}],
+					[],[],[],[],[],[],[]
 					],
 
 update : function(du) {
 	var mp = global.mapPart;
-	for(var i = 0; i < this._possibleEnemies.length; i++){
+	for(var i = 0; i < this._possibleEnemies[mp].length; i++){
 		var posEn = this._possibleEnemies[mp][i];
 		if(posEn.alive === false){
 			if(posEn.canSpawnAgain === false && 
@@ -51,7 +52,7 @@ spawnEnemy : function(mapPart,index){
 
 death : function (deadPos){
 	var mp = global.mapPart;
-	for(var i = 0; i < this._possibleEnemies.length; i++){
+	for(var i = 0; i < this._possibleEnemies[mp].length; i++){
 		var posEn = this._possibleEnemies[mp][i];
 		if(posEn.cx === deadPos[0]
 			&& posEn.cy === deadPos[1])
