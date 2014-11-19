@@ -192,10 +192,7 @@ Potton.prototype.render = function (ctx) {
     this.sprite.scale = origScale;
 
     if (this.health <= 0) {
-        entityManager.generateEnemy('explosion', {
-            cx : this.cx,
-            cy : this.cy
-        });
+        this.onDeath();
     }
 };
 

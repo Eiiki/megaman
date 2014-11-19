@@ -75,9 +75,6 @@ petiteSnakey.prototype.render = function (ctx) {
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped, this.flippY);
 
     if (this.health <= 0) {
-        entityManager.generateEnemy('explosion', {
-            cx : this.cx,
-            cy : this.cy
-        });
+        this.onDeath();
     }
 };

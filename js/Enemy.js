@@ -44,6 +44,19 @@ Enemy.prototype.halt = function () {
     this.velY = 0;
 };
 
+Enemy.prototype.onDeath = function() {
+    entityManager.generateEnemy('goodie', {
+        cx : this.cx,
+        cy : this.cy,
+        velX : 0,
+        velY : -0.5
+    });
+    entityManager.generateEnemy('explosion', {
+        cx : this.cx,
+        cy : this.cy
+    });
+}
+
 Enemy.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     this.sprite.scale = this._scale;
@@ -56,9 +69,6 @@ Enemy.prototype.render = function (ctx) {
     // be careful, if you overwrite this render in your own enemies, make
     // sure you include the explosion on death!
     if (this.health <= 0) {
-        entityManager.generateEnemy('explosion', {
-            cx : this.cx,
-            cy : this.cy
-        });
+        this.onDeath();
     }
 };

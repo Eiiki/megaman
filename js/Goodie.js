@@ -165,3 +165,20 @@ Goodie.prototype.updatePosition = function (du) {
 *                          A. I.                            *
 *************************************************************/
 /* goodie has no ai... */
+
+Goodie.prototype.render = function (ctx) {
+    var origScale = this.sprite.scale;
+    this.sprite.scale = this._scale;
+
+    this.sprite.drawWrappedCentredAt(
+       ctx, this.cx, this.cy, this.isFlipped
+    );
+    this.sprite.scale = origScale;
+
+    // be careful, if you overwrite this render in your own enemies, make
+    // sure you include the explosion on death!
+    /*if (this.health <= 0) {
+        this.onDeath();
+    }*/
+    // this is obviously omitted here....
+};

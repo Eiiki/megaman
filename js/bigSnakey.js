@@ -91,9 +91,6 @@ bigSnakey.prototype.render = function (ctx) {
     this.drawNec(1);
 
     if (this.health <= 0) {
-        entityManager.generateEnemy('explosion', {
-            cx : this.cx,
-            cy : this.cy
-        });
+        this.onDeath();
     }
 };
