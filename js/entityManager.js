@@ -110,6 +110,9 @@ generateEnemy : function(type, descr) {
     if (type === 'bubukan_stick'){
         this._enemies.push(new Bubukan_stick(descr));
     }
+    if (type === 'misteryBox'){
+        this._enemies.push(new misteryBox(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
