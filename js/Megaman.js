@@ -65,6 +65,7 @@ Megaman.prototype.nextCamY = global.camY;
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
 Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 Megaman.prototype.takesHitSound = "sounds/megaman_takes_hit.wav";
+Megaman.prototype.goodieSound = "sounds/megaman_live_increase.wav";
 
 // misc
 Megaman.prototype.maxHealth = 100;
@@ -329,7 +330,7 @@ Megaman.prototype.updatePosition = function (du) {
         }
     }
     var hitEntity = this.isColliding();
-    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
+    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && hitEntity.type !== 'goodie') {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
@@ -437,6 +438,38 @@ Megaman.prototype.takeBulletHit = function() {
     }
 };
 
+Megaman.prototype.receiveGoodie = function (type) {
+    console.log("received goodie " + type);
+    if (type === 'small_pill') {
+        this._health += 10;
+        audioManager.play(this.goodieSound);
+    } else if (type === 'big_life') {
+        this._health += 30;
+        audioManager.play(this.goodieSound);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 500);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 1000);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 1500);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 2000);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 2500);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 3000);
+        setTimeout(function() {
+            audioManager.play(this.goodieSound);
+        }, 6000);
+    }
+};
+
 Megaman.prototype.getRadius = function () {
     return (Math.max(this.sprite.width, this.sprite.height) / 2) * this._scale;
 };
@@ -508,6 +541,7 @@ Megaman.prototype.drawHealth = function(ctx) {
         ctx, cx, cy
     );
     var healthRatio = 1 - this._health / this.maxHealth;
+    if (healthRatio < 0) healthRatio = 0;
     var topLeft = [cx - s*(sprite.width)/2, cy - s*(sprite.height)/2]; // [x, y]
     // draw a black box over the health we've lost
     var oldFillStyle = ctx.fillStyle;

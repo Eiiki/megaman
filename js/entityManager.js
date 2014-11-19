@@ -92,6 +92,9 @@ generateEnemy : function(type, descr) {
     if (type === 'explosion'){
         this._enemies.push(new Explosion(descr));
     }
+    if (type === 'goodie') {
+        this._enemies.push(new Goodie(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

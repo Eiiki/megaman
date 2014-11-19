@@ -26,7 +26,7 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 function createMegaman() {
     entityManager.generateMegaman({
         cx : 200,
-        cy : 3520,
+        cy : 3720,
         velX : 0,
         velY : -0.5
     });
@@ -367,9 +367,9 @@ function preloadDone() {
         ),
         new Sprite(
             g_images.map,
-            0, 0,
-            400, 400,
-            1.5
+            274, 14,
+            260, 244,
+            1.98
         )
     ];
 
@@ -392,6 +392,25 @@ function preloadDone() {
     entityManager.generateEnemy('potton', {
         cx : 1800,
         cy : 3020
+    });
+
+    entityManager.generateEnemy('goodie', {
+        cx : 320,
+        cy : 3770,
+        velX : 0,
+        velY : 0
+    });
+    entityManager.generateEnemy('goodie', {
+        cx : 350,
+        cy : 3770,
+        velX : 0,
+        velY : 0
+    });
+    entityManager.generateEnemy('goodie', {
+        cx : 390,
+        cy : 3770,
+        velX : 0,
+        velY : 0
     });
 
     // title screen!!!
