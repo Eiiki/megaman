@@ -19,7 +19,7 @@ function Bullet(descr) {
     this._scale = 0.15;
 
     if (this.creator === "petiteSnakey") {
-        this.sprite = g_sprites.small_pill;
+        this.sprite = g_sprites.small_pill[0];
         this._scale = 1.4;
     }
 }

@@ -332,11 +332,18 @@ function preloadDone() {
         )
     ];
 
-    g_sprites.small_pill = new Sprite(
-        g_images.small_pill,
-        1, 0,
-        12, 10
-    );
+    g_sprites.small_pill = [
+        new Sprite(
+            g_images.small_pill,
+            1, 0,
+            12, 10
+        ),
+        new Sprite(
+            g_images.small_pill,
+            13, 0,
+            12, 10
+        )
+    ];
 
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
