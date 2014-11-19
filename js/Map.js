@@ -153,6 +153,12 @@ cornerCollisions : function(x, y, w, h){
    	return [leftTopCollision, rightTopCollision, rightBottomCollision, leftBottomCollision];
 },
 
+changeTile : function(x, y, value){
+	if(isNaN(value)) return;
+	var tileCoords = this.calculateTileCoords(x, y);
+	this._tiles[tileCoords.y][tileCoords.x] = value;
+},
+
 collidesWithStair : function(lt, rt, rb, lb){
 	//leftTop, rightTop, rightBottom, leftBottom
 	var corners = [lt, rt, rb, lb];

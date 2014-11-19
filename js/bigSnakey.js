@@ -14,14 +14,29 @@ function bigSnakey(descr) {
 
 bigSnakey.prototype = new Enemy();
 
-bigSnakey.prototype.health = 2;
+bigSnakey.prototype.health = 10;
 bigSnakey.prototype.type = 'bigsnakey';
 bigSnakey.prototype.timeSinceShot = 0;
 bigSnakey.prototype.hasShot = false;
 
 bigSnakey.prototype.megamanBehind = function() {
     return this.isFlipped ? global.megamanX < this.cx : global.megamanX > this.cx;
-}
+};
+
+bigSnakey.prototype.drawNec = function(value) {
+    var xyPairs = [
+                    {x: this.cx+this.width/2*this._scale + 32, y: this.cy+this.height/2*this._scale + 1*32},
+                    {x: this.cx+this.width/2*this._scale + 0 , y: this.cy+this.height/2*this._scale + 1*32},
+                    {x: this.cx+this.width/2*this._scale + 32, y: this.cy+this.height/2*this._scale + 2*32},
+                    {x: this.cx+this.width/2*this._scale + 0 , y: this.cy+this.height/2*this._scale + 2*32},
+                    {x: this.cx+this.width/2*this._scale + 32, y: this.cy+this.height/2*this._scale + 3*32},
+                    {x: this.cx+this.width/2*this._scale + 0 , y: this.cy+this.height/2*this._scale + 3*32},
+                ];
+    for(var n = 0; n < xyPairs.length; n++){
+        Map.changeTile(xyPairs[n].x, xyPairs[n].y, value);
+    }
+
+};
 
 bigSnakey.prototype._updateSprite = function () {
     /*if (this.timeSinceShot >= 100) { this.sprite = g_sprites.bigSnakey[2]; }
@@ -51,7 +66,10 @@ bigSnakey.prototype.fireBullet = function () {
 
 bigSnakey.prototype.update = function (du) {
     spatialManager.unregister(this);
-    if (this._isDeadNow) return entityManager.KILL_ME_NOW;
+    if (this._isDeadNow){
+        this.drawNec(0);
+        return entityManager.KILL_ME_NOW;
+    }
 
     // update time
     this.timeSinceShot += du;
@@ -70,6 +88,7 @@ bigSnakey.prototype.update = function (du) {
 bigSnakey.prototype.render = function (ctx) {
     var offSet = this.isFlipped ? this.sprite.width/2 : 0;
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped);
+    this.drawNec(1);
 
     if (this.health <= 0) {
         entityManager.generateEnemy('explosion', {
