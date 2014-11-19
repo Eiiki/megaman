@@ -57,6 +57,19 @@ function initSprites() {
         )
     ];
 
+    g_sprites.misteryBox = [
+        new Sprite(
+            g_images.mistery_box,
+            0,0,
+            17,14
+        ),
+        new Sprite(
+            g_images.mistery_box,
+            17,0,
+            17,14
+        )
+    ];
+
     g_sprites.megaman_fire = {
         still : new Sprite(
             g_images.megaman_sprite,

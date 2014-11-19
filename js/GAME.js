@@ -159,7 +159,8 @@ function requestPreloads() {
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
         big_life      : "sprites/big_life.png",
-        small_life    : "sprites/small_life.png" // life is actually pill 
+        small_life    : "sprites/small_life.png", // life is actually pill
+        mistery_box    : "sprites/mistery_box.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -190,9 +191,7 @@ function preloadDone() {
     });
     entityManager.generateEnemy('misteryBox', {
         cx : 350,
-        cy : 3770,
-        velX : 0,
-        velY : 0
+        cy : 3764
     });
     entityManager.generateEnemy('goodie', {
         cx : 390,
