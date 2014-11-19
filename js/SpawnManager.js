@@ -21,7 +21,9 @@ _possibleEnemies : [[],[
 					{type: 'petiteSnakey',cx:1832, cy:3208,alive:false,canSpawnAgain:true,isFlipped:true},
 					{type: 'petiteSnakey',cx:1768, cy:3144,alive:false,canSpawnAgain:true,isFlipped:true},
 					{type: 'petiteSnakey',cx:1704, cy:3080,alive:false,canSpawnAgain:true,isFlipped:true}],
-					[],[],[],[],[],[]
+					[
+					{type: 'potton',cx:2400, cy:2460,alive:false,canSpawnAgain:true}],
+					[],[],[],[],[]
 					],
 
 update : function(du) {
