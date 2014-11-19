@@ -5,7 +5,7 @@
 "use strict";
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Goodie(descr) {
+function Goodie(descr,forceGoodie) {
     // Common inherited setup logic from Entity
     this.setup(descr);
     
@@ -24,7 +24,7 @@ function Goodie(descr) {
     } else if (4/16 <= rand && rand < 5/16) {
         this.goodieType = 'big_life';
     }
-
+    if(forceGoodie === "big_life"){this.goodieType = 'big_life';}
     // decide correct sprite/scale
     if (this.goodieType === 'small_pill') {
         this.sprite = g_sprites.small_pill[0];

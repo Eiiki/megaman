@@ -101,6 +101,9 @@ generateEnemy : function(type, descr) {
     if (type === 'goodie') {
         this._enemies.push(new Goodie(descr));
     }
+    if (type === 'big_life'){
+        this._enemies.push(new Goodie(descr,type));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
