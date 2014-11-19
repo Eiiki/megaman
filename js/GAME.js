@@ -25,8 +25,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3520,
+        cx : 1700,
+        cy : 2500,
         velX : 0,
         velY : -0.5
     });
@@ -160,7 +160,8 @@ function requestPreloads() {
         small_pill    : "sprites/small_pill.png",
         big_life      : "sprites/big_life.png",
         small_life    : "sprites/small_life.png", // life is actually pill
-        mistery_box    : "sprites/mistery_box.png"
+        mistery_box    : "sprites/mistery_box.png",
+        snake_part    : "sprites/snake_part.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);

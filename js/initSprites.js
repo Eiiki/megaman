@@ -299,6 +299,13 @@ function initSprites() {
         )
     ];
 
+    g_sprites.snake_part = new Sprite(
+        g_images.snake_part,
+        0,0,
+        g_images.snake_part.width, g_images.snake_part.height,
+        2
+    );
+
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
     );

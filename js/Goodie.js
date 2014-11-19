@@ -48,8 +48,13 @@ function Goodie(descr,forceGoodie) {
         this._isDeadNow = true;
     }
 
-    this.width = this.sprite.width * this._scale;
-    this.height = this.sprite.height * this._scale;
+    if (this.goodieType === 'small_pill' || this.goodieType === 'small_life') {
+        this.width = this.sprite.width * this._scale * 1.5; // add to scale for bigger bounding box so it doesn't fall through ground and crash game
+        this.height = this.sprite.height * this._scale * 2;
+    } else {
+        this.width = this.sprite.width * this._scale;
+        this.height = this.sprite.height * this._scale;
+    }
 };
 
 Goodie.prototype = new Enemy();
@@ -61,7 +66,7 @@ Goodie.prototype.goodieType = 'none';
 Goodie.prototype.possibles = ['small_pill', 'big_life', 'small_life'];
 
 Goodie.prototype.computeGravity = function() {
-    return global.gravity*0.4; // try to lessen odds of going to fast and through wall
+    return global.gravity*0.2; // try to lessen odds of going to fast and through wall
 }
 
 // Sprite indexes
