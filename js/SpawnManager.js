@@ -9,7 +9,7 @@
 
 var Spawner = {
 //[lvl1 dada]
-_possibleEnemies : [{cx:700, cy:3520,alive:false,canSpawnAgain:true}],
+_possibleEnemies : [{type: 'dada',cx:700, cy:3520,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}],
 
 // special handling stuff for the petiteSnakeys
 _petiteSnakeys : [],
@@ -53,21 +53,25 @@ update : function(du) {
 		if(global.camX + 510 > this._possibleEnemies[0].cx && global.camX < this._possibleEnemies[0].cx){
 	        if(this._possibleEnemies[0].alive === false
 	        	&& this._possibleEnemies[0].canSpawnAgain === true){
-	            entityManager.generateEnemy('dada', {
-	            cx : this._possibleEnemies[0].cx,
-	            cy : this._possibleEnemies[0].cy,
-	            spawncx : this._possibleEnemies[0].cx,
-	            spawncy : this._possibleEnemies[0].cy,
-	            velX : 0,
-	            velY : -0.5
-	            });
-	            this._possibleEnemies[0].alive=true;
-	            this._possibleEnemies[0].canSpawnAgain = false;
+	            this.spawnEnemy(0);
 	        }
 	    }
 	    // spawn petiteSnakeys for map part 1
 	    this._prevX = this.spawnPetiteSnakeys(this._prevX);
 	}
+},
+
+spawnEnemy : function(index){
+	entityManager.generateEnemy(this._possibleEnemies[index].type, {
+	            cx : this._possibleEnemies[index].cx,
+	            cy : this._possibleEnemies[index].cy,
+	            spawncx : this._possibleEnemies[index].cx,
+	            spawncy : this._possibleEnemies[index].cy,
+	            velX : this._possibleEnemies[index].velX,
+	            velY : this._possibleEnemies[index].velY,
+	            });
+	            this._possibleEnemies[index].alive=true;
+	            this._possibleEnemies[index].canSpawnAgain = false;
 },
 
 death : function (deadPos){
