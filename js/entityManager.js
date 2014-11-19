@@ -113,6 +113,14 @@ yoinkMegamanToPos : function(xPos, yPos) {
 },
 
 update: function(du) {
+    if(this._enemies.length !== 0){
+        for(var i = 0; i < this._enemies.length; i++){
+            var Baddie = this._enemies[i]
+            if(Baddie.cx > global.camX + 710 || Baddie.cx < global.camX-200){
+                Baddie.kill();
+            }
+        }
+    }
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];

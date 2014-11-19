@@ -39,7 +39,7 @@ update : function(du) {
 		var posEn = this._possibleEnemies[mp][i];
 		if(posEn.alive === false){
 			if(posEn.canSpawnAgain === false && 
-				(global.camX+610 < posEn.cx || global.camX-100 > posEn.cx)){
+				(global.camX+710 < posEn.cx || global.camX-200 > posEn.cx)){
 				posEn.canSpawnAgain = true;
 			}
 		}
@@ -76,6 +76,10 @@ death : function (deadPos){
 			&& posEn.cy === deadPos[1])
 			posEn.alive = false;
 	}
+},
+
+kill : function (){
+
 },
 
 render : function(ctx){
