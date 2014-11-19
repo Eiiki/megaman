@@ -17,6 +17,7 @@ audioManager.set("sounds/snake_man_intro.mp3", "sounds/snake_man_intro.mp3");
 audioManager.set("sounds/snake_man.mp3", "sounds/snake_man.mp3");
 audioManager.set("sounds/boss_intro.mp3", "sounds/boss_intro.mp3");
 audioManager.set("sounds/boss.mp3", "sounds/boss.mp3");
+audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 
 // ====================
 // CREATE INITIAL SHIPS
@@ -357,20 +358,23 @@ function preloadDone() {
         g_images.bullet_sprite
     );
 
+    g_sprites.titleScreen = [
+        new Sprite(
+            g_images.map,
+            14, 14,
+            260, 244,
+            1.98
+        ),
+        new Sprite(
+            g_images.map,
+            0, 0,
+            400, 400,
+            1.5
+        )
+    ];
+
     entityManager.init();
     createMegaman();
-
-    // delay both background songs to allow them a bit of time to load to avoid
-    // them not playing
-    var delay = 500;
-    setTimeout(function() {
-        audioManager.playByID("sounds/snake_man_intro.mp3", 0.2, false);
-    }, delay); 
-    setTimeout(function() {
-        // setTimeout function is called 3.50 seconds after the code reaches it. That is the time
-        // the snake_man_intro.wav takes to finish playing. 
-        audioManager.playByID("sounds/snake_man.mp3", 0.2, true);
-    }, 3500 + delay);
 
     // if boss
     /*setTimeout(function() {
@@ -389,6 +393,52 @@ function preloadDone() {
         cx : 1800,
         cy : 3020
     });
+
+    // title screen!!!
+    playTitleSong(); // play song
+    drawTitleScreen();
+
+    //main.init();
+    // listen for KEY_START and then init main
+    // see titlescreenend function
+}
+
+function playTitleSong() {
+    var delay = 500; // ms
+    setTimeout(function(){
+        if (!GAME_STARTED) {
+            audioManager.playByID("sounds/title.mp3", 0.8, true);
+        }
+    }, delay);
+}
+
+function drawTitleScreen() {
+    // yes global ctx whatevs
+    g_sprites.titleScreen[0].drawWrappedCentredAt(
+        g_ctx, g_canvas.width / 2, g_canvas.height / 2
+    );
+}
+
+var KEY_START = 13; // ENTER
+var KEY_START_ALTER = keyCode(' ');
+var GAME_STARTED = false;
+// call this function everytime when we hit start, unless
+// we've done it once
+function titleScreenEnd() {
+    audioManager.pause("sounds/title.mp3");
+    GAME_STARTED = true;
+
+    // delay both background songs to allow them a bit of time to load to avoid
+    // them not playing
+    var delay = 0;
+    setTimeout(function() {
+        audioManager.playByID("sounds/snake_man_intro.mp3", 0.2, false);
+    }, delay); 
+    setTimeout(function() {
+        // setTimeout function is called 3.50 seconds after the code reaches it. That is the time
+        // the snake_man_intro.wav takes to finish playing. 
+        audioManager.playByID("sounds/snake_man.mp3", 0.2, true);
+    }, 3500 + delay);
 
     main.init();
 }

@@ -8,6 +8,12 @@ var keyUpKeys = [];
 function handleKeydown(evt) {
     keys[evt.keyCode] = true;
     keyUpKeys[evt.keyCode] = false;
+
+    var eatStart = eatKey(KEY_START);
+    var eatStartAlter = eatKey(KEY_START_ALTER);
+    if ((eatStart || eatStartAlter) && !GAME_STARTED) {
+        titleScreenEnd();
+    }
 }
 
 function handleKeyup(evt) {
