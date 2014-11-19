@@ -30,6 +30,8 @@ function Megaman(descr) {
     this.reset_verticalSpeed = this.verticalSpeed;
     this.reset_initialJumpSpeed = this.initialJumpSpeed;
     this.reset_climbSpeed = this.climbSpeed;
+
+    this.fix = false;
 };
 
 Megaman.prototype = new Entity();
@@ -207,9 +209,16 @@ Megaman.prototype.update = function (du) {
         this.computeSubStep(dStep);
     }
 
+    // ugly fix for annoying visual bug when jumping between map parts
+    if (global.mapPart === 6 && this.cy < 1000 && !this.isClimbing) {
+            this.fix = true;
+    }
+
+    if (this.cy > 1000) this.fix = false;
+
     // move camera when megaman transisiton between levels of the map
     if(!global.isTransitioning){
-        if (this.cy < global.camY && global.camY > global.mapHeight){
+        if (this.cy < global.camY && global.camY > global.mapHeight && !this.fix){
             this.nextCamY -= 480;
             global.mapPart++;
         } 
@@ -393,7 +402,7 @@ Megaman.prototype.updatePosition = function (du) {
             //The megaman jumps up and collides its head with a tile
             this.velY = -0.5;
         }
-        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
+        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3 || lbColl === 4 || rbColl === 4) {
             //Check whether the megaman is colliding with the ground of the map
             this.cy = Map.getYPosition(this.cy, this.height);
             this.velY = 0;
@@ -405,12 +414,22 @@ Megaman.prototype.updatePosition = function (du) {
         }
     }
 
+    if (rbColl === 4 || lbColl === 4 || rbColl === 3 || lbColl === 3) {
+        Map._tiles[33][159] = 0;
+        Map._tiles[32][159] = 0;
+        Map._tiles[31][159] = 0;
+        Map._tiles[30][159] = 0;
+        Map._tiles[29][159] = 0;
+        Map._tiles[28][159] = 0;
+    }
+
     if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     global.megamanX = this.cx;
     global.megamanY = this.cy;
 
     // check if the camera translation system should follow megaman or not
     if(Map.isColliding(this.cx, this.cy) === null) global.fellOffEdge = true;
+    //console.log("megaman x : " + global.megamanX + ", megaman y : " + global.megamanY);
 };
 
 //Fires one bullet after each keypress.

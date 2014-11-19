@@ -48,7 +48,7 @@ Entity.prototype.getPos = function () {
 };
 
 Entity.prototype.getRadius = function () {
-    return this.getRadius();
+    return (Math.max(this.sprite.width, this.sprite.height) / 2) * this._scale;
 };
 
 Entity.prototype.getSpatialID = function () {

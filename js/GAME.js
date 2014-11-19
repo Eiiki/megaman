@@ -25,8 +25,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3720,
+        cx : 5168,
+        cy : 1050,
         velX : 0,
         velY : -0.5
     });
@@ -98,19 +98,34 @@ function renderSimulation(ctx) {
     var canvasHalfWidth = g_canvas.width/2;
     var part = global.mapPart; 
 
-    global.camX = x > g_canvas.width/2 ? x - canvasHalfWidth: 0;
+    //global.camX = x > g_canvas.width/2 ? x - canvasHalfWidth: 0;
 
     // all the numbers here are just coordinates on the map image corresponding to
     // the starts and ends of "map parts" which are used to keep track of the current
     // heigt level of the map
-    if (x > g_canvas.width/2) global.camX = x - canvasHalfWidth;
+    if (x > g_canvas.width/2 && global.shouldTrans) global.camX = x - canvasHalfWidth;
     if (x > 1792 && part === 1 || part === 2 || part === 3 && x < 1792) global.camX = 1792 - canvasHalfWidth;
     if (part === 3 && x > 2817) global.camX = 2817 - canvasHalfWidth;
     if (part === 2 && x < 2817 + canvasHalfWidth && x > 2817 - canvasHalfWidth) global.camX = 2817 - canvasHalfWidth;
     if (part === 2 && x > 2817 && y > 3100) global.camX = x - canvasHalfWidth;
     if (part === 2 && x > 3840 || part === 3 && x > 3200 || part === 4 || part === 5) global.camX = 3840 - canvasHalfWidth;
     if (part === 6 && x < 3840) global.camX = 3840 - canvasHalfWidth;
-    if (part === 6 && x > 5377 || part === 7) global.camX = 5377 - canvasHalfWidth;
+    if (part === 6 && x < 5122 && !global.shouldTrans) {
+        global.camX = x - canvasHalfWidth;
+        global.shouldTrans = true;
+    }
+    if (part === 6 && x > 5377 || part === 7) {
+        global.camX = 5377 - canvasHalfWidth;
+        global.shouldTrans = false;
+    }
+    if (part === 7) {
+        Map._tiles[33][159] = 1;
+        Map._tiles[32][159] = 1;
+        Map._tiles[31][159] = 1;
+        Map._tiles[30][159] = 1;
+        Map._tiles[29][159] = 1;
+        Map._tiles[28][159] = 1;
+    }
     if (part === 8 && x < 5377) global.camX = 5377 - canvasHalfWidth;
     if (part === 8 && x > 8448) global.camX = 8448 - canvasHalfWidth;
 
