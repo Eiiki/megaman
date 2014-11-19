@@ -23,7 +23,7 @@ play : function(path, vol, loop) {
     var audio = new Audio(path);
     audio.volume = vol;
     audio.loop = loop;
-    audio.play();
+    if(!g_mute) audio.play();
 },
 
 playByID : function(ID, vol, loop) {
@@ -37,6 +37,18 @@ playByID : function(ID, vol, loop) {
 
 pause : function(ID) {
     this._audio[ID].pause();
+},
+
+muteAll : function(){
+    for(var n in this._audio){
+        this._audio[n].muted = true;
+    }
+},
+
+unmuteAll : function(){
+    for(var n in this._audio){
+        this._audio[n].muted = false;
+    }
 }
 
 };
