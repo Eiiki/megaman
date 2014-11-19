@@ -16,11 +16,17 @@ _possibleEnemies : [[],[
 						{type: 'petiteSnakey',cx:1065, cy:3688,alive:false,canSpawnAgain:true},
 						{type: 'petiteSnakey',cx:1353, cy:3624,alive:false,canSpawnAgain:true},
 						{type: 'dada',cx:1520, cy:3580,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
-						{type: 'dada',cx:1884, cy:3750,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}],
+						{type: 'dada',cx:1884, cy:3750,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}
+					],
 					[
 						{type: 'petiteSnakey',cx:1832, cy:3208,alive:false,canSpawnAgain:true,isFlipped:true},
 						{type: 'petiteSnakey',cx:1768, cy:3144,alive:false,canSpawnAgain:true,isFlipped:true},
-						{type: 'petiteSnakey',cx:1704, cy:3080,alive:false,canSpawnAgain:true,isFlipped:true}],
+						{type: 'petiteSnakey',cx:1704, cy:3080,alive:false,canSpawnAgain:true,isFlipped:true},
+						{type: 'potton',cx:3360, cy:3020,alive:false,canSpawnAgain:true},
+						{type: 'potton',cx:3560, cy:3040,alive:false,canSpawnAgain:true},
+						{type: 'potton',cx:3760, cy:3060,alive:false,canSpawnAgain:true},
+						{type: 'potton',cx:3910, cy:3040,alive:false,canSpawnAgain:true}
+					],
 					[
 						{type: 'bigsnakey', cx: 1972, cy: 2536, alive: false, canSpawnAgain: true},
 						{type: 'potton',cx:2400, cy:2460,alive:false,canSpawnAgain:true},
@@ -32,7 +38,9 @@ _possibleEnemies : [[],[
 						{type: 'big_life',cx:2704,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
 						{type: 'big_life',cx:2832,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
 					],
-					[],[],[],[],[]
+					[],[],[
+						{type: 'big_life',cx:5200,cy:1076, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
+					],[],[]
 					],
 
 update : function(du) {
