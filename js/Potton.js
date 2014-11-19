@@ -160,7 +160,8 @@ Potton.prototype.decideActions = function(du) {
         this.RIGHT = !this.RIGHT;
     }
 
-    if (Math.abs(this.cx - global.megamanX) < 5 && !this.shellDropped) {
+    // drop shell if megaman is under you +- 5 and he must be below you as well
+    if (Math.abs(this.cx - global.megamanX) < 5 && global.megamanY - this.cy > 0 && !this.shellDropped) {
         this.DROPSHELL = true;
     }
 };

@@ -104,6 +104,12 @@ generateEnemy : function(type, descr) {
     if (type === 'big_life'){
         this._enemies.push(new Goodie(descr,type));
     }
+    if (type === 'bubukan'){
+        this._enemies.push(new Bubukan(descr));
+    }
+    if (type === 'bubukan_stick'){
+        this._enemies.push(new Bubukan_stick(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

@@ -60,6 +60,10 @@ Goodie.prototype.goodieType = 'none';
 
 Goodie.prototype.possibles = ['small_pill', 'big_life', 'small_life'];
 
+Goodie.prototype.computeGravity = function() {
+    return global.gravity*0.4; // try to lessen odds of going to fast and through wall
+}
+
 // Sprite indexes
 Goodie.prototype.spriteRenderer = {
     blink : {
