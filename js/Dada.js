@@ -117,7 +117,10 @@ Dada.prototype.update = function (du) {
     }
 
     // handle collisions and stuff
-    if (this.health <= 0) this.kill();
+    if (this.health <= 0) {
+        this.onDeath(); // make bombs and goodies 
+        this.kill();
+    }
 
     spatialManager.register(this);
 
