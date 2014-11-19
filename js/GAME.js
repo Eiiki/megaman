@@ -307,17 +307,17 @@ function preloadDone() {
             22, 0,
             25, 25
         )
-    ];
+    ];    
     g_sprites.explosion = [
         new Sprite(
             g_images.explosion,
             0, 0,
-            15, 15
+            14, 16
         ),
         new Sprite(
             g_images.explosion,
-            15, 0,
-            15, 15
+            14, 0,
+            16, 16
         ),
         new Sprite(
             g_images.explosion,
@@ -329,7 +329,7 @@ function preloadDone() {
             45, 0,
             15, 15
         )
-    ];
+    ];;
 
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
