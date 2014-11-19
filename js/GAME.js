@@ -160,7 +160,7 @@ function requestPreloads() {
         small_pill    : "sprites/small_pill.png",
         big_life      : "sprites/big_life.png",
         small_life    : "sprites/small_life.png", // life is actually pill 
-        snake_part     : "sprites/snake_part.png"
+        snake_part    : "sprites/snake_part.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
