@@ -200,12 +200,12 @@ function preloadDone() {
         velX : 0,
         velY : 0
     });
-    entityManager.generateEnemy('bubukan', {
+    /*entityManager.generateEnemy('bubukan', {
         cx : 400,
-        cy : 3700,
+        cy : 3600,
         velX : 0,
         velY : -0.5
-    });
+    });*/
 
     // title screen!!!
     playTitleSong(); // play song
