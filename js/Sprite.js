@@ -22,7 +22,7 @@ function Sprite(image, sx, sy, width, height, scale) {
     this.scale = scale;
 };
 
-Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
+Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, flipSpriteY, rotation) {
     if (rotation === undefined) rotation = 0;
     var w = this.width;
     var h = this.height;
@@ -36,32 +36,34 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
     // coords accordingly, to draw our sprite centred at the origin
 
     if(flipSprite) ctx.scale(-1,1);
+    if(flipSpriteY) ctx.scale(1,-1);
     ctx.drawImage(this.image, 
                   this.sx, this.sy, w, h,
                   -w/2,-h/2, w, h);
+    if(flipSpriteY) ctx.scale(1,-1);
     if(flipSprite) ctx.scale(-1,1);
     ctx.restore();
 };
 
-Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
+Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, flipSprite, flipSpriteY, rotation) {
     
     // Get "screen width"
     var sw = g_canvas.width;
     
     // Draw primary instance
-    this.drawWrappedVerticalCentredAt(ctx, cx, cy, flipSprite, rotation);
+    this.drawWrappedVerticalCentredAt(ctx, cx, cy, flipSprite, flipSpriteY, rotation);
     
     // Left and Right wraps
     //this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, flipSprite, rotation);
     //this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, flipSprite, rotation);
 };
 
-Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, flipSprite, rotation) {
+Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, flipSprite, flipSpriteY, rotation) {
 
     // Get "screen height"
     var sh = g_canvas.height;
     // Draw primary instance
-    this.drawCentredAt(ctx, cx, cy, flipSprite, rotation);
+    this.drawCentredAt(ctx, cx, cy, flipSprite, flipSpriteY, rotation);
     
     // Top and Bottom wraps
     //this.drawCentredAt(ctx, cx, cy - sh, flipSprite, rotation);

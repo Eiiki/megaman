@@ -23,7 +23,12 @@ _possibleEnemies : [[],[
 						{type: 'petiteSnakey',cx:1704, cy:3080,alive:false,canSpawnAgain:true,isFlipped:true}],
 					[
 						{type: 'bigsnakey', cx: 1972, cy: 2536, alive: false, canSpawnAgain: true},
-						{type: 'potton',cx:2400, cy:2460,alive:false,canSpawnAgain:true}
+						{type: 'potton',cx:2400, cy:2460,alive:false,canSpawnAgain:true},
+						{type: 'petiteSnakey',cx:2440, cy:2644,alive:false,canSpawnAgain:true,flippY:true},
+						{type: 'petiteSnakey',cx:2504, cy:2708,alive:false,canSpawnAgain:true,flippY:true},
+						{type: 'potton',cx:2800, cy:2742,alive:false,canSpawnAgain:true},
+						{type: 'petiteSnakey', cx: 2889, cy: 2794, alive: false, canSpawnAgain: true},
+						{type: 'potton',cx:2950, cy:2742,alive:false,canSpawnAgain:true}
 					],
 					[],[],[],[],[]
 					],
@@ -56,7 +61,8 @@ spawnEnemy : function(mapPart,index){
 	            spawncy : posEn.cy,
 	            velX : posEn.velX,
 	            velY : posEn.velY,
-	            isFlipped : posEn.isFlipped
+	            isFlipped : posEn.isFlipped,
+	            flippY : posEn.flippY
 	            });
 	            posEn.alive=true;
 	            posEn.canSpawnAgain = false;
