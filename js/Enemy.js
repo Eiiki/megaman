@@ -67,7 +67,7 @@ Enemy.prototype.render = function (ctx) {
     this.sprite.scale = origScale;
 
     // be careful, if you overwrite this render in your own enemies, make
-    // sure you include the explosion on death!
+    // sure you include the explosion and goodie on death!
     if (this.health <= 0) {
         this.onDeath();
     }
