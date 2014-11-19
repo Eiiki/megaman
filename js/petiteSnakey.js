@@ -10,7 +10,7 @@ function petiteSnakey(descr) {
     this.sprite = this.sprite || g_sprites.petiteSnakey[0];
     
     // Set drawing scale
-    this._scale = 1;
+    this._scale = 2;
     this.width = this.sprite.width * this._scale;
     this.height = this.sprite.height * this._scale;
 };
@@ -72,7 +72,11 @@ petiteSnakey.prototype.update = function (du) {
 
 petiteSnakey.prototype.render = function (ctx) {
     var offSet = this.isFlipped ? this.sprite.width/2 : 0;
+    var origScale = this.sprite.scale;
+    this.sprite.scale = this._scale;
+
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped, this.flippY);
+    this.sprite.scale = origScale;
 
     if (this.health <= 0) {
         this.onDeath();
