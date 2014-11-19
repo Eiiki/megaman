@@ -135,13 +135,16 @@ function requestPreloads() {
         bullet_sprite  : "sprites/bullet.png",
         map: "sprites/MegaManIII-SnakeMan-clean.png",
         // AI
-        dada : "sprites/dada.png",
-        petiteSnakey : "sprites/small_frog.png",
-        bigSnakey : "sprites/big_frog.png",
+        dada          : "sprites/dada.png",
+        petiteSnakey  : "sprites/small_frog.png",
+        bigSnakey     : "sprites/big_frog.png",
         potton_copter : "sprites/potton_copter.png",
-        potton_ball : "sprites/potton_ball.png",
-        explosion : "sprites/explosion.png",
-        small_pill : "sprites/small_pill.png"
+        potton_ball   : "sprites/potton_ball.png",
+        // MISC
+        explosion     : "sprites/explosion.png",
+        small_pill    : "sprites/small_pill.png",
+        big_life      : "sprites/big_life.png",
+        small_life    : "sprites/small_life.png" // life is actually pill 
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -356,6 +359,32 @@ function preloadDone() {
         )
     ];
 
+    g_sprites.big_life = [
+        new Sprite(
+            g_images.big_life,
+            0, 0,
+            14, 14
+        ),
+        new Sprite(
+            g_images.big_life,
+            15, 0,
+            14, 14
+        )
+    ];
+
+    g_sprites.small_life = [
+        new Sprite(
+            g_images.small_life,
+            0, 0,
+            10, 10
+        ),
+        new Sprite(
+            g_images.small_life,
+            11, 0,
+            10, 10
+        )
+    ];
+
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
     );
@@ -394,15 +423,6 @@ function preloadDone() {
     setTimeout(function() {
         audioManager.playByID("sounds/boss.mp3", 0.35, true);
     }, 8800 + delay);*/
-
-    entityManager.generateEnemy('potton', {
-        cx : 1800,
-        cy : 3120
-    });
-    entityManager.generateEnemy('potton', {
-        cx : 1800,
-        cy : 3020
-    });
 
     entityManager.generateEnemy('goodie', {
         cx : 320,

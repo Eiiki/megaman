@@ -11,24 +11,41 @@ function Goodie(descr) {
     
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.small_pill[0];
-    
-    //decide type at random!!
-    var rand = Math.floor(util.randRange(0, this.possibles.length));
-    console.log("rand " + rand);
-    if (rand === this.possibles.length) rand = this.possibles.length - 1; // just in case
-    this.goodieType = this.possibles[rand];
-    console.log("goodieType " + this.goodieType);
+
+    // odds:
+    // small_pill (life) == 1/16 (times 2 for easier game, i.e. 1/8 etc)
+    // big_life == 1/32
+    // small_life = 1/16
+    var rand = Math.random();
+    if (0 <= rand && rand < 1/8) {
+        this.goodieType = 'small_pill';
+    } else if (1/8 <= rand && rand < 2/8) {
+        this.goodieType = 'small_life';
+    } else if (4/16 <= rand && rand < 5/16) {
+        this.goodieType = 'big_life';
+    }
 
     // decide correct sprite/scale
     if (this.goodieType === 'small_pill') {
         this.sprite = g_sprites.small_pill[0];
         this.spriteArray = g_sprites.small_pill;
-        this._scale = 1.5;
+        this._scale = 1.4;
+    } else if (this.goodieType === 'big_life') {
+        this.sprite = g_sprites.big_life[0];
+        this.spriteArray = g_sprites.big_life;
+        this._scale = 2.2;
+    } else if (this.goodieType === 'small_life') {
+        // life is actually a pill and vice versa
+        this.sprite = g_sprites.small_life[0];
+        this.spriteArray = g_sprites.small_life;
+        this._scale = 1.6;
     } else {
-        // default to small pill just in case
+        // default to small pill just in case, but still kill us straight away
         this.sprite = g_sprites.small_pill[0];
         this.spriteArray = g_sprites.small_pill;
         this._scale = 1.5;
+
+        this._isDeadNow = true;
     }
 
     this.width = this.sprite.width * this._scale;
@@ -38,15 +55,15 @@ function Goodie(descr) {
 Goodie.prototype = new Enemy();
 
 Goodie.prototype.type = 'goodie';
-Goodie.prototype.goodieType = 'small_pill'; // default, seperate from this.type because of megaman collides with enemy
+Goodie.prototype.goodieType = 'none'; 
 
 
-Goodie.prototype.possibles = ['small_pill', 'big_life'];
+Goodie.prototype.possibles = ['small_pill', 'big_life', 'small_life'];
 
 // Sprite indexes
 Goodie.prototype.spriteRenderer = {
     blink : {
-        renderTimes : 8,
+        renderTimes : 24,
         idx : 0,
         cnt : 0
     }
@@ -102,6 +119,8 @@ Goodie.prototype.update = function (du) {
     }
 
     spatialManager.register(this);
+
+    this._updateSprite(du, 0, 0);
 };
 
 Goodie.prototype.updatePosition = function (du) {
@@ -123,7 +142,6 @@ Goodie.prototype.updatePosition = function (du) {
         * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
         * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
     */
-    console.log(this.cx + " " + this.cy + " " + this.width + " " + this.height);
     var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
     var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
 
