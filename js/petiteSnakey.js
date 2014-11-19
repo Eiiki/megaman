@@ -75,7 +75,7 @@ petiteSnakey.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     this.sprite.scale = this._scale;
 
-    this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped);
+    this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped, this.flippY);
     this.sprite.scale = origScale;
 
     if (this.health <= 0) {
