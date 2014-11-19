@@ -78,10 +78,6 @@ death : function (deadPos){
 	}
 },
 
-kill : function (){
-
-},
-
 render : function(ctx){
 
 }
