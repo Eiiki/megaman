@@ -174,13 +174,13 @@ function initSprites() {
         walking : [
             new Sprite(
                 g_images.bubukan,
-                0, 0,
-                50, 45
+                0, 6,
+                50, 33
             ),
             new Sprite(
                 g_images.bubukan,
-                50, 0,
-                50, 45
+                50, 6,
+                50, 33
             )
         ],
         jumping : [

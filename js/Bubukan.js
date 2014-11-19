@@ -170,7 +170,7 @@ Bubukan.prototype.updatePosition = function (du) {
 
     // tjékkar á láréttu collission við umhverfi
     var isColliding = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
-    if (isColliding[0] !== 1 && isColliding[3] !== 1 && isColliding[1] !== 1 && isColliding[2] !== 1){
+    if (isColliding[0] !== 1 && isColliding[3] !== 1 /*&& isColliding[1] !== 1 && isColliding[2] !== 1*/){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
@@ -191,7 +191,7 @@ Bubukan.prototype.updatePosition = function (du) {
 
     if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3) {
         //Check whether the entity is colliding with the ground of the map
-        this.cy = Map.getYPosition(this.cy, this.height*0.7);
+        this.cy = Map.getYPosition(this.cy, this.height*1.05);
         this.velY = 0;
         this.isFalling = false;
 
@@ -231,7 +231,7 @@ Bubukan.prototype.decideActions = function(du) {
             this.verticalSpeed = 5; // go faster than megaman!
         }
     } else if (this.state === 'jumping') {
-        // sortif a misnomer, this is actually the leverege move before the jump
+        // sortof a misnomer, this is actually the leverege move before the jump
         if (this.timeTillFall <= 0) {
             this.JUMP = true;
             this.state = 'falling';
