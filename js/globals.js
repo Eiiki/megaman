@@ -33,12 +33,6 @@ var global = {
 	fellOffEdge : false,
 	mapPart : 1,
 	transitionSpeed : 15,
-	gravity : 0.7,
-	petiteSnakeysCoords : [
-		undefined,
-		{ cx : 648, cy : 3560, isFlipped : false},
-    	{ cx : 1065, cy : 3688, isFlipped : false},
-    	{ cx : 1353, cy : 3624, isFlipped : false}
-    ]
+	gravity : 0.7
 };
 global.mapHeight = global.camY - 7 * g_canvas.width;
