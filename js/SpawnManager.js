@@ -36,7 +36,6 @@ _possibleEnemies : [[],[
 					],
 
 update : function(du) {
-	console.log(this._possibleEnemies[3][7]);
 	var mp = global.mapPart;
 	for(var i = 0; i < this._possibleEnemies[mp].length; i++){
 		var posEn = this._possibleEnemies[mp][i];
