@@ -15,16 +15,13 @@ function Bullet(descr) {
 
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.bullet;
-    
     // Set normal drawing scale
     this._scale = 0.15;
-    
-/*
-    // Diagnostics to check inheritance stuff
-    this._bulletProperty = true;
-    console.dir(this);
-*/
 
+    if (this.creator === "petiteSnakey") {
+        this.sprite = g_sprites.small_pill;
+        this._scale = 1.4;
+    }
 }
 
 Bullet.prototype = new Entity();
@@ -94,7 +91,7 @@ Bullet.prototype.render = function (ctx) {
 
     this.sprite.scale = this._scale;
 
-    g_sprites.bullet.drawWrappedCentredAt(
+    this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;

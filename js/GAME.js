@@ -24,8 +24,8 @@ audioManager.set("sounds/boss.mp3", "sounds/boss.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 2000,
-        cy : 3200,
+        cx : 200,
+        cy : 3520,
         velX : 0,
         velY : -0.5
     });
@@ -138,7 +138,8 @@ function requestPreloads() {
         petiteSnakey : "sprites/small_frog.png",
         potton_copter : "sprites/potton_copter.png",
         potton_ball : "sprites/potton_ball.png",
-        explosion : "sprites/explosion.png"
+        explosion : "sprites/explosion.png",
+        small_pill : "sprites/small_pill.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -329,7 +330,13 @@ function preloadDone() {
             45, 0,
             15, 15
         )
-    ];;
+    ];
+
+    g_sprites.small_pill = new Sprite(
+        g_images.small_pill,
+        1, 0,
+        12, 10
+    );
 
     g_sprites.megaman_health = new Sprite(
         g_images.megaman_health
