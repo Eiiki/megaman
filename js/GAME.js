@@ -25,8 +25,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3520,
+        cx : 1700,
+        cy : 2420,
         velX : 0,
         velY : -0.5
     });
@@ -137,6 +137,7 @@ function requestPreloads() {
         // AI
         dada : "sprites/dada.png",
         petiteSnakey : "sprites/small_frog.png",
+        bigSnakey : "sprites/big_frog.png",
         potton_copter : "sprites/potton_copter.png",
         potton_ball : "sprites/potton_ball.png",
         explosion : "sprites/explosion.png",
@@ -283,6 +284,15 @@ function preloadDone() {
             g_images.petiteSnakey,
             64, 0,
             30, 25, 2
+        )
+    ];
+
+    g_sprites.bigSnakey = [
+        new Sprite(
+            g_images.bigSnakey,
+            0, 0,
+            73, 54,
+            2.1
         )
     ];
 
