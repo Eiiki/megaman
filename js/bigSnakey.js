@@ -116,8 +116,8 @@ bigSnakey.prototype._updateBrickInWave = function(brick){
     var megamanLM = global.megamanX - global.megamanWidth/2;
     var megamanRM = global.megamanX + global.megamanWidth/2;
     if(util.isBetween(megamanLM, brick.x - 16, brick.x + 16) || util.isBetween(megamanRM, brick.x - 16, brick.x + 16)){
-        if(global.mapPart === 3 || global.mapPart === 3)global.collisionUpdate.shouldUpdate = true;
-        console.log(global.mapPart);
+        if(global.mapPart === 3 || global.mapPart === 6)global.collisionUpdate.shouldUpdate = true;
+        //console.log(global.mapPart);
         if(global.collisionUpdate.cy === 0) {
             global.collisionUpdate.cy = global.megamanY;
             global.collisionUpdate.lastY = global.megamanY;
