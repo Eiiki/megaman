@@ -148,7 +148,7 @@ update: function(du) {
                     Baddie.kill();
                 }
             }
-            if(global.camY+480 < Baddie.cy || global.camY > Baddie.cy){
+            if(global.camY+960 < Baddie.cy || global.camY-480 > Baddie.cy){
                 if (Baddie.type !== 'snakeman') {
                     Baddie.kill();
                 }
