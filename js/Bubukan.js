@@ -11,7 +11,6 @@ function Bubukan(descr) {
     
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.bubukan.walking[0];
-    console.log("sprite: " + this.sprite);
     this.sprite.drawWrappedCentredAt(g_ctx, g_canvas.width/2, g_canvas.height/2, false, false);
     this.spriteArray = g_sprites.bubukan.walking;
     
@@ -126,7 +125,6 @@ Bubukan.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-    console.log("this.state: " + this.state);
     if (this.state === 'jumping') this.timeTillFall -= du;
 
     this.decideActions(du); // AI
@@ -186,7 +184,6 @@ Bubukan.prototype.updatePosition = function (du) {
         * collisions[2] represents the value of the RIGHT BOTTOM tile that the megaman colides with -> rbColl
         * collisions[3] represents the value of the LEFT  BOTTOM tile that the megaman colides with -> lbColl
     */
-    //console.log(this);
     var collisions = Map.cornerCollisions(this.cx, this.cy, this.width, this.height);
     var ltColl = collisions[0], rtColl = collisions[1], rbColl = collisions[2], lbColl = collisions[3];
 
