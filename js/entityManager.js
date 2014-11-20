@@ -113,6 +113,12 @@ generateEnemy : function(type, descr) {
     if (type === 'misteryBox'){
         this._enemies.push(new misteryBox(descr));
     }
+    if (type === 'snakeman') {
+        this._enemies.push(new Snakeman(descr));
+    }
+    if (type === 'snakebullet') {
+        this._enemies.push(new SnakeBullet(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
@@ -127,9 +133,11 @@ yoinkMegamanToPos : function(xPos, yPos) {
 update: function(du) {
     if(this._enemies.length !== 0){
         for(var i = 0; i < this._enemies.length; i++){
-            var Baddie = this._enemies[i]
+            var Baddie = this._enemies[i];
             if(Baddie.cx > global.camX + 710 || Baddie.cx < global.camX-200){
-                Baddie.kill();
+                if (Baddie.type !== 'snakeman') {
+                    Baddie.kill();
+                }
             }
         }
     }
