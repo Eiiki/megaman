@@ -44,7 +44,10 @@ _possibleEnemies : [[],[
 						{type: 'misteryBox',cx:3887,cy:1842,alive:false,canSpawnAgain:true,oneTime:false},
 						{type: 'misteryBox',cx:3951,cy:1842,alive:false,canSpawnAgain:true,oneTime:false}
 					],[
-						{type: 'big_life',cx:5200,cy:1076, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
+						{type: 'big_life',cx:5200,cy:1076, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
+						{type: 'bubukan',cx:4400, cy:1180,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
+						{type: 'bubukan',cx:4700, cy:1180,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
+						{type: 'bubukan',cx:5400, cy:1348,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}
 					],[],[]
 					],
 
