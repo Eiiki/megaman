@@ -286,6 +286,112 @@ function initSprites() {
         )
     ];
 
+    g_sprites.hammer_joe = [
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 70,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 70,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 70,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 70,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 70,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            186, 68.5,
+            35, 44, 2
+        )
+    ];
+
+    g_sprites.hammer_joe_bullet = [
+        new Sprite(
+            g_images.hammer_joe,
+            0, 3,
+            23, 14, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            27, 3,
+            23, 14, 2
+        ),          
+    ];
+
     g_sprites.small_life = [
         new Sprite(
             g_images.small_life,
