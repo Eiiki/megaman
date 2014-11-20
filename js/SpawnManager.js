@@ -50,7 +50,8 @@ _possibleEnemies : [[],[
 						{type: 'big_life',cx:5200,cy:1076, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
 						{type: 'bubukan',cx:4400, cy:1180,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
 						{type: 'bubukan',cx:4700, cy:1180,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
-						{type: 'bubukan',cx:5400, cy:1348,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}
+						{type: 'bubukan',cx:5400, cy:1348,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
+						{type: 'bigsnakey', cx: 4022, cy: 1094, alive: false, canSpawnAgain: true}
 					],[],[
 						{type: 'bomb_flier',cx:6300,cy:172,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
 						{type: 'bomb_flier',cx:6480,cy:300,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
