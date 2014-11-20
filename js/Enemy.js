@@ -25,6 +25,10 @@ Enemy.prototype.type = 'enemy';
 
 Enemy.prototype.takeBulletHit = function() {
     this.health -= 1;
+    if(this.type === "bomb_flier"){
+            this.beenHit = true;
+            this.transition = true;
+        }
 };
 
 Enemy.prototype.computeSubStep = function (du) {
