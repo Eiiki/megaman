@@ -14,8 +14,8 @@ function bomb_flier(descr) {
     this.spriteArray = g_sprites.bomb_flier;
     // Set drawing scale
     this._scale = 2;
-    this.width = this.sprite.width * this._scale;
-    this.height = this.sprite.height * this._scale;
+    this.width = this.sprite.width * this._scale/2;
+    this.height = this.sprite.height * this._scale/2;
     this.spawncy = this.cy;
 
     // decide initial direction, go in direction of megaman
@@ -61,9 +61,6 @@ bomb_flier.prototype._updateSprite = function (du, oldX, oldY){
 
     //Sprite is blink
     this.sprite = this.spriteArray[s_blink.idx];
-    console.log(s_blink.idx);
-    console.log(this.beenHit);
-    console.log(this.transition);
     //Update sprite blink
     if(!this.beenHit && s_blink.cnt >= 4 * s_blink.renderTimes) {
         s_blink.idx = 0;
@@ -129,10 +126,10 @@ bomb_flier.prototype.updatePosition = function (du) {
     var xAdjusted = flipped * spriteHalfWidth + nextX;
     if(!this.beenHit){
 
-        if(this.cy > this.spawncy+16)this.velY = -0.5;
-        if(this.cy <= this.spawncy-16)this.velY = 0.5;
+        if(this.cy > this.spawncy+32)this.velY = -1.5;
+        if(this.cy <= this.spawncy-32)this.velY = 1.5;
     }
-    this.cy += this.velY;
+    this.cy += this.velY*du;
     this.cx = nextX;
     
     //HORIZONTAL POSITION UPDATE
