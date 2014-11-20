@@ -108,6 +108,72 @@ function initSprites() {
     // ==========
     // AI sprites
     // ==========
+     g_sprites.snakeman = {
+        walking : [
+            new Sprite(
+                g_images.snakeman,
+                185, 25,
+                37, 30
+            ),
+            new Sprite(
+                g_images.snakeman,
+                135, 25,
+                37, 30
+            ),
+            new Sprite(
+                g_images.snakeman,
+                90,  25,
+                37, 30
+            ),
+            new Sprite(
+                g_images.snakeman,
+                45,  25,
+                37, 30
+            )
+        ],
+        jumping : [
+            new Sprite(
+                g_images.snakeman,
+                355, 15,
+                24, 45
+            )
+        ],
+        highjumping : [
+            new Sprite(
+                g_images.snakeman,
+                355, 15,
+                25, 45
+            ),
+            new Sprite(
+                g_images.snakeman,
+                310, 20,
+                40, 35
+            ),
+            new Sprite(
+                g_images.snakeman,
+                275, 20,
+                30, 35
+            )
+        ],
+        cinematic : [
+            new Sprite(
+                g_images.snakeman,
+                0,   25,
+                37, 30
+            ),
+            new Sprite(
+                g_images.snakeman,
+                225, 25,
+                37, 30
+            )
+        ],
+        explosion : new Sprite(
+            g_images.megaman_sprite,
+            272, 287,
+            50, 33,
+            3
+        )
+    };
     g_sprites.dada_moving = [
         new Sprite(
             g_images.dada,
@@ -402,6 +468,60 @@ function initSprites() {
             g_images.small_life,
             11, 0,
             10, 10
+        )
+    ];
+
+    g_sprites.bomb_flier = [
+        new Sprite(
+            g_images.bomb_flier,
+            0, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            39, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            78, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            117, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            156, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            156, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            117, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            0, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            39, 0,
+            39, 34
+        )
+        ,
+        new Sprite(
+            g_images.bomb_flier,
+            78, 0,
+            39, 34
         )
     ];
 

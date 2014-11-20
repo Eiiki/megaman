@@ -126,6 +126,7 @@ function renderSimulation(ctx) {
         Map._tiles[29][159] = 1;
         Map._tiles[28][159] = 1;
     }
+    if (part === 8) global.shouldTrans = true;
     if (part === 8 && x < 5377) global.camX = 5377 - canvasHalfWidth;
     if (part === 8 && x > 8448) global.camX = 8448 - canvasHalfWidth;
 
@@ -156,12 +157,15 @@ function requestPreloads() {
         potton_ball   : "sprites/potton_ball.png",
         bubukan       : "sprites/bubukan_added.png",
         hammer_joe    : "sprites/hammer_joe.png",
+        bomb_flier    : "sprites/bomb_flier.png",
+        snakeman      : "sprites/snakeman.png",
+        snakebullet   : "sprites/snakeman_bullets.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
         big_life      : "sprites/big_life.png",
         small_life    : "sprites/small_life.png", // life is actually pill
-        mistery_box    : "sprites/mistery_box.png",
+        mistery_box   : "sprites/mistery_box.png",
         snake_part    : "sprites/snake_part.png"
     };
 
@@ -190,10 +194,6 @@ function preloadDone() {
         cy : 3770,
         velX : 0,
         velY : 0
-    });
-    entityManager.generateEnemy('misteryBox', {
-        cx : 350,
-        cy : 3764
     });
     entityManager.generateEnemy('goodie', {
         cx : 390,
