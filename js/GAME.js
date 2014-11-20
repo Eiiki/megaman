@@ -23,14 +23,30 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 // CREATE INITIAL SHIPS
 // ====================
 
+// function createMegaman() {
+//     entityManager.generateMegaman({
+//         cx : 4000,
+//         cy : 1000,
+//         velX : 0,
+//         velY : -0.5
+//     });
+// }
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 4000,
-        cy : 2250,
+        cx : 200,
+        cy : 3750   ,
         velX : 0,
         velY : -0.5
     });
 }
+// function createMegaman() {
+//     entityManager.generateMegaman({
+//         cx : 5735,
+//         cy : 370,
+//         velX : 0,
+//         velY : -0.5
+//     });
+// }
 
 // =============
 // GATHER INPUTS
