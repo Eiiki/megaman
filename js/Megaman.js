@@ -219,8 +219,10 @@ Megaman.prototype.update = function (du) {
     // move camera when megaman transisiton between levels of the map
     if(!global.isTransitioning){
         if (this.cy < global.camY && global.camY > global.mapHeight && !this.fix){
-            this.nextCamY -= 480;
-            global.mapPart++;
+            if (!(this.cy < 150)) {
+                this.nextCamY -= 480;
+                global.mapPart++;
+            }
         } 
         else if (this.cy > global.camY + 480 && !global.fellOffEdge) {
             this.nextCamY += 480;
@@ -430,7 +432,7 @@ Megaman.prototype.updatePosition = function (du) {
 
     // check if the camera translation system should follow megaman or not
     if(Map.isColliding(this.cx, this.cy) === null) global.fellOffEdge = true;
-    //console.log("megaman x : " + global.megamanX + ", megaman y : " + global.megamanY);
+    console.log("megaman x : " + global.megamanX + ", megaman y : " + global.megamanY);
 };
 
 //Fires one bullet after each keypress.
