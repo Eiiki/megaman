@@ -35,7 +35,7 @@ function Gate(descr) {
     this.cx = x1 + 14;
     this.cy = y1 + 57;
 
-    audioManager.play("sounds/gates_open.wav", 0.5, false);
+    audioManager.play("sounds/gates_open.wav", 1, false);
 };
 
 Gate.prototype = new Enemy();

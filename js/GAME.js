@@ -41,8 +41,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3520,
+        cx : 5487,
+        cy : 745,
         velX : 0,
         velY : -0.5
     });
@@ -184,6 +184,7 @@ function requestPreloads() {
         snakeman      : "sprites/snakeman.png",
         snakebullets    : "sprites/snakeman_bullets.png",
         snakeman_health : "sprites/snakeman_health.png",
+        jamacy          : "sprites/jamacy.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",

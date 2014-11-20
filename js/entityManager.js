@@ -131,6 +131,9 @@ generateEnemy : function(type, descr) {
     if (type === 'gate') {
         this._enemies.push(new Gate(descr));
     }
+    if (type === 'jamacy') {
+        this._enemies.push(new Jamacy(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

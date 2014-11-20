@@ -355,6 +355,19 @@ function initSprites() {
         )
     };
 
+    g_sprites.jamacy = [
+        new Sprite(
+            g_images.jamacy,
+            0, 0,
+            19, 17
+        ),
+        new Sprite(
+            g_images.jamacy,
+            19, 0,
+            19, 17
+        )
+    ];
+
     g_sprites.explosion = [
         new Sprite(
             g_images.explosion,

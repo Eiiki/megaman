@@ -57,7 +57,7 @@ Snakeman.prototype.shortJumpSpeed = 14;
 Snakeman.prototype.isFlipped  = false;
 Snakeman.prototype.isFalling  = false;
 
-Snakeman.prototype.health = 200; // dies after 22 megaman hit
+Snakeman.prototype.health = 200; // dies after 40 megaman hit
 Snakeman.prototype.maxHealth = 200;
 
 // Sprite indexes

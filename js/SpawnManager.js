@@ -52,7 +52,9 @@ _possibleEnemies : [[],[
 						{type: 'bubukan',cx:4700, cy:1180,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
 						{type: 'bubukan',cx:5400, cy:1348,alive:false,canSpawnAgain:true,velX:0,velY:-0.5},
 						{type: 'bigsnakey', cx: 4022, cy: 1094, alive: false, canSpawnAgain: true}
-					],[],[
+					],[
+						{type: 'jamacy',cx:5360, cy:550,alive:false,canSpawnAgain:true,velX:0,velY:0},
+					],[
 						{type: 'bomb_flier',cx:6300,cy:172,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
 						{type: 'bomb_flier',cx:6480,cy:300,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
 						{type: 'bomb_flier',cx:6600,cy:236,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
