@@ -236,6 +236,34 @@ function initSprites() {
         ),
     ];
 
+    g_sprites.big_bullet = [
+        new Sprite(
+            g_images.big_bullet,
+            0, 0,
+            16, 14
+        ),
+        new Sprite(
+            g_images.big_bullet,
+            16, 0,
+            16, 14
+        ),
+        new Sprite(
+            g_images.big_bullet,
+            32, 0,
+            16, 14
+        ),
+        new Sprite(
+            g_images.big_bullet,
+            48, 0,
+            16, 14
+        ),
+        new Sprite(
+            g_images.big_bullet,
+            64, 0,
+            16, 14
+        )
+    ];
+
     g_sprites.potton_copter = [
         new Sprite(
             g_images.potton_copter,

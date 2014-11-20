@@ -28,6 +28,12 @@ function Bullet(descr) {
         this.spriteIndex = 0;
         this._scale = 2;
     }
+
+    if(this.creator === "bigsnakey"){
+        this.sprite = g_sprites.big_bullet[0];
+        this.spriteIndex = 0;
+        this._scale = 2.1;
+    }
     this.timeSinceShot = 0;
     this.shouldRegister = true;
 }
@@ -42,6 +48,15 @@ Bullet.prototype.zappedSound = "sounds/enemy_takes_hit.wav";
 Bullet.prototype._updateSprite = function () {
     if (this.creator === 'hammer_joe') {
         this.sprite = g_sprites.hammer_joe_bullet[this.spriteIndex];
+        if (this.timeSinceShot >= 3) {
+            this.spriteIndex++;
+            this.timeSinceShot = 0;
+            if (this.spriteIndex >= g_sprites.big_bullet.length) this.spriteIndex = 0;
+        }
+    }
+
+    if(this.creator === "bigsnakey"){
+        this.sprite = g_sprites.big_bullet[this.spriteIndex];
         if (this.timeSinceShot >= 3) {
             this.spriteIndex++;
             this.timeSinceShot = 0;

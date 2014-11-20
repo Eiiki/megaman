@@ -166,7 +166,8 @@ function requestPreloads() {
         big_life      : "sprites/big_life.png",
         small_life    : "sprites/small_life.png", // life is actually pill
         mistery_box   : "sprites/mistery_box.png",
-        snake_part    : "sprites/snake_part.png"
+        snake_part    : "sprites/snake_part.png",
+        big_bullet    : "sprites/big_bullet.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);

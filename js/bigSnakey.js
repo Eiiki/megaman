@@ -156,8 +156,8 @@ bigSnakey.prototype.fireBullet = function () {
     // 5 is to make it look good when snakey fires, otherwise when he is
     // flipped the shot will start outside of his sprite
     for(var n = 0; n < numBullets; n++){
-        var randomX = numBullets > 2 ? -Math.random() : Math.random();
-        var randomY = numBullets > 2 ? -Math.random() : Math.random();
+        var randomX = n%2 === 0 ? Math.random() : -Math.random();
+        var randomY = n%2 === 0 ? Math.random() : -Math.random();
         entityManager.fireBullet(this.cx + 5, this.cy, xVel+randomX, yVel+randomY, this.type);
     }
     
