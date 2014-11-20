@@ -148,6 +148,12 @@ update: function(du) {
                     Baddie.kill();
                 }
             }
+            if(posEn.canSpawnAgain === false && 
+                (global.camY+480 < posEn.cy || global.camY > posEn.cy)){
+                if (Baddie.type !== 'snakeman') {
+                    Baddie.kill();
+                }
+            }
         }
     }
     for (var c = 0; c < this._categories.length; ++c) {
