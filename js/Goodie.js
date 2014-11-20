@@ -17,11 +17,11 @@ function Goodie(descr,forceGoodie) {
     // big_life == 1/32
     // small_life = 1/16
     var rand = Math.random();
-    if (0 <= rand && rand < 1/8) {
+    if (0 <= rand && rand < 1/12) {
         this.goodieType = 'small_pill';
-    } else if (1/8 <= rand && rand < 2/8) {
+    } else if (1/12 <= rand && rand < 2/12) {
         this.goodieType = 'small_life';
-    } else if (4/16 <= rand && rand < 5/16) {
+    } else if (4/24 <= rand && rand < 5/24) {
         this.goodieType = 'big_life';
     }
     if(forceGoodie === "big_life"){this.goodieType = 'big_life';}

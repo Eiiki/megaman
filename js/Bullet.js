@@ -78,7 +78,7 @@ Bullet.prototype.update = function (du) {
     this.timeSinceShot += du;
 
     if(this.cx > g_canvas.width + global.camX || this.cx < global.camX){
-        this.takeBulletHit();
+        //this.takeBulletHit();
         return entityManager.KILL_ME_NOW;
     }
 
