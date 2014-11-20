@@ -33,8 +33,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3750   ,
+        cx:5375,
+        cy:265,
         velX : 0,
         velY : -0.5
     });
@@ -175,7 +175,7 @@ function requestPreloads() {
         hammer_joe    : "sprites/hammer_joe.png",
         bomb_flier    : "sprites/bomb_flier.png",
         snakeman      : "sprites/snakeman.png",
-        snakebullet   : "sprites/snakeman_bullets.png",
+        snakebullets   : "sprites/snakeman_bullets.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
