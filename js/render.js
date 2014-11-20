@@ -6,8 +6,8 @@ var g_undoBox = false;
 var g_doFlipFlop = false;
 var g_doRender = true;
 var g_camCoords = true;
-var g_makeTiles = true;
-var g_renderTiles = true;
+var g_makeTiles = false;
+var g_renderTiles = false;
 var g_mute = false;
 
 var g_frameCounter = 1;

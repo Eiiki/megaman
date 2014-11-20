@@ -610,4 +610,17 @@ function initSprites() {
             1.98
         )
     ];
+
+    g_sprites.cloud = [
+        new Sprite(
+            g_images.cloud,
+            0, 0,
+            36, 25, 2
+        ),
+        new Sprite(
+            g_images.cloud,
+            36, 0,
+            36, 25, 2
+        )
+    ];
 }

@@ -63,45 +63,45 @@ _possibleEnemies : [[],[
 					], []
 					],
 
-update : function(du) {
-	var mp = global.mapPart;
-	for(var i = 0; i < this._possibleEnemies[mp].length; i++){
-		var posEn = this._possibleEnemies[mp][i];
-		if(posEn.alive === false){
-			if(posEn.canSpawnAgain === false && 
-				(global.camX+610 < posEn.cx || global.camX-100 > posEn.cx)){
-				posEn.canSpawnAgain = true;
-			}
-			if(posEn.canSpawnAgain === false && 
-				(global.camY+480 < posEn.cy || global.camY > posEn.cy)){
-				posEn.canSpawnAgain = true;
-			}
-		}
-		if(global.camX + 510 > posEn.cx && global.camX < posEn.cx){
-	        if(posEn.alive === false
-	        	&& posEn.canSpawnAgain === true && !posEn.oneTime){
-	            this.spawnEnemy(mp,i);
-	        	if(posEn.oneTime !== undefined) posEn.oneTime = true;
-	        }
-	    }
-	}
-},
+update : function(du) {},
+// 	var mp = global.mapPart;
+// 	for(var i = 0; i < this._possibleEnemies[mp].length; i++){
+// 		var posEn = this._possibleEnemies[mp][i];
+// 		if(posEn.alive === false){
+// 			if(posEn.canSpawnAgain === false && 
+// 				(global.camX+610 < posEn.cx || global.camX-100 > posEn.cx)){
+// 				posEn.canSpawnAgain = true;
+// 			}
+// 			if(posEn.canSpawnAgain === false && 
+// 				(global.camY+480 < posEn.cy || global.camY > posEn.cy)){
+// 				posEn.canSpawnAgain = true;
+// 			}
+// 		}
+// 		if(global.camX + 510 > posEn.cx && global.camX < posEn.cx){
+// 	        if(posEn.alive === false
+// 	        	&& posEn.canSpawnAgain === true && !posEn.oneTime){
+// 	            this.spawnEnemy(mp,i);
+// 	        	if(posEn.oneTime !== undefined) posEn.oneTime = true;
+// 	        }
+// 	    }
+// 	}
+// },
 
-spawnEnemy : function(mapPart,index){
-	var posEn = this._possibleEnemies[mapPart][index];
-	entityManager.generateEnemy(posEn.type, {
-	            cx : posEn.cx,
-	            cy : posEn.cy,
-	            spawncx : posEn.cx,
-	            spawncy : posEn.cy,
-	            velX : posEn.velX,
-	            velY : posEn.velY,
-	            isFlipped : posEn.isFlipped,
-	            flippY : posEn.flippY
-	            });
-	            posEn.alive=true;
-	            posEn.canSpawnAgain = false;
-},
+// spawnEnemy : function(mapPart,index){
+// 	var posEn = this._possibleEnemies[mapPart][index];
+// 	entityManager.generateEnemy(posEn.type, {
+// 	            cx : posEn.cx,
+// 	            cy : posEn.cy,
+// 	            spawncx : posEn.cx,
+// 	            spawncy : posEn.cy,
+// 	            velX : posEn.velX,
+// 	            velY : posEn.velY,
+// 	            isFlipped : posEn.isFlipped,
+// 	            flippY : posEn.flippY
+// 	            });
+// 	            posEn.alive=true;
+// 	            posEn.canSpawnAgain = false;
+// },
 
 death : function (deadPos){
 	var mp = global.mapPart;

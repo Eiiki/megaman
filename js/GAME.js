@@ -31,22 +31,22 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 //         velY : -0.5
 //     });
 // }
-function createMegaman() {
-    entityManager.generateMegaman({
-        cx:5375,
-        cy:265,
-        velX : 0,
-        velY : -0.5
-    });
-}
 // function createMegaman() {
 //     entityManager.generateMegaman({
-//         cx : 5735,
-//         cy : 370,
+//         cx:200,
+//         cy:3750,
 //         velX : 0,
 //         velY : -0.5
 //     });
 // }
+function createMegaman() {
+    entityManager.generateMegaman({
+        cx : 5735,
+        cy : 370,
+        velX : 0,
+        velY : -0.5
+    });
+}
 
 // =============
 // GATHER INPUTS
@@ -77,6 +77,7 @@ function updateSimulation(du) {
     processDiagnostics();
     
     entityManager.update(du);
+    g_cloud.update(du);
 
     // Prevent perpetual firing!
     //eatKey(Ship.prototype.KEY_FIRE);
@@ -148,6 +149,7 @@ function renderSimulation(ctx) {
 
     ctx.translate(-global.camX, -global.camY);
     entityManager.render(ctx);
+    g_cloud.render(ctx);
     
     if (g_renderSpatialDebug) spatialManager.render(ctx);
     ctx.restore();
@@ -183,13 +185,15 @@ function requestPreloads() {
         small_life    : "sprites/small_life.png", // life is actually pill
         mistery_box   : "sprites/mistery_box.png",
         snake_part    : "sprites/snake_part.png",
-        big_bullet    : "sprites/big_bullet.png"
+        big_bullet    : "sprites/big_bullet.png",
+        cloud         : "sprites/flying_platform.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
+var g_cloud;
 
 function preloadDone() {
     initSprites();
@@ -233,6 +237,7 @@ function preloadDone() {
     //main.init();
     // listen for KEY_START and then init main
     // see titlescreenend function
+    g_cloud = new cloud();
 }
 
 function playTitleSong() {

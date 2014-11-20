@@ -432,7 +432,6 @@ Megaman.prototype.updatePosition = function (du) {
 
     // check if the camera translation system should follow megaman or not
     if(Map.isColliding(this.cx, this.cy) === null) global.fellOffEdge = true;
-    console.log("megaman x : " + global.megamanX + ", megaman y : " + global.megamanY);
 };
 
 //Fires one bullet after each keypress.
