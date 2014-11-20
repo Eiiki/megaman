@@ -19,8 +19,6 @@ function bomb_flier(descr) {
     this.spawncy = this.cy;
 
     // decide initial direction, go in direction of megaman
-    if (this.cx - global.megamanX > 0) this.LEFT = true;
-    else this.RIGHT = true;
 };
 
 bomb_flier.prototype = new Enemy();
