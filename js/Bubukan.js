@@ -16,7 +16,7 @@ function Bubukan(descr) {
     
     // Set drawing scale
     this._scale = 1.5;
-    this.width = this.sprite.width * this._scale;
+    this.width = this.sprite.width * this._scale * 0.55;
     this.height = this.sprite.height * this._scale;
 
     // decide initial direction, go in direction of megaman

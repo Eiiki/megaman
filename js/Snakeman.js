@@ -38,7 +38,7 @@ Snakeman.prototype.HIGHJUMP = false;
 Snakeman.prototype.LEFT = false;
 Snakeman.prototype.RIGHT = false;
 Snakeman.prototype.SUMMON_SNAKES = false;
-Snakeman.prototype.minTimeBetweenSnakes = 8 * SECS_TO_NOMINALS;
+Snakeman.prototype.minTimeBetweenSnakes = 6 * SECS_TO_NOMINALS;
 Snakeman.prototype.minJumpTime = 2 * SECS_TO_NOMINALS;
 Snakeman.prototype.blinkTime = 1 * SECS_TO_NOMINALS;
 Snakeman.prototype.snakeTime = 0.5 * SECS_TO_NOMINALS;
@@ -291,8 +291,8 @@ Snakeman.prototype.decideActions = function(du) {
     } else if (this.state === 'highjumping') {
         this.snakeTimer -= du;
         if (this.snakeTimer <= 0) {
-            //this.summonSnakes();
-            console.log("summon snakes!");
+            this.summonSnakes();
+            //console.log("summon snakes!");
             this.snakeTimer = this.snakeTime;
             this.timeSinceSnakes = this.minTimeBetweenSnakes;
         }
@@ -315,6 +315,12 @@ Snakeman.prototype.summonSnakes = function () {
         cy : this.cy,
         velX : 0,
         velY : -0.5
+    });
+    entityManager.generateEnemy('snakebullet', {
+        cx : this.isFlipped ? this.cx - 20 : this.cx + 20,
+        cy : this.cy,
+        velX : 0,
+        velY : -1.0
     });
 };
 

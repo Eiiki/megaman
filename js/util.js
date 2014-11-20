@@ -69,6 +69,32 @@ square: function(x) {
     return x*x;
 },
 
+// orientation true if left
+dirToRad: function(dir, orientation) {
+    var circle = consts.FULL_CIRCLE;
+    if (orientation) {
+        if (dir === 'down') {
+            return 3 * circle / 4;
+        } else if (dir === 'left') {
+            return 0;
+        } else if (dir === 'up') {
+            return 1 * circle / 4;
+        } else if (dir ==='right') {
+            return circle / 2;
+        }
+    } else {
+        if (dir === 'down') {
+            return 1 * circle / 4;
+        } else if (dir === 'left') {
+            return circle / 2;
+        } else if (dir === 'up') {
+            return 3 * circle / 4;
+        } else if (dir ==='right') {
+            return 0;
+        }
+    }
+    return 0;
+},
 
 // DISTANCES
 // =========
