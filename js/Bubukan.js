@@ -126,6 +126,7 @@ Bubukan.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
+    console.log("this.state: " + this.state);
     if (this.state === 'jumping') this.timeTillFall -= du;
 
     this.decideActions(du); // AI
@@ -206,7 +207,7 @@ Bubukan.prototype.updatePosition = function (du) {
             if (this.cx - global.megamanX > 0) this.LEFT = true;
             else this.RIGHT = true; 
         }
-    }else if(this.isFalling && this.velY <= 0){
+    }else if(!this.isFalling && this.velY <= 0 && this.droppedStick){ // this &&this.droppedStick is a shitmix, because without it he constantly jumped
         //Starts falling down
         this.velY = -0.5;
         this.isFalling = true;
