@@ -169,8 +169,11 @@ Bubukan.prototype.updatePosition = function (du) {
 
     // tjékkar á láréttu collission við umhverfi
     var isColliding = Map.cornerCollisions(nextX, this.cy, this.width, this.height);
-    if (isColliding[0] !== 1 && isColliding[3] !== 1 /*&& isColliding[1] !== 1 && isColliding[2] !== 1*/){
+    if (isColliding[0] !== 1 && isColliding[3] !== 1 && isColliding[1] !== 1 && isColliding[2] !== 1){
         this.cx = Math.max(spriteHalfWidth, nextX);
+    }
+    if (isColliding[1] === 1 && isColliding[2] === 1){
+    	this.kill();
     }
 
     //HORIZONTAL POSITION UPDATE
@@ -219,7 +222,7 @@ Bubukan.prototype.updatePosition = function (du) {
 *                          A. I.                            *
 *************************************************************/
 Bubukan.prototype.decideActions = function(du) {
-    if (this.state === 'walking') {
+	    if (this.state === 'walking') {
         var dist = Math.abs(this.cx - global.megamanX);
         // jump when megaman is close
         if (dist < 150 && !this.hitGround) {
