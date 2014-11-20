@@ -40,6 +40,7 @@ Megaman.prototype.KEY_UP    = 38;
 Megaman.prototype.KEY_DOWN  = 40;
 Megaman.prototype.KEY_LEFT  = 37;
 Megaman.prototype.KEY_RIGHT = 39;
+Megaman.prototype.KEY_SUPER = 55;
 Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
 Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 
@@ -62,6 +63,7 @@ Megaman.prototype.canShootNow = true;
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
 Megaman.prototype.alive = true;
+Megaman.prototype.SUPERMAN = false;
 
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
@@ -201,6 +203,8 @@ Megaman.prototype.update = function (du) {
     //console.log(this.cx + " " + this.cy);
     var oldX = this.cx,
         oldY = this.cy;
+
+    if(eatKey(this.KEY_SUPER)) this.SUPERMAN = !this.SUPERMAN;
 
     if(this._health <= 0 || (this.velY < -20 && (global.camY+960 < this.cy || global.camY-480 > this.cy))){
         this.alive = false;
@@ -374,7 +378,7 @@ Megaman.prototype.updatePosition = function (du) {
         hitEntity.type !== 'goodie' && 
         hitEntity.type !== 'misteryBox') {
         // COLLISION
-        this._health -= 5; // needs adjusting
+        if(!this.SUPERMAN)this._health -= 5; // needs adjusting
         this.isInvuln = true;
         this.isClimbing = false;
         audioManager.play(this.takesHitSound);
