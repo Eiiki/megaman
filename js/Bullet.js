@@ -51,7 +51,7 @@ Bullet.prototype._updateSprite = function () {
         if (this.timeSinceShot >= 3) {
             this.spriteIndex++;
             this.timeSinceShot = 0;
-            if (this.spriteIndex >= g_sprites.big_bullet.length) this.spriteIndex = 0;
+            if (this.spriteIndex >= g_sprites.hammer_joe_bullet.length) this.spriteIndex = 0;
         }
     }
 
