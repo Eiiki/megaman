@@ -196,7 +196,7 @@ update : function(du) {
 renderSnakePart : function(ctx){
 	for (var i = 0; i < this._tiles.length; i++) {
 		for (var j = 0; j < this._tiles[0].length; j++) {
-			if (this._tiles[i][j] === 4) {
+			if (this._tiles[i][j] === 5) {
 				g_sprites.snake_part.drawWrappedCentredAt(ctx, j*this.tileWidth+16, i*this.tileHeight + 32);
 			}
 		}
@@ -232,6 +232,6 @@ render : function(ctx) {
 	ctx.restore();
 
 	if (g_renderTiles) this.renderTiles(ctx);
-	//this.renderSnakePart(ctx);
+	this.renderSnakePart(ctx);
 }
 }

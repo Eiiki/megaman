@@ -114,7 +114,7 @@ bigSnakey.prototype._updateBrickInWave = function(brick, unitIdx){
         }
     }
 */
-    if(unitIdx === 0) Map.changeTile(brick.x, brick.y, 4);
+    if(unitIdx === 0) Map.changeTile(brick.x, brick.y, 5);
     else Map.changeTile(brick.x, brick.y, 1);
 };
 
