@@ -360,7 +360,7 @@ Megaman.prototype.updatePosition = function (du) {
     // tjékkar á láréttu collission við umhverfi
     var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5), //afhverju + 5 ?
         bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5); //afhverju - 5 ?
-    if (topXAdjusted !== 1 && bottomXAdjusted !== 1){
+    if ((topXAdjusted !== 1 && bottomXAdjusted !== 1) && (topXAdjusted !== 5 && bottomXAdjusted !== 5)){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
@@ -403,7 +403,7 @@ Megaman.prototype.updatePosition = function (du) {
             //The megaman jumps up and collides its head with a tile
             this.velY = -0.5;
         }
-        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3 || lbColl === 4 || rbColl === 4) {
+        if(lbColl === 1 || lbColl === 3 || rbColl === 1 || rbColl === 3 || lbColl === 4 || rbColl === 4 || lbColl === 5 || rbColl === 5) {
             //Check whether the megaman is colliding with the ground of the map
             this.cy = Map.getYPosition(this.cy, this.height);
             this.velY = 0;
@@ -415,7 +415,7 @@ Megaman.prototype.updatePosition = function (du) {
         }
     }
 
-    if (rbColl === 4 || lbColl === 4 || rbColl === 3 || lbColl === 3) {
+    if (rbColl === 5 || lbColl === 5 || rbColl === 4 || lbColl === 4 || rbColl === 3 || lbColl === 3) {
         Map._tiles[33][159] = 0;
         Map._tiles[32][159] = 0;
         Map._tiles[31][159] = 0;
