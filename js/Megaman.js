@@ -438,6 +438,13 @@ Megaman.prototype.updatePosition = function (du) {
         Map._tiles[29][159] = 0;
         Map._tiles[28][159] = 0;
     }
+    //implement the y update if fx megaman is standing on big snakey wave
+    if(global.collisionUpdate.shouldUpdate){
+        if(!this._hasJumped){
+            this.cy = global.collisionUpdate.cy;
+        }
+        global.collisionUpdate.shouldUpdate = false;
+    }
 
     if(oldVelY < 0 && this.velY === 0) audioManager.play(this.jumpSound);
     global.megamanX = this.cx;

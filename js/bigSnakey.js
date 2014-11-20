@@ -60,7 +60,7 @@ function bigSnakey(descr) {
 
 bigSnakey.prototype = new Enemy();
 
-bigSnakey.prototype.health = 1;
+bigSnakey.prototype.health = 10;
 bigSnakey.prototype.type = 'bigsnakey';
 bigSnakey.prototype.timeSinceShot = 0;
 bigSnakey.prototype.timeForBrickUpdate = 0;
@@ -73,8 +73,10 @@ bigSnakey.prototype.megamanBehind = function() {
 bigSnakey.prototype._updateBrickInWave = function(brick){
     var zeroBrick1 = 0;
     var zeroBrick2 = 0;
+    var downOneBrick = 0;
+    var plusTile = 0;
     if(brick.y > brick.lastY && brick.y < brick.nextY){
-        //in middle going down
+        //in middle going down        downOneBrick = 32;
         brick.y += 32;
         brick.nextY -= 32;
         brick.lastY += 32;
@@ -89,6 +91,8 @@ bigSnakey.prototype._updateBrickInWave = function(brick){
         zeroBrick1 = brick.y + 2*32;
     }else if(brick.y > brick.lastY && brick.y > brick.nextY){
         //Lowest Pos
+        plusTile = 32;
+        downOneBrick = 32;
         brick.y -= 32;
         brick.nextY -= 32;
         brick.lastY += 32;
@@ -108,6 +112,28 @@ bigSnakey.prototype._updateBrickInWave = function(brick){
     Map.changeTile(brick.x, brick.y - 32, 0);
     Map.changeTile(brick.x, zeroBrick1, 0);
     Map.changeTile(brick.x, zeroBrick2, 0);
+
+    var megamanLM = global.megamanX - global.megamanWidth/2;
+    var megamanRM = global.megamanX + global.megamanWidth/2;
+    if(util.isBetween(megamanLM, brick.x - 16, brick.x + 16) || util.isBetween(megamanRM, brick.x - 16, brick.x + 16)){
+        global.collisionUpdate.shouldUpdate = true;
+        if(global.collisionUpdate.cy === 0) {
+            global.collisionUpdate.cy = global.megamanY;
+            global.collisionUpdate.lastY = global.megamanY;
+        }
+
+        if(global.collisionUpdate.cy + global.megamanHeight/2 !== brick.y - 16){
+            global.collisionUpdate.cy = brick.y - 16 - global.megamanHeight/2;
+        }
+        if(global.collisionUpdate.lastX && global.collisionUpdate.lastY < global.collisionUpdate.cy){
+            global.collisionUpdate.cy = global.collisionUpdate.lastY + plusTile;
+        }
+        global.collisionUpdate.lastY = global.collisionUpdate.cy;
+        global.collisionUpdate.lastX = true;
+    }else{
+        global.collisionUpdate.lastX = false;
+    }
+
     return brick;
 };
 
