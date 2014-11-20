@@ -39,83 +39,62 @@ bigSnakey.prototype.gatherBricks = function(){
                     wave: [
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 1*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 1*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 2*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 2*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 3*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 3*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 4*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 4*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 5*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 5*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 6*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 6*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 7*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 7*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 32}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 32, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32}
                         ],
                         [
                             {x: Map.getXPosition(this.cx+this.width/2*this._scale - 8*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 - 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0},
-                            {x: Map.getXPosition(this.cx+this.width/2*this._scale - 8*32), y: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 - 32, 
-                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 4*32) + 16 + 0}
+                                lastY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0, nextY: Map.getYPosition(this.cy+this.height/2*this._scale + 3*32) + 16 + 0}
                         ]
                     ]
                 };
     return bricks;
 };
 
-bigSnakey.prototype._updateBrickInWave = function(brick, unitIdx){
-    /*
-    var lastBrickDiff = brick.y > brick.lastY;
-    var nextBrickDiff = brick.y > brick.nextY;
-    if(lastBrickDiff && !nextBrickDiff){
+bigSnakey.prototype._updateBrickInWave = function(brick){
+    if(brick.y > brick.lastY && brick.y < brick.nextY){
         brick.y += 32;
         brick.nextY -= 32;
         brick.lastY += 32;
-    }else if(!lastBrickDiff && nextBrickDiff){
+    }else if(brick.y < brick.lastY && brick.y > brick.nextY){
         brick.y -= 32;
         brick.nextY += 32;
         brick.lastY -= 32;
-    }else if(!lastBrickDiff && !nextBrickDiff){
-        if(brick.lastY > brick.nextY){
-            brick.y -= 32;
-            brick.lastY -= 32;
-            brick.nextY += 32;
-        }else{
-            brick.y += 32;
-            brick.lastY += 32;
-            brick.nextY -= 32;
-        }
+    }else if(brick.y > brick.lastY && brick.y > brick.nextY){
+        brick.y -= 32;
+        brick.nextY -= 32;
+        brick.lastY += 32;
+    }else if(brick.y < brick.lastY && brick.y < brick.nextY){
+        brick.y += 32;
+        brick.nextY += 32;
+        brick.lastY -= 32;
     }
-*/
-    if(unitIdx === 0) Map.changeTile(brick.x, brick.y, 5);
-    else Map.changeTile(brick.x, brick.y, 1);
+
+    Map.changeTile(brick.x, brick.y, 5);
+    Map.changeTile(brick.x, brick.y + 32, 1);
 };
 
 bigSnakey.prototype.drawNeck = function(value) {
@@ -137,7 +116,7 @@ bigSnakey.prototype.updateWave = function(){
     for(var n = 0; n < wave.length; n++){
         for(var brickIdx in wave[n]){
             var brick = wave[n][brickIdx];
-            this._updateBrickInWave(brick, parseInt(brickIdx));
+            this._updateBrickInWave(brick);
         }
     }
 };
@@ -174,10 +153,14 @@ bigSnakey.prototype.update = function (du) {
         this.drawNeck(0);
         return entityManager.KILL_ME_NOW;
     }
-
     // update time
     this.timeSinceShot += du;
     this.timeForBrickUpdate += du;
+
+    if(this.timeForBrickUpdate > 20){
+        this.updateWave();
+        this.timeForBrickUpdate = 0;
+    }
 
     if (this.timeSinceShot >= 145 && !this.hasShot && !this.megamanBehind()) { this.fireBullet(); } 
     if (this.timeSinceShot >= 160) { this.hasShot = false; }
@@ -197,8 +180,4 @@ bigSnakey.prototype.render = function (ctx) {
     var offSet = this.isFlipped ? this.sprite.width/2 : 0;
     this.sprite.drawWrappedCentredAt(ctx, this.cx + offSet, this.cy, this.isFlipped);
     this.drawNeck(1);
-    if(this.timeForBrickUpdate > 20){
-        this.updateWave();
-        this.timeForBrickUpdate = 0;
-    }
 };
