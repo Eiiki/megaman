@@ -14,8 +14,8 @@ function bomb_flier(descr) {
     this.spriteArray = g_sprites.bomb_flier;
     // Set drawing scale
     this._scale = 2;
-    this.width = this.sprite.width * this._scale/2;
-    this.height = this.sprite.height * this._scale/2;
+    this.width = this.sprite.width * this._scale/2 * 0.7;
+    this.height = this.sprite.height * this._scale/2 * 0.7;
     this.spawncy = this.cy;
 
     // decide initial direction, go in direction of megaman

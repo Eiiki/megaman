@@ -41,6 +41,7 @@ function Bullet(descr) {
 Bullet.prototype = new Entity();
 
 Bullet.prototype.creator = 'none'; // who fired me?
+Bullet.prototype.type = 'bullet';
 
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.zappedSound = "sounds/enemy_takes_hit.wav";
@@ -98,7 +99,7 @@ Bullet.prototype.update = function (du) {
         return;
     }
 
-    if (hitEntity) {
+    if (hitEntity && hitEntity.type !== 'bullet') {
         var canTakeHit = hitEntity.takeBulletHit;
         var type = hitEntity.type;
         if (canTakeHit && ((this.creator === 'megaman' && type !== 'megaman') ||

@@ -39,7 +39,7 @@ Snakeman.prototype.LEFT = false;
 Snakeman.prototype.RIGHT = false;
 Snakeman.prototype.SUMMON_SNAKES = false;
 Snakeman.prototype.minTimeBetweenSnakes = 4 * SECS_TO_NOMINALS;
-Snakeman.prototype.minJumpTime = 1.5 * SECS_TO_NOMINALS;
+Snakeman.prototype.minJumpTime = 1.0 * SECS_TO_NOMINALS;
 Snakeman.prototype.blinkTime = 1 * SECS_TO_NOMINALS;
 Snakeman.prototype.snakeTime = 0.5 * SECS_TO_NOMINALS;
 
@@ -57,8 +57,8 @@ Snakeman.prototype.shortJumpSpeed = 14;
 Snakeman.prototype.isFlipped  = false;
 Snakeman.prototype.isFalling  = false;
 
-Snakeman.prototype.health = 110; // dies after 22 megaman hit
-Snakeman.prototype.maxHealth = 110;
+Snakeman.prototype.health = 5; // dies after 36 megaman hit
+Snakeman.prototype.maxHealth = 180;
 
 // Sprite indexes
 Snakeman.prototype.spriteRenderer = {
@@ -188,6 +188,9 @@ Snakeman.prototype.update = function (du) {
     if (this.health <= 0) {
         this.onDeath(); // make bombs and goodies 
         this.kill();
+        setTimeout(function(){
+            SNAKEMAN_DEAD = true;
+        }, 2000);
     }
 
     spatialManager.register(this);

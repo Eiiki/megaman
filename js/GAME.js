@@ -18,6 +18,7 @@ audioManager.set("sounds/snake_man.mp3", "sounds/snake_man.mp3");
 audioManager.set("sounds/boss_intro.mp3", "sounds/boss_intro.mp3");
 audioManager.set("sounds/boss.mp3", "sounds/boss.mp3");
 audioManager.set("sounds/title.mp3", "sounds/title.mp3");
+audioManager.set("sounds/getWeapon.mp3", "sounds/getWeapon.mp3");
 
 // ====================
 // CREATE INITIAL SHIPS
@@ -41,8 +42,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 200,
-        cy : 3520,
+       cx : 200,
+        cy : 3400,
         velX : 0,
         velY : -0.5
     });
@@ -79,6 +80,9 @@ function updateSimulation(du) {
     entityManager.update(du);
     g_cloud.update(du);
 
+    if (SNAKEMAN_DEAD) {
+        youWin();
+    }
     // Prevent perpetual firing!
     //eatKey(Ship.prototype.KEY_FIRE);
 }
@@ -158,6 +162,15 @@ function renderSimulation(ctx) {
     
     if (g_renderSpatialDebug) spatialManager.render(ctx);
     ctx.restore();
+
+    if (SNAKEMAN_DEAD) {
+        // won game
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, g_canvas.width, g_canvas.height);
+        g_sprites.youWin.drawWrappedCentredAt(
+            ctx, g_canvas.width / 2, g_canvas.height / 2
+        );
+    } 
 }
 
 // =============
@@ -184,6 +197,7 @@ function requestPreloads() {
         snakeman      : "sprites/snakeman.png",
         snakebullets    : "sprites/snakeman_bullets.png",
         snakeman_health : "sprites/snakeman_health.png",
+        jamacy          : "sprites/jamacy.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
@@ -193,7 +207,8 @@ function requestPreloads() {
         snake_part    : "sprites/snake_part.png",
         big_bullet    : "sprites/big_bullet.png",
         cloud         : "sprites/flying_platform.png",
-        gate          : "sprites/gate.png"
+        gate          : "sprites/gate.png",
+        youWin        : "sprites/youWin.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -297,6 +312,16 @@ function titleScreenEnd() {
     }, 3500 + delay);
 
     main.init();
+}
+
+var SNAKEMAN_DEAD = false;
+function youWin() {
+    var delay = 500; // ms 
+    setTimeout(function() { 
+        audioManager.pause("sounds/boss.mp3");
+        audioManager.playByID("sounds/getWeapon.mp3", 0.7, true);
+    }, delay);
+    g_isUpdatePaused = true;
 }
 
 // Kick it off

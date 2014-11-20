@@ -20,7 +20,7 @@ function Megaman(descr) {
     this._isFiringBullet = false;
     this._hasJumped = false;
 
-    this._health = this.maxHealth; //this.maxHealth
+    this._health = this.maxHealth*20; //this.maxHealth
 
     this._invulnTimer = this.invulnDuration;
     g_sprites.megaman_explosion.scale = 2.2;
@@ -40,6 +40,7 @@ Megaman.prototype.KEY_UP    = 38;
 Megaman.prototype.KEY_DOWN  = 40;
 Megaman.prototype.KEY_LEFT  = 37;
 Megaman.prototype.KEY_RIGHT = 39;
+Megaman.prototype.KEY_SUPER = 55;
 Megaman.prototype.KEY_JUMP  = 'S'.charCodeAt(0);
 Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 
@@ -61,6 +62,8 @@ Megaman.prototype.canShootNow = true;
 // Values for rendering
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
+Megaman.prototype.alive = true;
+Megaman.prototype.SUPERMAN = false;
 
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
@@ -158,6 +161,11 @@ Megaman.prototype._updateSprite = function (du, oldX, oldY){
     if (this.isInvuln && this._invulnTimer > this.invulnDuration / 2) {
         this.sprite = g_sprites.megaman_invulnerable;
     }
+
+    if(!this.alive){
+        this.isInvuln = true;
+        this.sprite = g_sprites.megaman_dead;
+    }
 };
 
 Megaman.prototype._computeVelocityY = function(du, oldVelY){
@@ -195,6 +203,17 @@ Megaman.prototype.update = function (du) {
     //console.log(this.cx + " " + this.cy);
     var oldX = this.cx,
         oldY = this.cy;
+
+    if(eatKey(this.KEY_SUPER)) this.SUPERMAN = !this.SUPERMAN;
+
+    if(this._health <= 0 || (this.velY < -20 && (global.camY+960 < this.cy || global.camY-480 > this.cy))){
+        this.alive = false;
+        
+        setTimeout(function(){
+            this.kill;
+            location.reload();
+        },3000);
+    }
 
     // hopefully disable controls if we are in a collision with an enemy (the first half)
     if (this._invulnTimer < this.invulnDuration && this._invulnTimer > this.invulnDuration / 2) {
@@ -252,7 +271,7 @@ Megaman.prototype.update = function (du) {
     } else if(global.isTransitioning) {
         global.isTransitioning = false;
     }
-
+    if(this._health > this.maxHealth) this._health = this.maxHealth;
     // Handle firing
     this.maybeFireBullet();
 
@@ -357,9 +376,9 @@ Megaman.prototype.updatePosition = function (du) {
     var hitEntity = this.isColliding();
     if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && 
         hitEntity.type !== 'goodie' && 
-        hitEntity.type !== 'misteryBox') {
+        hitEntity.type !== 'misteryBox' && !this.SUPERMAN) {
         // COLLISION
-        this._health -= 5; // needs adjusting
+        if(!this.SUPERMAN)this._health -= 5; // needs adjusting
         this.isInvuln = true;
         this.isClimbing = false;
         audioManager.play(this.takesHitSound);
@@ -375,14 +394,14 @@ Megaman.prototype.updatePosition = function (du) {
     // tjékkar á láréttu collission við umhverfi
     var topXAdjusted    = Map.isColliding(xAdjusted, this.cy - spriteHalfHeight + 5), //afhverju + 5 ?
         bottomXAdjusted = Map.isColliding(xAdjusted, this.cy + spriteHalfHeight - 5); //afhverju - 5 ?
-    if ((topXAdjusted !== 1 && bottomXAdjusted !== 1) && (topXAdjusted !== 5 && bottomXAdjusted !== 5)){
+    if ((topXAdjusted !== 1 && bottomXAdjusted !== 1) && (topXAdjusted !== 5 && bottomXAdjusted !== 5) && this.alive){
         this.cx = Math.max(spriteHalfWidth, nextX);
     }
 
     //VERTICAL POSITION UPDATE
     //
     this._computeVelocityY(du, oldVelY);
-    this.cy -= du * this.velY;
+    if(this.alive) this.cy -= du * this.velY;
     
     // if megaman is climbing and jumps he will stop climbing
     if(keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
@@ -472,7 +491,7 @@ Megaman.prototype.maybeFireBullet = function () {
 
 Megaman.prototype.takeBulletHit = function() {
     var hitEntity = this.isColliding();
-    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
+    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && !this.SUPERMAN) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
@@ -508,7 +527,7 @@ Megaman.prototype.render = function (ctx) {
     // draw explosion if an enemy collides with us
     // alternate every x second
     // this can perhaps be simplified some... but whatever, it works! :D
-    if (this.isInvuln) {
+    if (this.isInvuln && this.alive) {
         // blink controlles the rate of alternating sprites here
         // yes... probably couldve variablized the number 8 here but damn it!
         var blink = this._invulnTimer < this.invulnDuration && this._invulnTimer > this.invulnDuration * 7 / 8 ||

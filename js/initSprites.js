@@ -10,6 +10,11 @@ function initSprites() {
         265,4,
         26,30
     );
+    g_sprites.megaman_dead = new Sprite(
+        g_images.megaman_sprite,
+        184,94,
+        32,14
+    );
     g_sprites.megaman_invulnerable = new Sprite(
         g_images.megaman_sprite,
         280, 45,
@@ -355,6 +360,19 @@ function initSprites() {
         )
     };
 
+    g_sprites.jamacy = [
+        new Sprite(
+            g_images.jamacy,
+            0, 0,
+            19, 17
+        ),
+        new Sprite(
+            g_images.jamacy,
+            19, 0,
+            19, 17
+        )
+    ];
+
     g_sprites.explosion = [
         new Sprite(
             g_images.explosion,
@@ -624,6 +642,13 @@ function initSprites() {
             1.98
         )
     ];
+
+    g_sprites.youWin = new Sprite(
+        g_images.youWin,
+        0, 0,
+        290, 272,
+        1.8
+    );
 
     g_sprites.cloud = [
         new Sprite(
