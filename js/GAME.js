@@ -126,6 +126,7 @@ function renderSimulation(ctx) {
         Map._tiles[29][159] = 1;
         Map._tiles[28][159] = 1;
     }
+    if (part === 8) global.shouldTrans = true;
     if (part === 8 && x < 5377) global.camX = 5377 - canvasHalfWidth;
     if (part === 8 && x > 8448) global.camX = 8448 - canvasHalfWidth;
 
