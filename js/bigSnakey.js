@@ -60,7 +60,7 @@ function bigSnakey(descr) {
 
 bigSnakey.prototype = new Enemy();
 
-bigSnakey.prototype.health = 10;
+bigSnakey.prototype.health = 20;
 bigSnakey.prototype.type = 'bigsnakey';
 bigSnakey.prototype.timeSinceShot = 0;
 bigSnakey.prototype.timeForBrickUpdate = 0;

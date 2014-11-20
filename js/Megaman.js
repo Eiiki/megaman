@@ -204,7 +204,7 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
 Megaman.prototype.update = function (du) {
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-    //console.log(this.cx + " " + this.cy);
+    console.log(this.cx + " " + this.cy);
     var oldX = this.cx,
         oldY = this.cy;
 
@@ -396,7 +396,7 @@ Megaman.prototype.updatePosition = function (du) {
     var hitEntity = this.isColliding();
     if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && 
         hitEntity.type !== 'goodie' && 
-        hitEntity.type !== 'misteryBox' && !this.SUPERMAN) {
+        hitEntity.type !== 'misteryBox' && !this.SUPERMAN && hitEntity.type !== 'bullet') {
         // COLLISION
         if(!this.SUPERMAN){
             this._health -= 7.5; // needs adjusting
@@ -528,6 +528,10 @@ Megaman.prototype.takeBulletHit = function() {
         this.isInvuln = true;
         this.isClimbing = false;
         audioManager.play(this.takesHitSound);
+        /*if ((global.mapPart === 3 && this.cx < 1970) || (global.mapPart === 6 && this.cx < 4020)) {
+            this._health -= 7.5; // big snakey hack!!!
+        }*/
+        if (hitEntity.creator === 'bigsnakey') this._health -= 7.5;    
     }
 };
 
