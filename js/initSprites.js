@@ -10,6 +10,11 @@ function initSprites() {
         265,4,
         26,30
     );
+    g_sprites.megaman_dead = new Sprite(
+        g_images.megaman_sprite,
+        184,94,
+        32,14
+    );
     g_sprites.megaman_invulnerable = new Sprite(
         g_images.megaman_sprite,
         280, 45,
