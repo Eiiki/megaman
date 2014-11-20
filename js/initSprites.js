@@ -219,9 +219,21 @@ function initSprites() {
         new Sprite(
             g_images.bigSnakey,
             0, 0,
-            73, 54,
+            74, 54,
             2.1
-        )
+        ),
+        new Sprite(
+            g_images.bigSnakey,
+            74,0,
+            74,54,
+            2.1
+        ),
+        new Sprite(
+            g_images.bigSnakey,
+            147,0,
+            76,54,
+            2.1
+        ),
     ];
 
     g_sprites.potton_copter = [
