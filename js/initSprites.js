@@ -172,7 +172,7 @@ function initSprites() {
             272, 287,
             50, 33,
             3
-        )
+        ),
         bullets : [
             new Sprite(
                 g_images.snakebullets,
