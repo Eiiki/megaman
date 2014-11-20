@@ -19,6 +19,7 @@ audioManager.set("sounds/boss_intro.mp3", "sounds/boss_intro.mp3");
 audioManager.set("sounds/boss.mp3", "sounds/boss.mp3");
 audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 audioManager.set("sounds/getWeapon.mp3", "sounds/getWeapon.mp3");
+audioManager.set("sounds/megaman_and_boss_dead.wav", "sounds/megaman_and_boss_dead.wav");
 
 // ====================
 // CREATE INITIAL SHIPS
@@ -42,8 +43,8 @@ audioManager.set("sounds/getWeapon.mp3", "sounds/getWeapon.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-       cx : 200,
-        cy : 3520,
+       cx : 5350,
+        cy : 1250,
         velX : 0,
         velY : -0.5
     });

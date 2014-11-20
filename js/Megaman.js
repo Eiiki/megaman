@@ -47,7 +47,7 @@ Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 // Velocity values
 Megaman.prototype.verticalSpeed      = 4;
 Megaman.prototype.initialJumpSpeed   = 12;
-Megaman.prototype.climbSpeed         = 2.5;
+Megaman.prototype.climbSpeed         = 5;//2.5;
 Megaman.prototype.moveBackwardsSpeed = 1.5; 
 
 // Position values
@@ -63,7 +63,7 @@ Megaman.prototype.canShootNow = true;
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
 Megaman.prototype.alive = true;
-Megaman.prototype.SUPERMAN = false;
+Megaman.prototype.SUPERMAN = true;//false;
 
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
@@ -71,6 +71,7 @@ Megaman.prototype.fireSound = "sounds/megaman_fire_bullet.wav";
 Megaman.prototype.takesHitSound = "sounds/megaman_takes_hit.wav";
 Megaman.prototype.small_pillSound = "sounds/megaman_live_increase.wav";
 Megaman.prototype.big_lifeSound = "sounds/megaman_live_increase_much.wav";
+Megaman.prototype.death_sound = "sounds/megaman_and_boss_dead.wav"
 
 // misc
 Megaman.prototype.maxHealth = 100;
@@ -209,10 +210,7 @@ Megaman.prototype.update = function (du) {
     if(this._health <= 0 || (this.velY < -20 && (global.camY+960 < this.cy || global.camY-480 > this.cy))){
         this.alive = false;
         
-        setTimeout(function(){
-            this.kill;
-            location.reload();
-        },3000);
+        this.killMegaman();
     }
 
     // hopefully disable controls if we are in a collision with an enemy (the first half)
@@ -305,6 +303,16 @@ Megaman.prototype.immobilize = function (set) {
         keys[this.KEY_RIGHT] = false;
         keys[this.KEY_JUMP] = false;
         keys[this.KEY_FIRE] = false;*/
+};
+
+Megaman.prototype.killMegaman = function(){
+    this.kill();
+    audioManager.pause("sounds/snake_man.mp3");
+    audioManager.pause("sounds/snake_man_intro.mp3");
+    audioManager.playByID(this.death_sound);
+    setTimeout(function(){ 
+        location.reload(); 
+    },3000);
 };
 
 Megaman.prototype.computeSubStep = function (du) {
@@ -402,6 +410,13 @@ Megaman.prototype.updatePosition = function (du) {
     //
     this._computeVelocityY(du, oldVelY);
     if(this.alive) this.cy -= du * this.velY;
+
+    //If the megaman jumps out of view
+    if(global.mapPart === 8 && Map.isOutOfBound(this.cx, this.cy, this.width, this.height)){
+        this._health = -1;
+        this.killMegaman();
+        return;
+    }
     
     // if megaman is climbing and jumps he will stop climbing
     if(keys[this.KEY_JUMP] && this.isClimbing) this.isClimbing = false;
