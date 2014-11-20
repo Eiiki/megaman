@@ -41,8 +41,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 5735,
-        cy : 370,
+        cx : 200,
+        cy : 3520,
         velX : 0,
         velY : -0.5
     });
@@ -146,6 +146,11 @@ function renderSimulation(ctx) {
     if (part === 8) global.shouldTrans = true;
     if (part === 8 && x < 5377) global.camX = 5377 - canvasHalfWidth;
     if (part === 8 && x > 8448) global.camX = 8448 - canvasHalfWidth;
+    if (part === 8 && global.camX < 8448-canvasHalfWidth && BOSS_STARTED) global.camX = 8448-canvasHalfWidth;
+    if (part === 8 && global.camY > 30 && BOSS_STARTED) global.camY = 30;
+    if (part === 8 && BOSS_STARTED) {
+        global.isTransitioning = false;
+    }
 
     ctx.translate(-global.camX, -global.camY);
     entityManager.render(ctx);
@@ -177,7 +182,8 @@ function requestPreloads() {
         hammer_joe    : "sprites/hammer_joe.png",
         bomb_flier    : "sprites/bomb_flier.png",
         snakeman      : "sprites/snakeman.png",
-        snakebullets   : "sprites/snakeman_bullets.png",
+        snakebullets    : "sprites/snakeman_bullets.png",
+        snakeman_health : "sprites/snakeman_health.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
@@ -186,7 +192,8 @@ function requestPreloads() {
         mistery_box   : "sprites/mistery_box.png",
         snake_part    : "sprites/snake_part.png",
         big_bullet    : "sprites/big_bullet.png",
-        cloud         : "sprites/flying_platform.png"
+        cloud         : "sprites/flying_platform.png",
+        gate          : "sprites/gate.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -210,7 +217,7 @@ function preloadDone() {
         audioManager.playByID("sounds/boss.mp3", 0.35, true);
     }, 8800 + delay);*/
 
-    entityManager.generateEnemy('goodie', {
+    /*entityManager.generateEnemy('goodie', {
         cx : 320,
         cy : 3770,
         velX : 0,
@@ -221,7 +228,7 @@ function preloadDone() {
         cy : 3770,
         velX : 0,
         velY : 0
-    });
+    });*/
     
     /*entityManager.generateEnemy('bubukan', {
         cx : 400,
@@ -247,6 +254,18 @@ function playTitleSong() {
             audioManager.playByID("sounds/title.mp3", 0.8, true);
         }
     }, delay);
+}
+
+var BOSS_STARTED = false;
+function playBossSong() {
+    var delay = 500; // ms 
+    setTimeout(function() {
+        audioManager.pause("sounds/snake_man.mp3");
+        audioManager.playByID("sounds/boss_intro.mp3", 0.35, false);
+    }, delay);
+    setTimeout(function() {
+        audioManager.playByID("sounds/boss.mp3", 0.35, true);
+    }, 8800 + delay);
 }
 
 function drawTitleScreen() {

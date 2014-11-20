@@ -128,6 +128,9 @@ generateEnemy : function(type, descr) {
     if (type === 'bomb_flier') {
         this._enemies.push(new bomb_flier(descr));
     }
+    if (type === 'gate') {
+        this._enemies.push(new Gate(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {

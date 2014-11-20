@@ -38,8 +38,8 @@ Snakeman.prototype.HIGHJUMP = false;
 Snakeman.prototype.LEFT = false;
 Snakeman.prototype.RIGHT = false;
 Snakeman.prototype.SUMMON_SNAKES = false;
-Snakeman.prototype.minTimeBetweenSnakes = 6 * SECS_TO_NOMINALS;
-Snakeman.prototype.minJumpTime = 2 * SECS_TO_NOMINALS;
+Snakeman.prototype.minTimeBetweenSnakes = 4 * SECS_TO_NOMINALS;
+Snakeman.prototype.minJumpTime = 1.5 * SECS_TO_NOMINALS;
 Snakeman.prototype.blinkTime = 1 * SECS_TO_NOMINALS;
 Snakeman.prototype.snakeTime = 0.5 * SECS_TO_NOMINALS;
 
@@ -51,13 +51,14 @@ Snakeman.prototype.state = "cinematic"; // walking, jumping, highjumping/spawnin
 // Velocity values
 Snakeman.prototype.verticalSpeed  = 3;
 Snakeman.prototype.highJumpSpeed  = 20;
-Snakeman.prototype.shortJumpSpeed = 11;
+Snakeman.prototype.shortJumpSpeed = 14;
 
 // Position values
 Snakeman.prototype.isFlipped  = false;
 Snakeman.prototype.isFalling  = false;
 
-Snakeman.prototype.health = 100; // dies after one megaman hit
+Snakeman.prototype.health = 110; // dies after 22 megaman hit
+Snakeman.prototype.maxHealth = 110;
 
 // Sprite indexes
 Snakeman.prototype.spriteRenderer = {
@@ -72,7 +73,7 @@ Snakeman.prototype.spriteRenderer = {
         cnt : 0
     },
     highjumping : {
-        renderTimes : 8,
+        renderTimes : 24,
         idx : 0,
         cnt : 0
     },
@@ -114,7 +115,7 @@ Snakeman.prototype._updateSprite = function (du, oldX, oldY){
     if(s_moving.cnt >= this.spriteArray.length * s_moving.renderTimes) {
         s_moving.idx = 0;
         s_moving.cnt = 0;
-    }else if(velX !== 0 || this.state === 'cinematic'){
+    }else if(velX !== 0 || this.state === 'cinematic' || this.state === 'highjumping'){
         s_moving.idx = Math.floor(s_moving.cnt / s_moving.renderTimes);
         s_moving.cnt += Math.round(du) || 1;
     }
@@ -281,7 +282,7 @@ Snakeman.prototype.decideActions = function(du) {
                 this.LEFT = false;     
             }
         }
-    } else if (this.state === 'walking') {
+    } else if (this.state === 'walking' || this.state === 'jumping') {
         if (this.timeSinceSnakes <= 0) {
             this.HIGHJUMP = true;
             this.state = 'highjumping';
@@ -337,9 +338,10 @@ Snakeman.prototype.computeThrustX = function () {
 };
 
 Snakeman.prototype.takeBulletHit = function() {
-    this.health -= 5; // needs adjusting
-    this.isBlinking = true;
-    //audioManager.play(this.takesHitSound);
+    if (this.state !== 'cinematic') {
+        this.health -= 5; // needs adjusting
+        this.isBlinking = true;
+    }
 };
 
 Snakeman.prototype.render = function (ctx) {
@@ -369,6 +371,36 @@ Snakeman.prototype.render = function (ctx) {
     }
 
     this.sprite.scale = origScale;
+
+    this.drawHealth(ctx);
+};
+
+Snakeman.prototype.drawHealth = function(ctx) {
+    var sprite = g_sprites.snakeman_health;
+    var oldWidth = sprite.width;
+    var oldHeight = sprite.height;
+
+    var origScale = sprite.scale;
+    // whoop magic numbers
+    var s = sprite.scale;
+    var cx = global.camX + 84; // changeable param
+    var cy = global.camY + 30 + s*(sprite.height)/2;
+
+    sprite.drawWrappedCentredAt(
+        ctx, cx, cy
+    );
+    var healthRatio = 1 - this.health / this.maxHealth;
+    if (healthRatio < 0) healthRatio = 0;
+    var topLeft = [cx - s*(sprite.width)/2, cy - s*(sprite.height)/2]; // [x, y]
+    // draw a black box over the health we've lost
+    var oldFillStyle = ctx.fillStyle;
+    ctx.fillStyle = 'black';
+    ctx.fillRect(topLeft[0], topLeft[1], s*sprite.width, s*(healthRatio * sprite.height));
+    ctx.fillStyle = oldFillStyle;
+
+    sprite.scale = origScale;
+    sprite.width = oldWidth;
+    sprite.height = oldHeight;
 };
 
 Snakeman.prototype.debug = function() {

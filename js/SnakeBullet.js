@@ -16,7 +16,7 @@ function SnakeBullet(descr) {
     // Set drawing scale
     this._scale = 2.0;
     this.width = this.sprite.width * this._scale * 0.6;
-    this.height = this.sprite.height * this._scale * 1.5; 
+    this.height = this.sprite.height * this._scale * 2.0; 
 
     this.stayStillTimer = this.stayStillTime;
     this.stationaryX = this.cx; // old x
@@ -44,7 +44,7 @@ SnakeBullet.prototype.DOWN = false;
 SnakeBullet.prototype.LEFT = false;
 SnakeBullet.prototype.RIGHT = false;
 
-SnakeBullet.prototype.stayStillTime = 1 * SECS_TO_NOMINALS;
+SnakeBullet.prototype.stayStillTime = 0.3 * SECS_TO_NOMINALS;
 
 // directions!!! down, left, up, right
 SnakeBullet.prototype.direction = 'down';
@@ -244,7 +244,7 @@ SnakeBullet.prototype.changeDirectionGround = function() {
 
 SnakeBullet.prototype.computeGravity = function() {
     if (!this.hitGround) {
-        return global.gravity;
+        return global.gravity * 0.3; // lower to try and reduce odds of going through walls
     } else {
         return 0; // disable gravity when we hit ground
     }

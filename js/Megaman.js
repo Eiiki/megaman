@@ -20,8 +20,7 @@ function Megaman(descr) {
     this._isFiringBullet = false;
     this._hasJumped = false;
 
-    // just for display purposes start with half health for now ONLY 
-    this._health = this.maxHealth / 2; //this.maxHealth
+    this._health = this.maxHealth; //this.maxHealth
 
     this._invulnTimer = this.invulnDuration;
     g_sprites.megaman_explosion.scale = 2.2;
@@ -193,7 +192,7 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
 Megaman.prototype.update = function (du) {
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-
+    //console.log(this.cx + " " + this.cy);
     var oldX = this.cx,
         oldY = this.cy;
 
@@ -212,6 +211,20 @@ Megaman.prototype.update = function (du) {
     // ugly fix for annoying visual bug when jumping between map parts
     if (global.mapPart === 6 && this.cy < 1000 && !this.isClimbing) {
             this.fix = true;
+    }
+
+    // camera moving to correct place in snakeman boss
+    if (this.cx > 8240 && !BOSS_STARTED) {
+        global.camX = 8200;
+        global.camY = 20;
+        global.mapPart = 8;
+        // do more bossy stuff!
+        playBossSong();
+        BOSS_STARTED = true;
+        entityManager.generateEnemy('gate', {
+
+        });
+        global.isTransitioning = true;
     }
 
     if (this.cy > 1000) this.fix = false;
@@ -548,7 +561,8 @@ Megaman.prototype.drawHealth = function(ctx) {
     // draw a black box over the health we've lost
     var oldFillStyle = ctx.fillStyle;
     ctx.fillStyle = 'black';
-    ctx.fillRect(topLeft[0], topLeft[1], s*sprite.width, s*(healthRatio * sprite.height));
+    // - 2 is magic number for quick fix
+    ctx.fillRect(topLeft[0], topLeft[1], s*sprite.width-2, s*(healthRatio * sprite.height));
     ctx.fillStyle = oldFillStyle;
 
     sprite.scale = origScale;

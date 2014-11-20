@@ -588,6 +588,20 @@ function initSprites() {
         g_images.megaman_health
     );
 
+    g_sprites.snakeman_health = new Sprite(
+        g_images.snakeman_health,
+        0, 0,
+        27, 181,
+        0.615
+    );
+
+    g_sprites.gate = new Sprite(
+        g_images.gate,
+        0, 0,
+        56, 193,
+        0.68
+    );
+
     g_sprites.map = new Sprite(
         g_images.map
     );
