@@ -57,7 +57,8 @@ _possibleEnemies : [[],[
 						{type: 'bomb_flier',cx:6600,cy:236,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
 						{type: 'bomb_flier',cx:6710,cy:108,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
 						{type: 'bomb_flier',cx:6850,cy:140,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
-						{type: 'bomb_flier',cx:6900,cy:236,alive:false,canSpawnAgain:true,velX:0,velY:-1.5}
+						{type: 'bomb_flier',cx:6900,cy:236,alive:false,canSpawnAgain:true,velX:0,velY:-1.5},
+						{type: 'snakeman',cx:8615,cy:200,alive:false,canSpawnAgain:true,velX:0,velY:-0.5}
 					]
 					],
 
