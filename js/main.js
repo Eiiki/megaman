@@ -68,12 +68,13 @@ main._isGameOver = false;
 
 main.gameOver = function () {
     this._isGameOver = true;
+    audioManager.muteAll();
     console.log("gameOver: quitting...");
 };
 
 // Simple voluntary quit mechanism
 //
-var KEY_QUIT = 'Q'.charCodeAt(0);
+var KEY_QUIT = '9'.charCodeAt(0);
 function requestedQuit() {
     return keys[KEY_QUIT];
 }

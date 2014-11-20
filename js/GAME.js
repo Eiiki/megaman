@@ -43,7 +43,7 @@ audioManager.set("sounds/getWeapon.mp3", "sounds/getWeapon.mp3");
 function createMegaman() {
     entityManager.generateMegaman({
        cx : 200,
-        cy : 3400,
+        cy : 3520,
         velX : 0,
         velY : -0.5
     });
@@ -276,6 +276,8 @@ function playBossSong() {
     var delay = 500; // ms 
     setTimeout(function() {
         audioManager.pause("sounds/snake_man.mp3");
+        audioManager.pause("sounds/snake_man_intro.mp3");
+        audioManager.disableByID("sounds/snake_man.mp3"); // in case it hasnt started playing yet
         audioManager.playByID("sounds/boss_intro.mp3", 0.35, false);
     }, delay);
     setTimeout(function() {

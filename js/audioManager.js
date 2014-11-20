@@ -12,6 +12,7 @@ can set songs with ID and then play them by those ID's
 var audioManager = {
 
 _audio : {},
+_disabled : {},
 
 set : function(path, ID) {
     this._audio[ID] = new Audio(path);
@@ -30,9 +31,15 @@ playByID : function(ID, vol, loop) {
     if (vol === undefined) vol = 1;
     if (loop === undefined) loop = false;
 
-    this._audio[ID].volume = vol;
-    this._audio[ID].loop = loop;
-    this._audio[ID].play();
+    if (!(ID in this._disabled)) {
+        this._audio[ID].volume = vol;
+        this._audio[ID].loop = loop;
+        this._audio[ID].play();
+    }
+},
+
+disableByID : function(ID) {
+    this._disabled[ID] = ID;
 },
 
 pause : function(ID) {
