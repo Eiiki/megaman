@@ -174,6 +174,7 @@ isColliding : function(x, y) {
 },
 
 getYPosition : function(y, height) {
+	if(height === undefined) height = 0;
 	var yTileCoords = Math.floor(y / this.tileHeight);
 	return yTileCoords * this.tileHeight + this.tileHeight - height/2;
 },
@@ -190,6 +191,16 @@ toggleTile : function(x, y) {
 
 update : function(du) {
 
+},
+
+renderSnakePart : function(ctx){
+	for (var i = 0; i < this._tiles.length; i++) {
+		for (var j = 0; j < this._tiles[0].length; j++) {
+			if (this._tiles[i][j] === 4) {
+				g_sprites.snake_part.drawWrappedCentredAt(ctx, j*this.tileWidth+16, i*this.tileHeight + 32);
+			}
+		}
+	}
 },
 
 renderTiles : function(ctx) {
@@ -221,5 +232,6 @@ render : function(ctx) {
 	ctx.restore();
 
 	if (g_renderTiles) this.renderTiles(ctx);
+	//this.renderSnakePart(ctx);
 }
 }
