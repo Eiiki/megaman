@@ -3,7 +3,7 @@ function bigSnakey(descr) {
     this.setup(descr);
     
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.bigSnakey[0];
+    this.sprite = this.sprite || g_sprites.bigSnakey[1];
     
     // Set drawing scale
     this._scale = 1;
@@ -136,16 +136,16 @@ bigSnakey.prototype.updateWave = function(){
 };
 
 bigSnakey.prototype._updateSprite = function () {
-    /*if (this.timeSinceShot >= 100) { this.sprite = g_sprites.bigSnakey[2]; }
+    if (this.timeSinceShot >= 100) { this.sprite = g_sprites.bigSnakey[2]; }
     if (this.timeSinceShot >= 120) { this.sprite = g_sprites.bigSnakey[0]; }
     if (this.timeSinceShot >= 140 && !this.megamanBehind()) { this.sprite = g_sprites.bigSnakey[1]; }
     if (this.timeSinceShot >= 160) { this.timeSinceShot = 0; }
-    if (this.timeSinceShot  < 100) { this.sprite = g_sprites.bigSnakey[0]; }*/
-    this.sprite = g_sprites.bigSnakey[0];
+    if (this.timeSinceShot  < 100) { this.sprite = g_sprites.bigSnakey[0]; }
 };
 
 bigSnakey.prototype.fireBullet = function () {
-    /*var xVector = (global.megamanX - this.cx);
+    var numBullets = Math.random() > 0.6 ? 2 : 4;
+    var xVector = (global.megamanX - this.cx);
     var yVector = (global.megamanY - this.cy);
     
     var yToxRatio = yVector / xVector;
@@ -155,10 +155,14 @@ bigSnakey.prototype.fireBullet = function () {
 
     // 5 is to make it look good when snakey fires, otherwise when he is
     // flipped the shot will start outside of his sprite
-    entityManager.fireBullet(this.cx + 5, this.cy, xVel, yVel, this.type);
+    for(var n = 0; n < numBullets; n++){
+        var randomX = numBullets > 2 ? -Math.random() : Math.random();
+        var randomY = numBullets > 2 ? -Math.random() : Math.random();
+        entityManager.fireBullet(this.cx + 5, this.cy, xVel+randomX, yVel+randomY, this.type);
+    }
     
-    audioManager.play(this.fireSound);
-    this.hasShot = true;*/
+    //audioManager.play(this.fireSound);
+    this.hasShot = true;
 };
 
 bigSnakey.prototype.update = function (du) {
