@@ -38,9 +38,12 @@ _possibleEnemies : [[],[
 						{type: 'petiteSnakey', cx: 2889, cy: 2794, alive: false, canSpawnAgain: true},
 						{type: 'potton',cx:2950, cy:2742,alive:false,canSpawnAgain:true},
 						{type: 'big_life',cx:2704,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
-						{type: 'big_life',cx:2832,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false}
+						{type: 'big_life',cx:2832,cy:2550, velX:0,velY:0,alive:false,canSpawnAgain:true,oneTime:false},
+						{type: 'hammer_joe',cx:3920,cy:2680,alive:false,canSpawnAgain:true,velX:0,velY:0}
 					],
-					[],[
+					[
+						{type: 'hammer_joe',cx:3825,cy:2136,alive:false,canSpawnAgain:true,velX:0,velY:0}
+					],[
 						{type: 'misteryBox',cx:3887,cy:1842,alive:false,canSpawnAgain:true,oneTime:false},
 						{type: 'misteryBox',cx:3951,cy:1842,alive:false,canSpawnAgain:true,oneTime:false}
 					],[

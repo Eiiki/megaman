@@ -59,13 +59,16 @@ init: function() {
     //this.generateMegaman();
 },
 
-fireBullet: function(cx, cy, velX, velY, creator) {
+fireBullet: function(cx, cy, velX, velY, creator, flip) {
+    if (flip === 'undefined') flip = false;
+
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
         velY : velY,
-        creator : creator
+        creator : creator,
+        isFlipped : flip
     }));
 },
 
@@ -88,6 +91,9 @@ generateEnemy : function(type, descr) {
         this._enemies.push(entity);
         // I need access to the enemy entity for de-spawning purposes
         return entity;
+    }
+    if (type === 'hammer_joe') {
+        this._enemies.push(new hammerJoe(descr));
     }
     if (type === 'potton'){
         this._enemies.push(new Potton(descr));

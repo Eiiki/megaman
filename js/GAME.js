@@ -25,8 +25,8 @@ audioManager.set("sounds/title.mp3", "sounds/title.mp3");
 
 function createMegaman() {
     entityManager.generateMegaman({
-        cx : 1700,
-        cy : 2500,
+        cx : 4000,
+        cy : 2250,
         velX : 0,
         velY : -0.5
     });
@@ -155,6 +155,7 @@ function requestPreloads() {
         potton_copter : "sprites/potton_copter.png",
         potton_ball   : "sprites/potton_ball.png",
         bubukan       : "sprites/bubukan_added.png",
+        hammer_joe    : "sprites/hammer_joe.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
@@ -200,6 +201,112 @@ function preloadDone() {
         velX : 0,
         velY : 0
     });
+
+    g_sprites.hammer_joe = [
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 21,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 21,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 21,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 70,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            50, 70,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            92, 70,
+            35, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            128.5, 70,
+            55, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            0, 70,
+            45, 43, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            186, 68.5,
+            35, 44, 2
+        )
+    ];
+
+    g_sprites.hammer_joe_bullet = [
+        new Sprite(
+            g_images.hammer_joe,
+            0, 3,
+            23, 14, 2
+        ),
+        new Sprite(
+            g_images.hammer_joe,
+            27, 3,
+            23, 14, 2
+        ),          
+    ];
     /*entityManager.generateEnemy('bubukan', {
         cx : 400,
         cy : 3600,

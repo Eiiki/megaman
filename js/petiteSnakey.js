@@ -1,6 +1,3 @@
-        // entityManager.fireBullet(
-        //    this.cx, this.cy, velX, velY, this.type);
-        // audioManager.play(this.fireSound);
 
 function petiteSnakey(descr) {
     // Common inherited setup logic from Entity
