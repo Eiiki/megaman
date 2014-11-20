@@ -8,8 +8,8 @@ function hammerJoe(descr) {
     
     // Set drawing scale
     this._scale = 2;
-    this.width = this.sprite.width * this._scale;
-    this.height = this.sprite.height * this._scale;
+    this.width = this.sprite.width;
+    this.height = this.sprite.height;
     console.log("it's hammer time, hammer joe time!");
     
     this.offSets = [0, -14, -10, 5, -14];
@@ -20,7 +20,7 @@ function hammerJoe(descr) {
 
 hammerJoe.prototype = new Enemy();
 
-hammerJoe.prototype.health = 15;
+hammerJoe.prototype.health = 10;
 hammerJoe.prototype.type = 'hammer_joe';
 hammerJoe.prototype.timeSinceShot = 0;
 hammerJoe.prototype.hasShot = false;
