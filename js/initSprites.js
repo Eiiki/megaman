@@ -405,6 +405,60 @@ function initSprites() {
         )
     ];
 
+    g_sprites.bomb_flier = [
+        new Sprite(
+            g_images.bomb_flier,
+            0, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            39, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            78, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            117, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            156, 34,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            156, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            117, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            0, 0,
+            39, 34
+        ),
+        new Sprite(
+            g_images.bomb_flier,
+            39, 0,
+            39, 34
+        )
+        ,
+        new Sprite(
+            g_images.bomb_flier,
+            78, 0,
+            39, 34
+        )
+    ];
+
     g_sprites.snake_part = new Sprite(
         g_images.snake_part,
         0,0,

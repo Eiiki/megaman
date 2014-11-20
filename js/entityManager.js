@@ -125,6 +125,9 @@ generateEnemy : function(type, descr) {
     if (type === 'snakebullet') {
         this._enemies.push(new SnakeBullet(descr));
     }
+    if (type === 'bomb_flier') {
+        this._enemies.push(new bomb_flier(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
