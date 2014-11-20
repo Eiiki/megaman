@@ -59,13 +59,16 @@ init: function() {
     //this.generateMegaman();
 },
 
-fireBullet: function(cx, cy, velX, velY, creator) {
+fireBullet: function(cx, cy, velX, velY, creator, flip) {
+    if (flip === 'undefined') flip = false;
+
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
         velY : velY,
-        creator : creator
+        creator : creator,
+        isFlipped : flip
     }));
 },
 
@@ -88,6 +91,9 @@ generateEnemy : function(type, descr) {
         this._enemies.push(entity);
         // I need access to the enemy entity for de-spawning purposes
         return entity;
+    }
+    if (type === 'hammer_joe') {
+        this._enemies.push(new hammerJoe(descr));
     }
     if (type === 'potton'){
         this._enemies.push(new Potton(descr));
@@ -113,6 +119,12 @@ generateEnemy : function(type, descr) {
     if (type === 'misteryBox'){
         this._enemies.push(new misteryBox(descr));
     }
+    if (type === 'snakeman') {
+        this._enemies.push(new Snakeman(descr));
+    }
+    if (type === 'snakebullet') {
+        this._enemies.push(new SnakeBullet(descr));
+    }
 },
 
 yoinkMegamanToPos : function(xPos, yPos) {
@@ -127,9 +139,11 @@ yoinkMegamanToPos : function(xPos, yPos) {
 update: function(du) {
     if(this._enemies.length !== 0){
         for(var i = 0; i < this._enemies.length; i++){
-            var Baddie = this._enemies[i]
+            var Baddie = this._enemies[i];
             if(Baddie.cx > global.camX + 710 || Baddie.cx < global.camX-200){
-                Baddie.kill();
+                if (Baddie.type !== 'snakeman') {
+                    Baddie.kill();
+                }
             }
         }
     }

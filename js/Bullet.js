@@ -22,6 +22,14 @@ function Bullet(descr) {
         this.sprite = g_sprites.small_pill[0];
         this._scale = 1.4;
     }
+
+    if (this.creator === "hammer_joe") {
+        this.sprite = g_sprites.hammer_joe_bullet[0];
+        this.spriteIndex = 0;
+        this._scale = 2;
+    }
+    this.timeSinceShot = 0;
+    this.shouldRegister = true;
 }
 
 Bullet.prototype = new Entity();
@@ -31,15 +39,27 @@ Bullet.prototype.creator = 'none'; // who fired me?
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.zappedSound = "sounds/enemy_takes_hit.wav";
 
+Bullet.prototype._updateSprite = function () {
+    if (this.creator === 'hammer_joe') {
+        this.sprite = g_sprites.hammer_joe_bullet[this.spriteIndex];
+        if (this.timeSinceShot >= 3) {
+            this.spriteIndex++;
+            this.timeSinceShot = 0;
+            if (this.spriteIndex === 2) this.spriteIndex = 0;
+        }
+    }
+}
+
 Bullet.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
 
     //if (bullet hits anything) return entityManager.KILL_ME_NOW;
-
     this.cx += this.velX * du;
     this.cy += this.velY * du;
+
+    this.timeSinceShot += du;
 
     if(this.cx > g_canvas.width + global.camX || this.cx < global.camX){
         this.takeBulletHit();
@@ -52,7 +72,17 @@ Bullet.prototype.update = function (du) {
     // also don't call the "takeBulletHit" function if you hit the creator
 
     // plus all enemies hurt megaman and not each other
+
     var hitEntity = this.findHitEntity();
+    
+    if (hitEntity.type === 'hammer_joe' && hitEntity.invulnerable && this.shouldRegister) {
+        this.velX *= -1;
+        this.velY = -10;
+        this.shouldRegister = false;
+        spatialManager.register(this);
+        return;
+    }
+
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         var type = hitEntity.type;
@@ -73,6 +103,7 @@ Bullet.prototype.update = function (du) {
     }
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
+    this._updateSprite()
 };
 
 Bullet.prototype.getRadius = function () {
@@ -90,9 +121,8 @@ Bullet.prototype.render = function (ctx) {
     // pass my scale into the sprite, for drawing
 
     this.sprite.scale = this._scale;
-
     this.sprite.drawWrappedCentredAt(
-        ctx, this.cx, this.cy, this.rotation
+        ctx, this.cx, this.cy, this.isFlipped 
     );
     this.sprite.scale = origScale;
 };

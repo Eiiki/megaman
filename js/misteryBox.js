@@ -5,9 +5,9 @@
 function misteryBox(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
-    
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.misteryBox[0];
+    this.spriteArray = g_sprites.misteryBox;
     
     // Set drawing scale
     this._scale = 2;
@@ -31,10 +31,8 @@ misteryBox.prototype.spriteRenderer = {
 misteryBox.prototype._updateSprite = function (du){
     // the s_ variables represents the sprites
     var s_blink  = this.spriteRenderer.blink;
-
     //Sprite is blink
     this.sprite = this.spriteArray[s_blink.idx];
- 
     //Update sprite blink
     if(s_blink.cnt >= this.spriteArray.length * s_blink.renderTimes) {
         s_blink.idx = 0;
@@ -50,17 +48,8 @@ misteryBox.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-    // Perform movement substeps
-    var steps = this.numSubSteps;
-    var dStep = du / steps;
-    for (var i = 0; i < steps; ++i) {
-        this.computeSubStep(dStep);
-    }
-
-    // GIVE MEGAMAN THE GOODIE AND GO AWAY
-    var hitEntity = this.isColliding();
-    if (hitEntity && hitEntity.type === 'megaman') {
-        hitEntity.receiveGoodie(this.goodieType);
+    if (this.health <= 0) {
+        this.onDeath(); // make bombs and goodies 
         this.kill();
     }
 
@@ -68,6 +57,9 @@ misteryBox.prototype.update = function (du) {
 
     this._updateSprite(du, 0, 0);
 };
+
+misteryBox.prototype.updatePosition = function (du) {
+    };
 
 misteryBox.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
