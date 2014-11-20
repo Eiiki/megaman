@@ -42,8 +42,8 @@ audioManager.set("sounds/getWeapon.mp3", "sounds/getWeapon.mp3");
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-       cx : 200,
-        cy : 3520,
+       cx : 8270,
+        cy : 390,
         velX : 0,
         velY : -0.5
     });

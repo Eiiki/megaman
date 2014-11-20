@@ -31,6 +31,7 @@ function Megaman(descr) {
     this.reset_climbSpeed = this.climbSpeed;
 
     this.fix = false;
+    this.burstTimer = this.burstTime;
 };
 
 Megaman.prototype = new Entity();
@@ -58,6 +59,8 @@ Megaman.prototype.isClimbing = false;
 // Values allowing shooting or jumping
 Megaman.prototype.canJumpNow  = true;
 Megaman.prototype.canShootNow = true;
+Megaman.prototype.burstTime = 0.2 * SECS_TO_NOMINALS;
+Megaman.prototype.numShots = 0;
 
 // Values for rendering
 Megaman.prototype.numSubSteps = 1;
@@ -204,6 +207,15 @@ Megaman.prototype.update = function (du) {
     var oldX = this.cx,
         oldY = this.cy;
 
+    if (this.numShots >= 3) {
+        this.canShootNow = false;
+        this.burstTimer -= du;
+    }
+    if (this.burstTimer <= 0) {
+        this.numShots = 0;
+        this.canShootNow = true;
+        this.burstTimer = this.burstTime;
+    }
     if(eatKey(this.KEY_SUPER)) this.SUPERMAN = !this.SUPERMAN;
 
     if(this._health <= 0 || (this.velY < -20 && (global.camY+960 < this.cy || global.camY-480 > this.cy))){
@@ -378,7 +390,10 @@ Megaman.prototype.updatePosition = function (du) {
         hitEntity.type !== 'goodie' && 
         hitEntity.type !== 'misteryBox' && !this.SUPERMAN) {
         // COLLISION
-        if(!this.SUPERMAN)this._health -= 5; // needs adjusting
+        if(!this.SUPERMAN){
+            this._health -= 7.5; // needs adjusting
+            if (hitEntity.type === 'snakeman') this._health -= 2.5;
+        }
         this.isInvuln = true;
         this.isClimbing = false;
         audioManager.play(this.takesHitSound);
@@ -485,6 +500,7 @@ Megaman.prototype.maybeFireBullet = function () {
            this.cx, this.cy, velX, velY, this.type);
         audioManager.play(this.fireSound);
 
+        this.numShots += 1;
         this._isFiringBullet = true;
     }
 };
@@ -493,7 +509,7 @@ Megaman.prototype.takeBulletHit = function() {
     var hitEntity = this.isColliding();
     if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && !this.SUPERMAN) {
         // COLLISION
-        this._health -= 5; // needs adjusting
+        this._health -= 7.5; // needs adjusting
         this.isInvuln = true;
         this.isClimbing = false;
         audioManager.play(this.takesHitSound);
