@@ -48,7 +48,7 @@ Megaman.prototype.KEY_FIRE  = 'A'.charCodeAt(0);
 // Velocity values
 Megaman.prototype.verticalSpeed      = 4;
 Megaman.prototype.initialJumpSpeed   = 12;
-Megaman.prototype.climbSpeed         = 5;//2.5;
+Megaman.prototype.climbSpeed         = 2.5;
 Megaman.prototype.moveBackwardsSpeed = 1.5; 
 
 // Position values
@@ -66,7 +66,7 @@ Megaman.prototype.numShots = 0;
 Megaman.prototype.numSubSteps = 1;
 Megaman.prototype.nextCamY = global.camY;
 Megaman.prototype.alive = true;
-Megaman.prototype.SUPERMAN = true;//false;
+Megaman.prototype.SUPERMAN = false;
 
 // Sound values
 Megaman.prototype.jumpSound = "sounds/megaman_jump.wav";
@@ -318,7 +318,8 @@ Megaman.prototype.immobilize = function (set) {
 };
 
 Megaman.prototype.killMegaman = function(){
-    this.kill();
+    this.alive = false;
+    this.sprite = g_sprites.megaman_dead;
     audioManager.pause("sounds/snake_man.mp3");
     audioManager.pause("sounds/snake_man_intro.mp3");
     audioManager.playByID(this.death_sound);
