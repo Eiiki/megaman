@@ -484,7 +484,7 @@ Megaman.prototype.maybeFireBullet = function () {
 
 Megaman.prototype.takeBulletHit = function() {
     var hitEntity = this.isColliding();
-    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman') {
+    if (hitEntity && !this.isInvuln && hitEntity.creator !== 'megaman' && !this.SUPERMAN) {
         // COLLISION
         this._health -= 5; // needs adjusting
         this.isInvuln = true;
