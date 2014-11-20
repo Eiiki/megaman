@@ -39,7 +39,7 @@ Snakeman.prototype.LEFT = false;
 Snakeman.prototype.RIGHT = false;
 Snakeman.prototype.SUMMON_SNAKES = false;
 Snakeman.prototype.minTimeBetweenSnakes = 4 * SECS_TO_NOMINALS;
-Snakeman.prototype.minJumpTime = 1.5 * SECS_TO_NOMINALS;
+Snakeman.prototype.minJumpTime = 1.0 * SECS_TO_NOMINALS;
 Snakeman.prototype.blinkTime = 1 * SECS_TO_NOMINALS;
 Snakeman.prototype.snakeTime = 0.5 * SECS_TO_NOMINALS;
 
@@ -57,8 +57,8 @@ Snakeman.prototype.shortJumpSpeed = 14;
 Snakeman.prototype.isFlipped  = false;
 Snakeman.prototype.isFalling  = false;
 
-Snakeman.prototype.health = 110; // dies after 22 megaman hit
-Snakeman.prototype.maxHealth = 110;
+Snakeman.prototype.health = 200; // dies after 22 megaman hit
+Snakeman.prototype.maxHealth = 200;
 
 // Sprite indexes
 Snakeman.prototype.spriteRenderer = {
