@@ -137,7 +137,7 @@ SnakeBullet.prototype.update = function (du) {
 
     // handle DEATH, kind of hack. They only die if they go above certain y coords
     // thats when they are at ceiling of snake mans cavern
-    if (this.cy < 100) {
+    if (this.cy < 100 && this.hitGround) {
         entityManager.generateEnemy('explosion', {
             cx : this.cx,
             cy : this.cy

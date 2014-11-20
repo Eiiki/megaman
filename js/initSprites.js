@@ -173,6 +173,18 @@ function initSprites() {
             50, 33,
             3
         )
+        bullets : [
+            new Sprite(
+                g_images.snakebullets,
+                0, 0,
+                19, 8
+            ),
+            new Sprite(
+                g_images.snakebullets,
+                19, 0,
+                19, 8
+            )
+        ]
     };
     g_sprites.dada_moving = [
         new Sprite(
