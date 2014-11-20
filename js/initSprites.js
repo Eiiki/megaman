@@ -643,6 +643,13 @@ function initSprites() {
         )
     ];
 
+    g_sprites.youWin = new Sprite(
+        g_images.youWin,
+        0, 0,
+        290, 272,
+        1.8
+    );
+
     g_sprites.cloud = [
         new Sprite(
             g_images.cloud,

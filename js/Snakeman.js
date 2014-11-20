@@ -57,8 +57,8 @@ Snakeman.prototype.shortJumpSpeed = 14;
 Snakeman.prototype.isFlipped  = false;
 Snakeman.prototype.isFalling  = false;
 
-Snakeman.prototype.health = 200; // dies after 40 megaman hit
-Snakeman.prototype.maxHealth = 200;
+Snakeman.prototype.health = 180; // dies after 36 megaman hit
+Snakeman.prototype.maxHealth = 180;
 
 // Sprite indexes
 Snakeman.prototype.spriteRenderer = {
@@ -188,6 +188,7 @@ Snakeman.prototype.update = function (du) {
     if (this.health <= 0) {
         this.onDeath(); // make bombs and goodies 
         this.kill();
+        SNAKEMAN_DEAD = true;
     }
 
     spatialManager.register(this);

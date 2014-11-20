@@ -20,7 +20,7 @@ function Megaman(descr) {
     this._isFiringBullet = false;
     this._hasJumped = false;
 
-    this._health = this.maxHealth/5; //this.maxHealth
+    this._health = this.maxHealth*20; //this.maxHealth
 
     this._invulnTimer = this.invulnDuration;
     g_sprites.megaman_explosion.scale = 2.2;
