@@ -25,7 +25,7 @@ Enemy.prototype.type = 'enemy';
 
 Enemy.prototype.takeBulletHit = function() {
     this.health -= 1;
-    if(this.type === "bomb_flier"){
+    if(this.type === "bomb_flier" && !this.beenHit){
             this.beenHit = true;
             this.transition = true;
         }
