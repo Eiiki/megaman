@@ -158,6 +158,8 @@ function requestPreloads() {
         bubukan       : "sprites/bubukan_added.png",
         hammer_joe    : "sprites/hammer_joe.png",
         bomb_flier    : "sprites/bomb_flier.png",
+        snakeman      : "sprites/snakeman.png",
+        snakebullet   : "sprites/snakeman_bullets.png",
         // MISC
         explosion     : "sprites/explosion.png",
         small_pill    : "sprites/small_pill.png",
