@@ -267,7 +267,7 @@ Megaman.prototype.update = function (du) {
     } else if(global.isTransitioning) {
         global.isTransitioning = false;
     }
-
+    if(this._health > this.maxHealth) this._health = this.maxHealth;
     // Handle firing
     this.maybeFireBullet();
 
