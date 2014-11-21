@@ -20,7 +20,7 @@ function Megaman(descr) {
     this._isFiringBullet = false;
     this._hasJumped = false;
 
-    this._health = this.maxHealth*20; //this.maxHealth
+    this._health = this.maxHealth; //this.maxHealth
 
     this._invulnTimer = this.invulnDuration;
     g_sprites.megaman_explosion.scale = 2.2;
@@ -204,7 +204,7 @@ Megaman.prototype._computeVelocityY = function(du, oldVelY){
 Megaman.prototype.update = function (du) {
     spatialManager.unregister(this);
     if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-    console.log(this.cx + " " + this.cy);
+    //console.log(this.cx + " " + this.cy);
     var oldX = this.cx,
         oldY = this.cy;
 

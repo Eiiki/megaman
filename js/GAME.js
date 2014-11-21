@@ -43,8 +43,8 @@ audioManager.set("sounds/megaman_and_boss_dead.wav", "sounds/megaman_and_boss_de
 // }
 function createMegaman() {
     entityManager.generateMegaman({
-       cx : 5350,
-        cy : 1250,
+        cx : 200,
+        cy : 3520,
         velX : 0,
         velY : -0.5
     });
