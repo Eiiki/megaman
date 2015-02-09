@@ -284,7 +284,7 @@ function initSprites() {
     g_sprites.potton_copter = [
         new Sprite(
             g_images.potton_copter,
-            -1, 0,
+            0, 0,
             23, 20
         ),
         new Sprite(
@@ -323,40 +323,40 @@ function initSprites() {
             new Sprite(
                 g_images.bubukan,
                 100, 0,
-                45, 45
+                45, 39
             ),
             new Sprite(
                 g_images.bubukan,
                 146, 0,
-                50, 45
+                50, 39
             )
         ],
         falling : [
             new Sprite(
                 g_images.bubukan,
                 232, 0,
-                45, 45
+                45, 39
             ),
             new Sprite(
                 g_images.bubukan,
                 278, 0,
-                45, 45
+                45, 39
             ),
             new Sprite(
                 g_images.bubukan,
                 323, 0,
-                45, 45
+                45, 39
             ),
             new Sprite(
                 g_images.bubukan,
                 372, 0,
-                45, 45 
+                45, 39
             )
         ],
         stick : new Sprite(
             g_images.bubukan,
             200, 0,
-            30, 45       
+            30, 39       
         )
     };
 

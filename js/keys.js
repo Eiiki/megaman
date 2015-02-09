@@ -6,6 +6,11 @@ var keys = [];
 var keyUpKeys = [];
 
 function handleKeydown(evt) {
+    // prevent scrolling on arrowkeys and space
+    prevented = [37,38,39,40,32];
+    for (var i = 0; i < prevented.length; i++) {
+        if (prevented[i]===evt.keyCode) evt.preventDefault();
+    }
     keys[evt.keyCode] = true;
     keyUpKeys[evt.keyCode] = false;
 

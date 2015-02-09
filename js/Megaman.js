@@ -322,6 +322,8 @@ Megaman.prototype.killMegaman = function(){
     this.sprite = g_sprites.megaman_dead;
     audioManager.pause("sounds/snake_man.mp3");
     audioManager.pause("sounds/snake_man_intro.mp3");
+    audioManager.pause("sounds/boss.mp3");
+    audioManager.pause("sounds/boss_intro.mp3");
     audioManager.playByID(this.death_sound);
     setTimeout(function(){ 
         location.reload(); 

@@ -17,6 +17,10 @@ function Sprite(image, sx, sy, width, height, scale) {
     this.sy = sy;
     this.width = width || image.width;
     this.height = height || image.height;
+    this.width = Math.max(1,Math.round(this.width));
+    this.height = Math.max(1,Math.round(this.height));
+    if (this.width > g_canvas.width) this.width = g_canvas.width;
+    if (this.width > g_canvas.height) this.width = g_canvas.height;
 
     this.image = image;
     this.scale = scale;
@@ -31,15 +35,20 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, flipSprite, flipSpriteY,
     ctx.translate(cx, cy);
     ctx.rotate(rotation);
     ctx.scale(this.scale, this.scale);
-    
+
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
 
+    // math.round suggested by http://stackoverflow.com/questions/27537963/context-drawimage-working-in-chrome-but-not-in-firefox
     if(flipSprite) ctx.scale(-1,1);
     if(flipSpriteY) ctx.scale(1,-1);
-    ctx.drawImage(this.image, 
-                  this.sx, this.sy, w, h,
-                  -w/2,-h/2, w, h);
+    // try and catch just in case
+    try{ctx.drawImage(this.image, 
+                  Math.round(this.sx), Math.round(this.sy), w, h,
+                  Math.round(-w/2), Math.round(-h/2), w, h);
+    } catch (err) {
+        //console.log(this);
+    }
     if(flipSpriteY) ctx.scale(1,-1);
     if(flipSprite) ctx.scale(-1,1);
     ctx.restore();
